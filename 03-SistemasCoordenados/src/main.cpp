@@ -335,20 +335,49 @@ void applicationLoop() {
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 
 		glBindVertexArray(VAO2);
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, 1.0, -4.0));
-		model = glm::scale(model, glm::vec3(3.0, 1.0, 1.0));
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, 2.0, -4.0)); /*C ARRIBA*/
+		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-3.5, -1.0, -4.0));
-		model = glm::scale(model, glm::vec3(1.0, 3.0, 1.0));
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-4, 0.0, -4.0)); /*C VERTICAL*/
+		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, -2.0, -4.0));
-		model = glm::scale(model, glm::vec3(3.0, 1.0, 1.0));
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, -2.0, -4.0)); /*C ABAJO*/
+		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+		/*LETRA G*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, 2.0, -4.0)); /*G ARRIBA*/
+		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
+		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+		model = glm::translate(glm::mat4(1.0), glm::vec3(1.0, 0.0, -4.0)); /*G VERTICAL*/
+		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
+		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, -2.0, -4.0)); /*G ABAJO*/
+		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
+		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+		model = glm::translate(glm::mat4(1.0), glm::vec3(4.0, -1.0, -4.0)); /*G VERTICAL DERECHA*/
+		model = glm::scale(model, glm::vec3(1.0, 2.0, 1.0));
+		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+		model = glm::translate(glm::mat4(1.0), glm::vec3(3.5, 0.0, -4.0)); /*G ENMEDIO */
+		model = glm::scale(model, glm::vec3(2.0, 1.0, 1.0));
+		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		
+
+
 
 		// Se indica el buffer de datos y la estructura de estos utilizando solo el id del VAO
 		glBindVertexArray(VAO2);
