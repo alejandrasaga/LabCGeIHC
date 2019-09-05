@@ -116,23 +116,56 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 			{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) },
 			{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }
 	};
-
+	/*VERTICES CUBO
 	Vertex vertices2[] =
-	{	/*CARA FRONTAL*/
-		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V0*/
-		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V1*/
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V2*/
-		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V3*/
-		/*CARA DERECHA*/
-		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V4*/
-		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V5*/
-		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V6*/
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) },  /*V7*/
-		/*CARA SUPERIOR*/
-		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, /*V8*/
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, /*V9*/
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, /*V10*/
-		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, /*V11*/
+	{	//CARA FRONTAL COLOR ROJO
+		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V0
+		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V1
+		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V2
+		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V3
+		//CARA DERECHA COLOR VERDE
+		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V4
+		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V5
+		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V6
+		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) },  //V7
+		//CARA SUPERIOR COLOR AZUL
+		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V8
+		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V9
+		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V10
+		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V11
+		//CARA IZQUIERDA COLO AMARILLO
+		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V12
+		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V13
+		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V14
+		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V15
+		//CARA INFERIOR COLOR MAGENTA
+		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V16
+		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V17
+		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V18
+		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V19
+		//CARA TRASERA
+		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V20
+		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V21
+		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V22
+		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V23
+
+	}; */
+	/*VERTICES ESTRELLA*/
+	Vertex vertices2[] = {
+		{ glm::vec3(0.0,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P0	0
+		{ glm::vec3(-0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P1	1
+		{ glm::vec3(0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P2	2
+		{ glm::vec3(0.0,0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P4	3
+		{ glm::vec3(-0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P9	4
+		{ glm::vec3(-0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P10	5
+		{ glm::vec3(-0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P12	6
+		{ glm::vec3(-0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P5	7
+		{ glm::vec3(0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P6	8
+		{ glm::vec3(0.0,-0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P8	9
+		{ glm::vec3(0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P14	10
+		{ glm::vec3(0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P13	11
+		{ glm::vec3(0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P16	12
+
 	};
 
 	// Se definen los indices de las conexiones con los vertices.
@@ -150,14 +183,31 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		4, 5, 6,
 		4, 6, 7
 	};
-
+	/*	//INDICES DEL CUBO
 	GLuint indices2[]{
 		0, 1, 2,
 		0, 2, 3,
 		4, 5, 6,
 		4, 6, 7,
 		8, 9, 10,
-		8, 10, 11
+		8, 10, 11,
+		15, 14, 13,
+		15, 13, 12,
+		16, 17, 18,
+		16, 18, 19,
+		20, 21, 22,
+		20, 22, 23
+	};*/
+
+	GLuint indices2[]{
+		0, 1, 2,
+		1, 2, 3,
+		0, 4, 5,
+		4, 5, 6,
+		0, 7, 8,
+		7, 8, 9,
+		0, 10, 11,
+		10, 11, 12
 	};
 
 	size_t bufferSize = sizeof(vertices);
@@ -330,51 +380,54 @@ void applicationLoop() {
 		shader.setMatrix4("view", 1, false, glm::value_ptr(view));
 
 		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::rotate (model, glm::radians(-45.0f), glm::vec3(0.0, 1.0, 0.0f));
-		//model = glm::translate(model, glm::vec3(-1.0, 1.0, -4.0));
+		/*CUBO*/
+		/*model = glm::rotate (model, glm::radians(-135.0f), glm::vec3(0.0, 1.0, 0.0f));
+		model = glm::translate(model, glm::vec3(1.0, 1.0, -2.0));*/
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 
 		glBindVertexArray(VAO2);
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, 2.0, -4.0)); /*C ARRIBA*/
+		/*LETRAS CG*/
+		/*	
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, 2.0, -4.0)); //C ARRIBA
 		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-4, 0.0, -4.0)); /*C VERTICAL*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-4, 0.0, -4.0)); //C VERTICAL
 		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, -2.0, -4.0)); /*C ABAJO*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, -2.0, -4.0)); //C ABAJO
 		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		/*LETRA G*/
-		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, 2.0, -4.0)); /*G ARRIBA*/
+		//LETRA G
+		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, 2.0, -4.0)); //G ARRIBA
 		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(1.0, 0.0, -4.0)); /*G VERTICAL*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(1.0, 0.0, -4.0)); //G VERTICAL
 		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, -2.0, -4.0)); /*G ABAJO*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, -2.0, -4.0)); //G ABAJO
 		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(4.0, -1.0, -4.0)); /*G VERTICAL DERECHA*/
+		model = glm::translate(glm::mat4(1.0), glm::vec3(4.0, -1.0, -4.0)); //G VERTICAL DERECHA
 		model = glm::scale(model, glm::vec3(1.0, 2.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-		model = glm::translate(glm::mat4(1.0), glm::vec3(3.5, 0.0, -4.0)); /*G ENMEDIO */
+		model = glm::translate(glm::mat4(1.0), glm::vec3(3.5, 0.0, -4.0)); //G ENMEDIO
 		model = glm::scale(model, glm::vec3(2.0, 1.0, 1.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0); */
 		
 
 
