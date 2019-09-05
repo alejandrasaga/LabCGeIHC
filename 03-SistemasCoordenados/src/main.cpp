@@ -152,19 +152,19 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}; */
 	/*VERTICES ESTRELLA*/
 	Vertex vertices2[] = {
-		{ glm::vec3(0.0,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P0	0
-		{ glm::vec3(-0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P1	1
-		{ glm::vec3(0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P2	2
-		{ glm::vec3(0.0,0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P4	3
-		{ glm::vec3(-0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P9	4
-		{ glm::vec3(-0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P10	5
-		{ glm::vec3(-0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P12	6
-		{ glm::vec3(-0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P5	7
-		{ glm::vec3(0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P6	8
-		{ glm::vec3(0.0,-0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P8	9
-		{ glm::vec3(0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P14	10
-		{ glm::vec3(0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P13	11
-		{ glm::vec3(0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P16	12
+		{ glm::vec3(0.0,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P0	
+		{ glm::vec3(-0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P1	
+		{ glm::vec3(0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P2	
+		{ glm::vec3(0.0,0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P4	
+		{ glm::vec3(-0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P9	
+		{ glm::vec3(-0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P10	
+		{ glm::vec3(-0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P12	
+		{ glm::vec3(-0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P5	
+		{ glm::vec3(0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P6	
+		{ glm::vec3(0.0,-0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P8	
+		{ glm::vec3(0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P14	
+		{ glm::vec3(0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P13	
+		{ glm::vec3(0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P16	
 
 	};
 
