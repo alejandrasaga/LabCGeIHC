@@ -45,7 +45,7 @@ bool processInput(bool continueApplication = true);
 GLuint VAO, VBO, EBO;
 GLuint VAO2, VBO2, EBO2;
 
-typedef struct _Vertex {
+typedef struct _Vertex{
 	glm::vec3 m_Pos;
 	glm::vec3 m_Color;
 } Vertex;
@@ -116,56 +116,18 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 			{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) },
 			{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }
 	};
-	/*VERTICES CUBO
+
 	Vertex vertices2[] =
-	{	//CARA FRONTAL COLOR ROJO
-		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V0
-		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V1
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V2
-		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, //V3
-		//CARA DERECHA COLOR VERDE
-		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V4
-		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V5
-		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, //V6
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) },  //V7
-		//CARA SUPERIOR COLOR AZUL
-		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V8
-		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V9
-		{ glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V10
-		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 0.0f, 1.0f) }, //V11
-		//CARA IZQUIERDA COLO AMARILLO
-		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V12
-		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V13
-		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V14
-		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 0.0f) }, //V15
-		//CARA INFERIOR COLOR MAGENTA
-		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V16
-		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V17
-		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V18
-		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 0.0f, 1.0f) }, //V19
-		//CARA TRASERA
-		{ glm::vec3(-0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V20
-		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V21
-		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V22
-		{ glm::vec3(-0.5f, 0.5f,  -0.5f), glm::vec3(1.0f, 1.0f, 1.0f) }, //V23
-
-	}; */
-	/*VERTICES ESTRELLA*/
-	Vertex vertices2[] = {
-		{ glm::vec3(0.0,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P0	
-		{ glm::vec3(-0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P1	
-		{ glm::vec3(0.2,0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P2	
-		{ glm::vec3(0.0,0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P4	
-		{ glm::vec3(-0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P9	
-		{ glm::vec3(-0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) }, //P10	
-		{ glm::vec3(-0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P12	
-		{ glm::vec3(-0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P5	
-		{ glm::vec3(0.2,-0.7,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P6	
-		{ glm::vec3(0.0,-0.85,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P8	
-		{ glm::vec3(0.7,0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P14	
-		{ glm::vec3(0.7,-0.2,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P13	
-		{ glm::vec3(0.85,0.0,0.0), glm::vec3(1.0f, 1.0f, 1.0f) },//P16	
-
+	{	/*CARA FRONTAL*/
+		{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V0*/
+		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V1*/
+		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V2*/
+		{ glm::vec3(-0.5f, 0.5f,  0.5f), glm::vec3(1.0f, 0.0f, 0.0f) }, /*V3*/
+		/*CARA DERECHA*/
+		{ glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V4*/
+		{ glm::vec3(0.5f, -0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V5*/
+		{ glm::vec3(0.5f, 0.5f,  -0.5f), glm::vec3(0.0f, 1.0f, 0.0f) }, /*V6*/
+		{ glm::vec3(0.5f, 0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f) },  /*V7*/
 	};
 
 	// Se definen los indices de las conexiones con los vertices.
@@ -183,31 +145,12 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		4, 5, 6,
 		4, 6, 7
 	};
-	/*	//INDICES DEL CUBO
+
 	GLuint indices2[]{
 		0, 1, 2,
 		0, 2, 3,
 		4, 5, 6,
-		4, 6, 7,
-		8, 9, 10,
-		8, 10, 11,
-		15, 14, 13,
-		15, 13, 12,
-		16, 17, 18,
-		16, 18, 19,
-		20, 21, 22,
-		20, 22, 23
-	};*/
-
-	GLuint indices2[]{
-		0, 1, 2,
-		1, 2, 3,
-		0, 4, 5,
-		4, 5, 6,
-		0, 7, 8,
-		7, 8, 9,
-		0, 10, 11,
-		10, 11, 12
+		4, 6, 7
 	};
 
 	size_t bufferSize = sizeof(vertices);
@@ -305,7 +248,7 @@ void destroy() {
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 	glDeleteBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -316,7 +259,7 @@ void destroy() {
 void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes) {
 	screenWidth = widthRes;
 	screenHeight = heightRes;
-	glViewport(0, 0, screenWidth, screenHeight);
+	glViewport(0,0, screenWidth, screenHeight);
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
@@ -351,7 +294,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod) {
 	}
 }
 
-bool processInput(bool continueApplication) {
+bool processInput(bool continueApplication){
 	if (exitApp || glfwWindowShouldClose(window) != 0) {
 		return false;
 	}
@@ -366,7 +309,7 @@ void applicationLoop() {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.02f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) screenWidth / (float) screenHeight, 0.02f, 100.0f);
 		//glm::mat4 projection = glm::frustum(-0.005, 0.005, -0.005, 0.005, 0.01, 100.0);
 		//glm::mat4 projection = glm::ortho(-5.0, 5.0, -5.0, 5.0, 0.01, 10.0);
 
@@ -380,57 +323,9 @@ void applicationLoop() {
 		shader.setMatrix4("view", 1, false, glm::value_ptr(view));
 
 		glm::mat4 model = glm::mat4(1.0f);
-		/*CUBO*/
-		/*model = glm::rotate (model, glm::radians(-135.0f), glm::vec3(0.0, 1.0, 0.0f));
-		model = glm::translate(model, glm::vec3(1.0, 1.0, -2.0));*/
+		//model = glm::rotate (model, glm::radians(-45.0f), glm::vec3(0.0, 1.0, 0.0f));
+		model = glm::translate(model, glm::vec3(-1.0, 1.0, -4.0));
 		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-
-		glBindVertexArray(VAO2);
-		/*LETRAS CG*/
-		/*	
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, 2.0, -4.0)); //C ARRIBA
-		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-4, 0.0, -4.0)); //C VERTICAL
-		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(-2.5, -2.0, -4.0)); //C ABAJO
-		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		//LETRA G
-		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, 2.0, -4.0)); //G ARRIBA
-		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(1.0, 0.0, -4.0)); //G VERTICAL
-		model = glm::scale(model, glm::vec3(1.0, 4.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(2.5, -2.0, -4.0)); //G ABAJO
-		model = glm::scale(model, glm::vec3(4.0, 1.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(4.0, -1.0, -4.0)); //G VERTICAL DERECHA
-		model = glm::scale(model, glm::vec3(1.0, 2.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-		model = glm::translate(glm::mat4(1.0), glm::vec3(3.5, 0.0, -4.0)); //G ENMEDIO
-		model = glm::scale(model, glm::vec3(2.0, 1.0, 1.0));
-		shader.setMatrix4("model", 1, false, glm::value_ptr(model));
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0); */
-		
-
-
 
 		// Se indica el buffer de datos y la estructura de estos utilizando solo el id del VAO
 		glBindVertexArray(VAO2);

@@ -33,6 +33,7 @@ bool processInput(bool continueApplication = true);
 
 GLint vertexShaderID, fragmentShaderID, shaderProgramID;
 GLuint VAO, VBO;
+
 typedef struct _Vertex {
 	float m_Pos[3];
 	float m_Color[3];
@@ -42,23 +43,23 @@ typedef struct _Vertex {
 // Shader de vertices
 const GLchar * vertexShaderSource = "#version 330 core\n"
 "layout (location=0) in vec3 in_position;\n"
-"layout (location=1) in vec3 in_color;\n"
+"layout (location = 1) in vec3 in_color; \n"
 "out vec3 our_color;\n"
-"void main(){\n"
-"gl_Position = vec4(in_position, 1.0);\n"
-"our_color=in_color;\n"
-"}\0";
+		"void main(){\n"
+		"gl_Position = vec4(in_position, 1.0);\n"
+		"our_color = in_color;\n"
+		"}\0";
 // Shader de fragmento
 const GLchar * fragmentShaderSource = "#version 330 core\n"
-"out vec4 color;\n"
-"in vec3 our_color;\n"
-"void main(){\n"
-"color = vec4(our_color, 1.0);\n"
-"}\0";
+		"out vec4 color;\n"
+		"in vec3 our_color;\n"
+		"void main(){\n"
+		"color = vec4(our_color, 1.0);\n" //COLOR DEL TRIANGULO
+		"}\0";
 
 // Implementacion de todas las funciones.
 void init(int width, int height, std::string strTitle, bool bFullScreen) {
-
+	
 	if (!glfwInit()) {
 		std::cerr << "Failed to initialize GLFW" << std::endl;
 		exit(-1);
@@ -118,26 +119,27 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	GLchar infoLog[512];
 	// Se obtiene el estatus de la compilacion del vertex shader
 	glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &success);
-	if (!success) {
+	if(!success){
 		// En caso de error se obtiene el error y lanza mensaje con error
 		glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
 		std::cout << "Error al compilar el VERTEX_SHADER." << infoLog << std::endl;
 	}
-	//Se crea el id del Fragment Shader
-	fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-	//Se agrega el codigo fuente al ID 
-	glShaderSource(fragmentShaderID, 1, &fragmentShaderSource, NULL);
-	//Compilacion de Fragment Shader 
-	glCompileShader(fragmentShaderID);
-	//Se obtiene el estatus de la compilacion del Fragment Shader
-	glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		//En caso de error se obtiene el error y lanza mensaje con error 
-		glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
-		std::cout << "Error al compilar el FRAGMENT_SHADER." << infoLog << std::endl;
 
+	//Se crea el ID del Fragmente Shader
+	fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	//SE AGREGA EL CODIGO FUENTE AL ID
+	glShaderSource(fragmentShaderID, 1, &fragmentShaderSource, NULL);
+	//COMPILACION DE FRAGMENTE SHADER
+	glCompileShader(fragmentShaderID);
+	//sE OBTIENE EL ESTATUS DE LA COMPILACION DEL FRAGMENTE SHADER
+	glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		//En caso de error se obtiene el error y lanza mensaje con error
+		glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
+		std::cout << "Error al compilar el FRAGMENT_SHADER" << infoLog << std::endl;
 	}
+
+
 	// Programa con los shaders
 	shaderProgramID = glCreateProgram();
 	// Se agregan el vertex y fragment shader al program
@@ -147,246 +149,19 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	glLinkProgram(shaderProgramID);
 	// Revision de error de linkeo del programa
 	glGetProgramiv(shaderProgramID, GL_LINK_STATUS, &success);
-	if (!success) {
+	if(!success){
 		glGetProgramInfoLog(shaderProgramID, 512, NULL, infoLog);
 		std::cout << "ERROR al linkear el programa." << infoLog << std::endl;
 	}
 
 	// Se definen los vertices de la geometria a dibujar
 	//GLfloat vertices[] = {-0.5, -0.5, 0.0, 0.5, -0.5, 0.0, 0.0, 0.5, 0.0};
-	//Se definen los vertices de la geometria a dibujar 
+
+	// Se definen los vertices de la geometria a dibujar
 	/*Vertex vertices[] =
 	{
-		{ { -0.5f,-0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f } },
-		{ { 0.5f,-0.5f, 0.0f },{ 0.0f, 1.0f, 0.0f } },
-		{ { 0.5f, 0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f } },
-		{ { -0.5f,-0.5f, 0.0f },{ 1.0f, 0.0f, 0.0f } },
-		{ { 0.5f, 0.5f, 0.0f },{ 0.0f, 0.0f, 1.0f } },
-		{ { -0.5f, 0.5f, 0.0f },{ 1.0f, 0.0f, 1.0f } }
-	};*/
-	/* ESTRELLA
-	Vertex vertices[]
-	{
-		{ { 0.0,0.0,0.0 },{0.7,0.0,0.6} },//P0
-		{ { 0.2,0.7,0.0 },{0.7,0.0,0.6} },//P2
-		{ { 0.0,0.85,0.0 },{0.7,0.0,0.6} },//P4
-		{ { 0.0,0.7,0.0 },{0.7,0.0,0.6} },//P3
-		{ { 0.2,0.7,0.0 },{0.7,0.0,0.6} },//P2
-		{ { 0.0,0.7,0.0 },{0.7,0.0,0.6} },//P3
-		{ { 0.0,0.0,0.0 },{0.7,0.0,0.6 }},//P0
-		{ { -0.2,0.7,0.0 },{ 0.7,0.0,0.6 } },//P1
-		{ { 0.0,0.85,0.0 },{0.7,0.0,0.6} },//P4
-		{ { 0.0,0.7,0.0 },{0.7,0.0,0.6} },//P3
-		{ { -0.2,0.7,0.0 },{0.7,0.0,0.6} },//P1
-		{ { 0.0,0.0,0.0 },{ 0.7,0.0,0.6 } }, //P0
-		{ {-0.7,0.0,0.0 },{0.7,0.0,0.6}}, //P11
-		{ {-0.7,0.2,0.0},{0.7,0.0,0.6}},//P10
-		{ {-0.85,0.0,0.0},{0.7,0.0,0.6}},//p12
-		{ {-0.7,0.0,0.0 },{0.7,0.0,0.6}}, //P11
-		{ {-0.7,0.2,0.0},{0.7,0.0,0.6}},//P10
-		{ { 0.0,0.0,0.0 },{0.7,0.0,0.6 }},//P0
-		{ {-0.7,0.0,0.0 },{0.7,0.0,0.6}}, //P11
-		{ {-0.7,-0.2,0.0},{0.7,0.0,0.6}}, //P9
-		{ {-0.7,0.0,0.0 },{0.7,0.0,0.6}}, //P11
-		{ {-0.7,-0.2,0.0},{0.7,0.0,0.6}}, //P9
-		{{-0.85,0.0,0.0},{0.7,0.0,0.6}}, //P12
-		{{0.0,0.0,0.0},{0.7,0.0,0.6}},//P0
-		{{-0.2,-0.7,0.0},{0.7,0.0,0.6}},//p5
-		{{0.0,-0.7,0.0},{0.7,0.0,0.6}},  //P7
-		{{0.0,-0.85,0.0},{0.7,0.0,0.6}}, //P8
-		{{-0.2,-0.7,0.0},{0.7,0.0,0.6}},//p5
-		{{0.0,-0.7,0.0},{0.7,0.0,0.6}},  //P7
-		{{0.0,0.0,0.0},{0.7,0.0,0.6}},//P0
-		{{0.0,-0.7,0.0},{0.7,0.0,0.6}},  //P7
-		{{0.2,-0.7,0.0},{0.7,0.0,0.6}}, //p6
-		{ {0.0,-0.7,0.0},{0.7,0.0,0.6}},  //P7
-		{{0.2,-0.7,0.0},{0.7,0.0,0.6}}, //p6
-		{{0.0,-0.85,0.0},{0.7,0.0,0.6}}, //p8
-		{{0.0,0.0,0.0},{0.7,0.0,0.6}},//P0
-		{{0.7,0.0,0.0},{0.7,0.0,0.6}}, //p15
-		{{0.7,-0.2,0.0},{0.7,0.0,0.6}}, //p13
-		{{0.7,0.0,0.0},{0.7,0.0,0.6}}, //p15
-		{{0.7,-0.2,0.0},{0.7,0.0,0.6}}, //p13
-		{{0.85,0.0,0.0},{0.7,0.0,0.6}}, //p16
-		{{0.0,0.0,0.0},{0.7,0.0,0.6}},//P0
-		{{0.7,0.0,0.0},{0.7,0.0,0.6}}, //p15
-		{{0.7,0.2,0.0},{0.7,0.0,0.6}}, //p14
-		{{0.7,0.0,0.0},{0.7,0.0,0.6}}, //p15
-		{{0.7,0.2,0.0},{0.7,0.0,0.6}}, //p14
-		{{0.85,0.0,0.0},{0.7,0.0,0.6}}, //p16
-	};		ESTRELLA	*/
-
-	Vertex vertices[]{
-		{{-0.35,0.15,0.0},{1.0,1.0,1.0}}, //P1	**RECTANGULO BASE DE LA CASA
-		{{0.35,0.15,0.0},{1.0,1.0,1.0}}, //P2
-		{{-0.35,-0.6,0.0},{1.0,1.0,1.0}}, //P3
-		{{0.35,0.15,0.0},{1.0,1.0,1.0}}, //P2
-		{{0.35,-0.6,0.0},{1.0,1.0,1.0}},//P4
-		{{-0.35,-0.6,0.0},{1.0,1.0,1.0}}, //P3 **RECTANGULO BASE DE LA CASA
-
-		{{-0.35,0.15,0.0},{1.0,1.0,0.2}}, //P1	**RECTANGULO ENCIMADO SUPERIOR DE LA CASA
-		{{0.35,0.15,0.0},{1.0,1.0,0.2}}, //P2
-		{{-0.35,0.09,0.0},{1.0,1.0,0.2}}, //P3
-		{{0.35,0.15,0.0},{1.0,1.0,0.2}}, //P2
-		{{0.35,0.09,0.0},{1.0,1.0,0.2}},//P4
-		{{-0.35,0.09,0.0},{1.0,1.0,0.2}}, //P3 
-
-		{{0.15,0.6,0.0},{0.3,1.0,0.9}}, //P1 **CHIMENEA 
-		{{0.25,0.6,0.0},{0.3,1.0,0.9}}, //P2
-		{{0.15,0.4,0.0},{0.3,1.0,0.9}}, //P3
-		{{0.25,0.6,0.0},{0.3,1.0,0.9}}, //P2
-		{{0.25,0.15,0.0},{0.3,1.0,0.9}}, //P4
-		{{0.15,0.4,0.0},{0.3,1.0,0.9}}, //P3
-
-		{{0.1,0.65,0.0},{0.3,1.0,0.9}}, //P1 **CHIMENEA PARTE SUPERIOR
-		{{0.3,0.65,0.0},{0.3,1.0,0.9}}, //P2
-		{{0.1,0.6,0.0},{0.3,1.0,0.9}}, //P3
-		{{0.3,0.65,0.0},{0.3,1.0,0.9}}, //P2
-		{{0.3,0.6,0.0},{0.3,1.0,0.9}}, //P4
-		{{0.1,0.6,0.0},{0.3,1.0,0.9}}, //P3
-
-		{{-0.4,0.15,0.0},{0.3,0.5,0.02}}, //P1 **TRIANGULO BASE 
-		{{0.4,0.15,0.0},{0.3,0.5,0.02}}, //P2
-		{{0.0,0.6,0.0},{0.3,0.5,0.02}}, //P3 **TRIANGULO BASE
-
-		{{-0.35,0.15,0.0},{1.0,0.5,0.02}}, //P1 **TRIANGULO BASE 
-		{{0.35,0.15,0.0},{1.0,0.5,0.02}}, //P2
-		{{0.0,0.55,0.0},{1.0,0.5,0.02}}, //P3 **TRIANGULO BASE ENCIMADO
-
-		{{-0.06,0.45,0.0},{0.2,0.5,0.8}}, //P1 **VENTANA SUPERIOR MARCO EXTERIOR
-		{{0.06,0.45,0.0},{0.2,0.5,0.8}}, //P2
-		{{-0.06,0.3,0.0},{0.2,0.5,0.8}}, //P3
-		{{0.06,0.3,0.0},{0.2,0.5,0.8}}, //P4
-		{{0.06,0.45,0.0},{0.2,0.5,0.8}}, //P2
-		{{-0.06,0.3,0.0},{0.2,0.5,0.8}}, //P3
-
-		{{-0.05,0.44,0.0},{0.3,0.7,0.8}}, //P1 **VENTANA SUPERIOR INTERIOR
-		{{0.05,0.44,0.0},{0.3,0.7,0.8}}, //P2
-		{{-0.05,0.31,0.0},{0.3,0.7,0.8}}, //P3
-		{{0.05,0.31,0.0},{0.3,0.7,0.8}}, //P4
-		{{0.05,0.44,0.0},{0.3,0.7,0.8}}, //P2
-		{{-0.05,0.31,0.0},{0.3,0.7,0.8}}, //P3
-
-		{{-0.3,0.0,0.0},{0.5,0.25,0.0}}, //P1 **MARCO PUERTA EXTERIOR
-		{{-0.05,0.0,0.0},{0.5,0.25,0.0}}, //P2
-		{{-0.3,-0.55,0.0},{0.5,0.25,0.0}}, //P3
-		{{-0.05,-0.55,0.0},{0.5,0.25,0.0}}, //P4
-		{{-0.05,0.0,0.0},{0.5,0.25,0.0}}, //P2
-		{{-0.3,-0.55,0.0},{0.5,0.25,0.0}}, //P3
-
-		{{-0.26,-0.05,0.0},{0.5,0.25,0.9}}, //P1 **PUERTA INTERIOR
-		{{-0.09,-0.05,0.0},{0.5,0.25,0.9}}, //P2
-		{{-0.26,-0.5,0.0},{0.5,0.25,0.9}}, //P3
-		{{-0.09,-0.5,0.0},{0.5,0.25,0.9}}, //P4
-		{{-0.09,-0.05,0.0},{0.5,0.25,0.9}}, //P2
-		{{-0.26,-0.5,0.0},{0.5,0.25,0.9}}, //P3
-
-		{{0.05,0.0,0.0},{0.9,0.9,0.1}}, //P1 **MARCO VENTANA 
-		{{0.25,0.0,0.0},{0.9,0.9,0.1}}, //P2
-		{{0.05,-0.3,0.0},{0.9,0.9,0.1}}, //P3
-		{{0.25,-0.3,0.0},{0.9,0.9,0.1}}, //P4
-		{{0.25,0.0,0.0},{0.9,0.9,0.1}}, //P2
-		{{0.05,-0.3,0.0},{0.9,0.9,0.1}}, //P3
-
-		{{0.02,-0.3,0.0},{0.74,0.9,0.1}}, //P1 **RECTANGULO DEBAJO DE LA VENTANA
-		{{0.3,-0.3,0.0},{0.74,0.9,0.1}}, //P2
-		{{0.02,-0.35,0.0},{0.74,0.9,0.1}}, //P3
-		{{0.3,-0.35,0.0},{0.74,0.9,0.1}}, //P4
-		{{0.3,-0.3,0.0},{0.74,0.9,0.1}}, //P2
-		{{0.02,-0.35,0.0},{0.74,0.9,0.1}}, //P3
-												//**VIDRIO SUPERIOR 
-		{{0.08,-0.02,0.0},{0.0,0.0,1.0}}, //P1 
-		{{0.22,-0.02,0.0},{0.0,0.0,1.0}}, //P2
-		{{0.08,-0.1,0.0},{0.0,0.0,1.0}}, //P3
-		{{0.22,-0.1,0.0},{0.0,0.0,1.0}}, //P4	
-		{{0.08,-0.1,0.0},{0.0,0.0,1.0}}, //P3
-		{{0.22,-0.02,0.0},{0.0,0.0,1.0}}, //P2 
-												//**VIDRIO IZQUIERDO
-		{{0.15,-0.28,0.0},{0.0,0.0,1.0}}, //P4
-		{{0.15,-0.12,0.0},{0.0,0.0,1.0}}, //P2
-		{{0.08,-0.28,0.0},{0.0,0.0,1.0}}, //P3
-		{{0.08,-0.12,0.0},{0.0,0.0,1.0}}, //P1
-		{{0.15,-0.12,0.0},{0.0,0.0,1.0}}, //P2
-		{{0.08,-0.28,0.0},{0.0,0.0,1.0}}, //P3
-												//**VIDRIO DERECHO
-		{{0.17,-0.12,0.0},{0.0,0.0,1.0}}, //P1
-		{{0.23,-0.12,0.0},{0.0,0.0,1.0}}, //P2
-		{{0.17,-0.28,0.0},{0.0,0.0,1.0}}, //P3
-		{{0.23,-0.28,0.0},{0.0,0.0,1.0}}, //P4
-		{{0.23,-0.12,0.0},{0.0,0.0,1.0}}, //P2
-		{{0.17,-0.28,0.0},{0.0,0.0,1.0}}, //P3
-											//**VERJA BASE
-		{{-0.8,-0.6,0.0},{0.5,0.5,0.5}}, //P1 
-		{{-0.8,-0.62,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.8,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-		{{0.8,-0.62,0.0},{0.5,0.5,0.5}}, //P4
-		{{-0.8,-0.62,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.8,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-												//**TABLAS VERJA DE IZQ A DERECHA
-		{{-0.7,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{-0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.7,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-		{{-0.65,-0.6,0.0},{0.5,0.5,0.5}}, //P4
-		{{-0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.7,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-
-		{{-0.55,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{-0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.55,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-		{{-0.5,-0.6,0.0},{0.5,0.5,0.5}}, //P4
-		{{-0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.55,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-
-		{{0.7,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.7,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-		{{0.65,-0.6,0.0},{0.5,0.5,0.5}}, //P4
-		{{0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.7,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-
-		{{0.55,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.55,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-		{{0.5,-0.6,0.0},{0.5,0.5,0.5}}, //P4
-		{{0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.55,-0.6,0.0},{0.5,0.5,0.5}}, //P3
-
-		{{-0.7,-0.4,0.0},{0.5,0.5,0.5}}, //P1 PICO VERJA 1
-		{{-0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2 PICO VERJA 1
-		{{-0.675,-0.3,0.0},{0.5,0.5,0.5}}, //P3 PICO VERJA 1
-
-		{{-0.55,-0.4,0.0},{0.5,0.5,0.5}}, //P1 PICO VERJA 2
-		{{-0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2 PICO VERJA 2
-		{{-0.525,-0.3,0.0},{0.5,0.5,0.5}}, //P3 PICO VERJA 2
-
-		{{0.7,-0.4,0.0},{0.5,0.5,0.5}}, //P1 PICO VERJA 3
-		{{0.65,-0.4,0.0},{0.5,0.5,0.5}}, //P2 PICO VERJA 3
-		{{0.675,-0.3,0.0},{0.5,0.5,0.5}}, //P3 PICO VERJA 3
-
-		{{0.55,-0.4,0.0},{0.5,0.5,0.5}}, //P1 PICO VERJA 4
-		{{0.5,-0.4,0.0},{0.5,0.5,0.5}}, //P2 PICO VERJA 4
-		{{0.525,-0.3,0.0},{0.5,0.5,0.5}}, //P3 PICO VERJA 4
-
-										  //**VERJA ARRIBA 
-		{{-0.8,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{-0.35,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.8,-0.42,0.0},{0.5,0.5,0.5}}, //P3
-		{{-0.35,-0.42,0.0},{0.5,0.5,0.5}}, //P4
-		{{-0.35,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{-0.8,-0.42,0.0},{0.5,0.5,0.5}}, //P3
-							//*VERJA LADO POSITIVO ARRIBA
-		{{0.8,-0.4,0.0},{0.5,0.5,0.5}}, //P1
-		{{0.35,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.8,-0.42,0.0},{0.5,0.5,0.5}}, //P3
-		{{0.35,-0.42,0.0},{0.5,0.5,0.5}}, //P4
-		{{0.35,-0.4,0.0},{0.5,0.5,0.5}}, //P2
-		{{0.8,-0.42,0.0},{0.5,0.5,0.5}} //P3
-	};
-
-	size_t bufferSize = sizeof(vertices);
-	size_t vertexSize = sizeof(vertices[0]);
-	size_t rgbOffset = sizeof(vertices[0].m_Pos);
-
+	{ {0.0f, 0.0f, 0.0f},{ 0.2f, 0.3f, 0.5f } },//P0	{ { 0.2f, 0.7f, 0.0f },{ 0.5f, 0.3f, 0.7f } },//P2	{ { 0.0f, 0.7f, 0.0f },{ 0.2f, 0.4f, 0.1f } },//P3	{ { 0.0f, 0.7f, 0.0f },{ 0.1f, 0.6f, 0.45f } },//P3	{ { 0.2f, 0.7f, 0.0f },{ 0.5f, 0.3f, 0.7f } },//P2	{ { 0.0f, 0.85f, 0.0f },{ 0.4f, 0.1f, 0.8f } },//P4	{ { 0.0f, 0.7f, 0.0f },{ 0.1f, 0.6f, 0.45f } },//P3	{ { 0.0f, 0.85f, 0.0f },{ 0.4f, 0.1f, 0.8f } },//P4	{ { -0.2f, 0.7f, 0.0f },{ 0.3f, 0.1f, 0.6f } }//P1
+	};*/	Vertex vertices[] = {		{ { 0.0f, 0.0f, 0.0f },{ 1.0f, 0.0f, 0.0f } },		{ { 0.2f, 0.7f, 0.0f },{ 0.0f, 1.0f, 0.0f } },		{ { 0.0f, 0.7f, 0.0f },{ 0.0f, 0.0f, 1.0f } },		{ { 0.0f, 0.7f, 0.0f }, { 0.1f, 0.6f, 0.45f } },		{ { 0.2f, 0.7f, 0.0f }, { 0.1f, 0.6f, 0.45f } },		{ { 0.0f, 0.85f, 0.0f }, {0.2f, 0.3f, 0.8f} },		{ { 0.0f, 0.7f, 0.0f },{ 0.1f, 0.6f, 0.45f } }, // HOLA		{ { 0.0f, 0.85f, 0.0f },{ 0.4f, 0.1f, 0.8f } },		{ { -0.2f, 0.7f, 0.0f },{ 0.3f, 0.1f, 0.6f } } /*hola*/	};	size_t bufferSize = sizeof(vertices);	size_t vertexSize = sizeof(vertices[0]);	size_t rgbOffset = sizeof(vertices[0].m_Pos);
 	std::cout << "Vertices:" << std::endl;
 	std::cout << "bufferSize:" << bufferSize << std::endl;
 	std::cout << "vertexSize:" << vertexSize << std::endl;
@@ -412,13 +187,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	// Se crea un indice para el atributo del vertice posicion, debe corresponder al location del atributo del shader
 	// indice del atributo, Cantidad de datos, Tipo de dato, Normalizacion, Tamanio del bloque (Stride), offset
-	// vertexSIZE]= 6*sizeof(float)=24 bytes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, (GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, (GLvoid*)0); //vertezSize = 6 * sizeof(float) = 24 Bytes
 	// Se habilita el atributo del vertice con indice 0 (posicion)
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize, (GLvoid*)rgbOffset);
 	glEnableVertexAttribArray(1);
-
 	// Ya que se configuro, se regresa al estado original
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -443,7 +216,7 @@ void destroy() {
 	glBindVertexArray(VAO);
 	glDisableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER,VBO);
 	glDeleteBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -489,7 +262,7 @@ void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod) {
 	}
 }
 
-bool processInput(bool continueApplication) {
+bool processInput(bool continueApplication){
 	if (exitApp || glfwWindowShouldClose(window) != 0) {
 		return false;
 	}
@@ -510,7 +283,7 @@ void applicationLoop() {
 		// Se indica el buffer de datos y la estructura de estos utilizando solo el id del VAO
 		glBindVertexArray(VAO);
 		// Primitiva de ensamble
-		glDrawArrays(GL_TRIANGLES, 0, 300);
+		glDrawArrays(GL_TRIANGLES, 0, 9);
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);
