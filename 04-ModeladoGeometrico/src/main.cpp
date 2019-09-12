@@ -52,6 +52,7 @@ Box box4;
 Cylinder cylinder2(20, 20, 0.1, 0.1);// esfera de radio 0.5
 Cylinder cylinder3(20, 20, 0.1, 0.1);// esfera de radio 0.5
 
+float rot1 = 0.0, rot2 = 0.0, rot3 = 0.0, rot4 = 0.0;
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
@@ -288,6 +289,27 @@ bool processInput(bool continueApplication) {
 	offsetX = 0;
 	offsetY = 0;
 
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot1 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot1 -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot2 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot2 -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot3 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot3 -= 0.001;
+
 	glfwPollEvents();
 	return continueApplication;
 }
@@ -350,7 +372,8 @@ void applicationLoop() {
 		//articulacion mano derech hombro 
 		glm::mat4 j1 = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
 		sphere1.render(glm::scale(j1, glm::vec3(0.1, 0.1, 0.1)));
-
+		j1 = glm::rotate(j1, rot1, glm::vec3(0, 0, 1));
+		j1 = glm::rotate(j1, rot2, glm::vec3(0.0, 1.0, 0.0));
 
 		//para mano derecha
 		glm::mat4 l1 = glm::translate(j1, glm::vec3(0.1f, 0.0, 0.0));
@@ -358,13 +381,13 @@ void applicationLoop() {
 		cylinder1.render(glm::scale(l1, glm::vec3(0.05, 0.4, 0.05)));
 
 		//articulacion mano derecha codo
-		glm::mat4 j2 = glm::translate(model, glm::vec3(0.8f, 0.0, 0.0));
+		glm::mat4 j2 = glm::translate(l1, glm::vec3(0.2f, 0.0, 0.0));
 		sphere7.render(glm::scale(j2, glm::vec3(0.07, 0.07, 0.1)));
 
 
 		//mano derecha 2
 		glm::mat4 l2 = glm::translate(j2, glm::vec3(0.01, -0.18, 0.0));
-		l2 = glm::rotate(l2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
+		l2 = glm::rotate(j2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
 		cylinder1.render(glm::scale(l2, glm::vec3(0.048, 0.4, 0.048)));
 
 		//articulacion mano izquierda hombro 
