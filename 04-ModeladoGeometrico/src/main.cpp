@@ -50,6 +50,8 @@ Box box2;
 Box box3;
 Box box4;
 Cylinder cylinder2(20, 20, 0.1, 0.1);// esfera de radio 0.5
+Cylinder cylinder3(20, 20, 0.1, 0.1);// esfera de radio 0.5
+
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
@@ -196,6 +198,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	box4.init();
 	box4.setShader(&shader);
 	box4.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
+	// pestañas
+	cylinder3.init();
+	cylinder3.setShader(&shader);
+	cylinder3.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
 	//pantalones
 	box3.init();
 	box3.setShader(&shader);
@@ -427,7 +433,25 @@ void applicationLoop() {
 		glm::mat4 n1 = glm::translate(boca, glm::vec3(0.0f, 0.2, 0.05));
 		cylinder1.render(glm::scale(n1, glm::vec3(0.05, 0.05, 0.2)));
 
+		//pestañas
+		glm::mat4 pe1 = glm::translate(ojo2, glm::vec3(0.0f, 0.16, 0.05));
+		cylinder3.render(glm::scale(pe1, glm::vec3(0.05, 0.05, 0.2)));
 
+		glm::mat4 pe2 = glm::translate(ojo2, glm::vec3(-0.06f, 0.155, 0.05));
+		cylinder3.render(glm::scale(pe2, glm::vec3(0.05, 0.05, 0.2)));
+
+		glm::mat4 pe3 = glm::translate(ojo2, glm::vec3(0.06f, 0.155, 0.05));
+		cylinder3.render(glm::scale(pe3, glm::vec3(0.05, 0.05, 0.2)));
+
+		// pestañas 2 
+		glm::mat4 pe4 = glm::translate(ojo1, glm::vec3(0.0f, 0.16, 0.0));
+		cylinder3.render(glm::scale(pe4, glm::vec3(0.05, 0.05, 0.2)));
+
+		glm::mat4 pe5 = glm::translate(ojo1, glm::vec3(-0.06f, 0.15, 0.0));
+		cylinder3.render(glm::scale(pe5, glm::vec3(0.05, 0.05, 0.2)));
+
+		glm::mat4 pe6 = glm::translate(ojo1, glm::vec3(0.06f, 0.15, 0.0));
+		cylinder3.render(glm::scale(pe6, glm::vec3(0.05, 0.05, 0.2)));
 
 
 		shader.turnOff();
