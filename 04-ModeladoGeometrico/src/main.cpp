@@ -155,14 +155,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//METODO SETTER QUE COLOCA EL APUNTADOR AL SHADER 
 	sphere5.setShader(&shader);
 	//SETTER PARA PONER EL COLOR DE LA GEOMETRIA
-	sphere5.setColor(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	sphere5.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f));
 
 	//inicializar los buffers VAO,VBO,EBO
 	sphere6.init();
 	//METODO SETTER QUE COLOCA EL APUNTADOR AL SHADER 
 	sphere6.setShader(&shader);
 	//SETTER PARA PONER EL COLOR DE LA GEOMETRIA
-	sphere6.setColor(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	sphere6.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f));
 
 
 	//inicializar los buffers VAO,VBO,EBO
@@ -174,15 +174,15 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	cylinder1.init();
 	cylinder1.setShader(&shader);
-	cylinder1.setColor(glm::vec4(1.0, 1.0, 0.0, 0.0));
+	cylinder1.setColor(glm::vec4(0.85, 0.9, 0.0, 0.0));
 	//corbata
 	cylinder2.init();
 	cylinder2.setShader(&shader);
-	cylinder2.setColor(glm::vec4(1.0, 0.0, 0.0, 0.0));
+	cylinder2.setColor(glm::vec4(1.0, 0.5, 0.0, 0.0));
 	//bob
 	box1.init();
 	box1.setShader(&shader);
-	box1.setColor(glm::vec4(1.0, 1.0, 0.0, 0.0));
+	box1.setColor(glm::vec4(0.85, 0.9, 0.0, 0.0));
 	//camisa blanca
 	box2.init();
 	box2.setShader(&shader);
@@ -205,7 +205,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//pantalones
 	box3.init();
 	box3.setShader(&shader);
-	box3.setColor(glm::vec4((0.1f, 0.0f, 0.0f, 0.0f)));
+	box3.setColor(glm::vec4((0.5, 0.3, 0.1)));
 	camera->
 
 		setPosition(glm::vec3(2.0, 0.0, 4.0));
