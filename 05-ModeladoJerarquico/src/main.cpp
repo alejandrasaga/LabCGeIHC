@@ -240,8 +240,6 @@ void applicationLoop() {
 		glm::mat4 j1 = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
 		sphere1.enableWireMode();
 		sphere1.render(glm::scale(j1, glm::vec3(0.1, 0.1, 0.1)));
-		j1 = glm::rotate(j1, rot1, glm::vec3(0, 0, 1));
-		j1 = glm::rotate(j1, rot2, glm::vec3(0, 1, 0));
 
 		// Hueso 1
 		glm::mat4 l1 = glm::translate(j1, glm::vec3(0.25f, 0.0, 0.0));
