@@ -34,9 +34,9 @@ GLFWwindow * window;
 Shader shader;
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
-Sphere sphere1(20, 20);
-Sphere sphere2(20, 20);
-Cylinder cylinder1(20, 20, 0.5, 0.5);
+Sphere cabeza(20, 20);
+Sphere ojo(20, 20);
+Cylinder cuerpoTronco(20, 20, 0.5, 0.5);
 Box box1;
 
 bool exitApp = false;
@@ -115,22 +115,22 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	shader.initialize("../Shaders/colorShader.vs", "../Shaders/colorShader.fs");
 
 	// Inicializar los buffers VAO, VBO, EBO
-	sphere1.init();
+	cabeza.init();
 	// Método setter que colocar el apuntador al shader
-	sphere1.setShader(&shader);
+	cabeza.setShader(&shader);
 	//Setter para poner el color de la geometria
-	sphere1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
+	cabeza.setColor(glm::vec4(0.7, 0.7, 0.7, 1.0));
 
 	// Inicializar los buffers VAO, VBO, EBO
-	sphere2.init();
+	ojo.init();
 	// Método setter que colocar el apuntador al shader
-	sphere2.setShader(&shader);
+	ojo.setShader(&shader);
 	//Setter para poner el color de la geometria
-	sphere2.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
+	ojo.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
 
-	cylinder1.init();
-	cylinder1.setShader(&shader);
-	cylinder1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
+	cuerpoTronco.init();
+	cuerpoTronco.setShader(&shader);
+	cuerpoTronco.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
 
 	box1.init();
 	box1.setShader(&shader);
@@ -145,8 +145,8 @@ void destroy() {
 	// Eliminar los shader y buffers creados.
 
 	// Destrucción de los VAO, EBO, VBO
-	sphere1.destroy();
-	cylinder1.destroy();
+	cabeza.destroy();
+	cuerpoTronco.destroy();
 	box1.destroy();
 
 	shader.destroy();
@@ -264,43 +264,19 @@ void applicationLoop() {
 
 		model = rotate(model, rot0, glm::vec3(0, 1, 0));
 		model = glm::translate(model, glm::vec3(0, dz, 0));
-		//box1.enableWireMode();
-		box1.render(glm::scale(model, glm::vec3(1.0, 1.0, 0.1)));
+		//cuerpoTronco.enableWireMode();
+		
+		cuerpoTronco.render(glm::scale(model, glm::vec3(1.0,1.0,1.0))); //CUERPO DE R2D2
+		
+		glm::mat4 cabezaSC = glm::translate(model, glm::vec3(0.0, 0.5, 0.0));
+		cabezaSC = glm::rotate(cabezaSC, rot3, glm::vec3(0.0,1.0,0.0));
+		cabeza.render(glm::scale(cabezaSC,glm::vec3(1.0,0.7,1.0)));
+		
+		glm::mat4 ojoSC = glm::translate(cabezaSC,glm::vec3(0.0,0.1,0.4));
+		ojo.render(glm::scale(ojoSC, glm::vec3(0.2, 0.2, 0.2)));
+		
 
-		// Articulacion 1
-		glm::mat4 j1 = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		sphere1.enableWireMode();
-		sphere1.render(glm::scale(j1, glm::vec3(0.1, 0.1, 0.1)));
-		j1 = glm::rotate(j1, rot1, glm::vec3(0, 0, 1));
-		j1 = glm::rotate(j1, rot2, glm::vec3(0.0, 1.0, 0.0));
-
-		// Hueso 1
-		glm::mat4 l1 = glm::translate(j1, glm::vec3(0.25f, 0.0, 0.0));
-		l1 = glm::rotate(l1, glm::radians(90.0f), glm::vec3(0, 0, 1.0));
-		cylinder1.enableWireMode();
-		cylinder1.render(glm::scale(l1, glm::vec3(0.1, 0.5, 0.1)));
-
-		// Articulacion 2
-		glm::mat4 j2 = glm::translate(j1, glm::vec3(0.5, 0.0f, 0.0f));
-		j2 = glm::rotate(j2, rot3, glm::vec3(0.0, 0.0, 1.0));
-		j2 = glm::rotate(j2, rot3, glm::vec3(1.0, 0.0, 0.0));
-		sphere1.enableWireMode();
-		sphere1.render(glm::scale(j2, glm::vec3(0.1, 0.1, 0.1)));
-
-		// Hueso 2
-		glm::mat4 l2 = glm::translate(j2, glm::vec3(0.25, 0.0, 0.0));
-		l2 = glm::rotate(l2, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-		//cylinder1.enableWireMode();
-		cylinder1.render(glm::scale(l2, glm::vec3(0.1, 0.5, 0.1)));
-
-		// Ojo
-		glm::mat4 ojo = glm::translate(model, glm::vec3(0.25, 0.25, 0.05));
-		//sphere1.enableWireMode();
-		sphere1.render(glm::scale(ojo, glm::vec3(0.2, 0.2, 0.1)));
-
-		glm::mat4 ojo2 = glm::translate(model, glm::vec3(-0.25, 0.25, 0.05));
-		//sphere2.enableWireMode();
-		sphere2.render(glm::scale(ojo2, glm::vec3(0.2, 0.2, 0.1)));
+		
 
 		shader.turnOff();
 
