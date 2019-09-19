@@ -156,14 +156,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//METODO SETTER QUE COLOCA EL APUNTADOR AL SHADER 
 	sphere5.setShader(&shader);
 	//SETTER PARA PONER EL COLOR DE LA GEOMETRIA
-	sphere5.setColor(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	sphere5.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f));
 
 	//inicializar los buffers VAO,VBO,EBO
 	sphere6.init();
 	//METODO SETTER QUE COLOCA EL APUNTADOR AL SHADER 
 	sphere6.setShader(&shader);
 	//SETTER PARA PONER EL COLOR DE LA GEOMETRIA
-	sphere6.setColor(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+	sphere6.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f));
 
 
 	//inicializar los buffers VAO,VBO,EBO
@@ -175,15 +175,15 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	cylinder1.init();
 	cylinder1.setShader(&shader);
-	cylinder1.setColor(glm::vec4(1.0, 1.0, 0.0, 0.0));
+	cylinder1.setColor(glm::vec4(0.85, 0.9, 0.0, 0.0));
 	//corbata
 	cylinder2.init();
 	cylinder2.setShader(&shader);
-	cylinder2.setColor(glm::vec4(1.0, 0.0, 0.0, 0.0));
+	cylinder2.setColor(glm::vec4(1.0, 0.5, 0.0, 0.0));
 	//bob
 	box1.init();
 	box1.setShader(&shader);
-	box1.setColor(glm::vec4(1.0, 1.0, 0.0, 0.0));
+	box1.setColor(glm::vec4(0.85, 0.9, 0.0, 0.0));
 	//camisa blanca
 	box2.init();
 	box2.setShader(&shader);
@@ -194,7 +194,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//METODO SETTER QUE COLOCA EL APUNTADOR AL SHADER 
 	sphere8.setShader(&shader);
 	//SETTER PARA PONER EL COLOR DE LA GEOMETRIA
-	sphere8.setColor(glm::vec4(1.0, 0.0, 0.0, 0.0));
+	sphere8.setColor(glm::vec4(1.0, 0.4, 0.5, 0.0));
 	// dientes
 	box4.init();
 	box4.setShader(&shader);
@@ -206,7 +206,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//pantalones
 	box3.init();
 	box3.setShader(&shader);
-	box3.setColor(glm::vec4((0.1f, 0.0f, 0.0f, 0.0f)));
+	box3.setColor(glm::vec4((0.5, 0.3, 0.1)));
 	camera->
 
 		setPosition(glm::vec3(2.0, 0.0, 4.0));
@@ -369,7 +369,7 @@ void applicationLoop() {
 		glm::mat4 ci1 = glm::translate(model, glm::vec3(0.0, -0.5, 0.09));
 		cylinder2.render(glm::scale(ci1, glm::vec3(0.1, 0.07, 0.1)));
 
-		//articulacion mano derech hombro 
+		//articulacion mano derecha hombro 
 		glm::mat4 j1 = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
 		sphere1.render(glm::scale(j1, glm::vec3(0.1, 0.1, 0.1)));
 		j1 = glm::rotate(j1, rot1, glm::vec3(0, 0, 1));
@@ -381,14 +381,14 @@ void applicationLoop() {
 		cylinder1.render(glm::scale(l1, glm::vec3(0.05, 0.4, 0.05)));
 
 		//articulacion mano derecha codo
-		glm::mat4 j2 = glm::translate(l1, glm::vec3(0.2f, 0.0, 0.0));
-		sphere7.render(glm::scale(j2, glm::vec3(0.07, 0.07, 0.1)));
+		glm::mat4 j2 = glm::translate(j1, glm::vec3(0.3, 0.0, 0.0));
+		sphere7.render(glm::scale(j2, glm::vec3(0.1, 0.1, 0.1)));
 
 
 		//mano derecha 2
-		glm::mat4 l2 = glm::translate(j2, glm::vec3(0.01, -0.18, 0.0));
-		l2 = glm::rotate(j2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
-		cylinder1.render(glm::scale(l2, glm::vec3(0.048, 0.4, 0.048)));
+		glm::mat4 l2 = glm::translate(j2, glm::vec3(0.01, 0.2, 0.0));
+		//l2 = glm::rotate(j2, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+		cylinder1.render(glm::scale(l2, glm::vec3(0.05, 0.4, 0.05)));
 
 		//articulacion mano izquierda hombro 
 		glm::mat4 j3 = glm::translate(model, glm::vec3(-0.5f, 0.0f, 0.0f));
@@ -439,7 +439,7 @@ void applicationLoop() {
 		//sphere1.enableWireMode();
 
 		glm::mat4 boca = glm::translate(model, glm::vec3(0.0, -0.2, 0.08));
-		sphere8.render(glm::scale(boca, glm::vec3(0.2, 0.09, 0.0)));
+		sphere8.render(glm::scale(boca, glm::vec3(0.1, 0.1, 0.0)));
 		// dientes 
 		glm::mat4 d1 = glm::translate(boca, glm::vec3(-0.02, 0.03, 0.0));
 		box4.render(glm::scale(d1, glm::vec3(0.025, 0.03, 0.01)));
@@ -457,7 +457,7 @@ void applicationLoop() {
 		cylinder1.render(glm::scale(n1, glm::vec3(0.05, 0.05, 0.2)));
 
 		//pestañas
-		glm::mat4 pe1 = glm::translate(ojo2, glm::vec3(0.0f, 0.16, 0.05));
+		/*glm::mat4 pe1 = glm::translate(ojo2, glm::vec3(0.0f, 0.16, 0.05));
 		cylinder3.render(glm::scale(pe1, glm::vec3(0.05, 0.05, 0.2)));
 
 		glm::mat4 pe2 = glm::translate(ojo2, glm::vec3(-0.06f, 0.155, 0.05));
@@ -474,7 +474,7 @@ void applicationLoop() {
 		cylinder3.render(glm::scale(pe5, glm::vec3(0.05, 0.05, 0.2)));
 
 		glm::mat4 pe6 = glm::translate(ojo1, glm::vec3(0.06f, 0.15, 0.0));
-		cylinder3.render(glm::scale(pe6, glm::vec3(0.05, 0.05, 0.2)));
+		cylinder3.render(glm::scale(pe6, glm::vec3(0.05, 0.05, 0.2)));*/
 
 
 		shader.turnOff();
