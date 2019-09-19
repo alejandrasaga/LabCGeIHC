@@ -36,7 +36,16 @@ std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
 Sphere cabeza(20, 20);
 Sphere ojo(20, 20);
+Sphere articulacion(20, 20);
+Sphere  articulacion3(20, 20); //articulacion 1 es del hombro y la 3 de la muneca derecha
+Sphere articulacion2(20, 20);
+Sphere articulacion4(20, 20); //articulacion 2 es del hombro y la 4 de la muneca izquierda
 Cylinder cuerpoTronco(20, 20, 0.5, 0.5);
+Cylinder brazoDer(20, 20, 0.5, 0.5);
+Cylinder brazoIzq(20, 20, 0.5, 0.5);
+Box baseDer, baseIzq; //cajas en las articulaciones de las munecas
+Sphere articulacion5(20,20);
+Box baseCentro;
 Box box1;
 
 bool exitApp = false;
@@ -44,6 +53,7 @@ int lastMousePosX, offsetX = 0;
 int lastMousePosY, offsetY = 0;
 
 float rot1 = 0.0, rot2 = 0.0, rot3 = 0.0, rot4 = 0.0;
+float rotCabeza = 0.0, rotArt1 = 0.0, rotArt2 = 0.0, rotArt3 = 0.0, rotArt4 = 0.0; //Rotar R2D2
 bool sentido = true;
 
 float rot0 = 0.0, dz = 0.0;
@@ -119,7 +129,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	// Método setter que colocar el apuntador al shader
 	cabeza.setShader(&shader);
 	//Setter para poner el color de la geometria
-	cabeza.setColor(glm::vec4(0.7, 0.7, 0.7, 1.0));
+	cabeza.setColor(glm::vec4(0.7, 0.7, 1.0, 1.0));
 
 	// Inicializar los buffers VAO, VBO, EBO
 	ojo.init();
@@ -131,6 +141,46 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cuerpoTronco.init();
 	cuerpoTronco.setShader(&shader);
 	cuerpoTronco.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+	articulacion.init(); /*articulacion arriba derecha*/
+	articulacion.setShader(&shader);
+	articulacion.setColor(glm::vec4(0.8,0.8,0.8,0.8));
+
+	brazoDer.init();
+	brazoDer.setShader(&shader);
+	brazoDer.setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+
+	articulacion3.init(); /*articulacion muneca derecha*/
+	articulacion3.setShader(&shader);
+	articulacion3.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	articulacion2.init(); /*articulacion arriba izquierda*/
+	articulacion2.setShader(&shader);
+	articulacion2.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	articulacion4.init(); /*articulacion arriba izquierda*/
+	articulacion4.setShader(&shader);
+	articulacion4.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	brazoIzq.init();
+	brazoIzq.setShader(&shader);
+	brazoIzq.setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+
+	articulacion5.init(); /*articulacion arriba izquierda*/
+	articulacion5.setShader(&shader);
+	articulacion5.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	baseDer.init();
+	baseDer.setShader(&shader);
+	baseDer.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
+
+	baseIzq.init();
+	baseIzq.setShader(&shader);
+	baseIzq.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
+
+	baseCentro.init();
+	baseCentro.setShader(&shader);
+	baseCentro.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
 
 	box1.init();
 	box1.setShader(&shader);
@@ -237,6 +287,28 @@ bool processInput(bool continueApplication) {
 		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		rot3 -= 0.001;
 
+	//ROTACION DE ARTURITO
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS		/*ROTA LA CABEZA*/
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rotCabeza += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rotCabeza -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS		/*ROTA ARTICULACION DERECHA E IZQUIERDA PARA QUE AMBAS  */
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) /*SE MUEVAN AL MISMO TIEMPO*/
+		rotArt1 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rotArt1 -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS		/*ROTA ARTICULACION centro*/
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rotArt2 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rotArt2 -= 0.001;
+
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		rot0 = 0.0001;
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -251,7 +323,7 @@ bool processInput(bool continueApplication) {
 
 void applicationLoop() {
 	bool psi = true;
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 model2 = glm::mat4(1.0f);
 	while (psi) {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -262,21 +334,55 @@ void applicationLoop() {
 		shader.setMatrix4("projection", 1, false, glm::value_ptr(projection));
 		shader.setMatrix4("view", 1, false, glm::value_ptr(view));
 
-		model = rotate(model, rot0, glm::vec3(0, 1, 0));
-		model = glm::translate(model, glm::vec3(0, dz, 0));
+		model2 = rotate(model2, rot0, glm::vec3(0, 1, 0));
+		model2 = glm::translate(model2, glm::vec3(0, dz, 0));
 		//cuerpoTronco.enableWireMode();
+		//r2d2
+		cuerpoTronco.render(glm::scale(model2, glm::vec3(1.0,1.0,1.0))); //CUERPO DE R2D2
 		
-		cuerpoTronco.render(glm::scale(model, glm::vec3(1.0,1.0,1.0))); //CUERPO DE R2D2
-		
-		glm::mat4 cabezaSC = glm::translate(model, glm::vec3(0.0, 0.5, 0.0));
-		cabezaSC = glm::rotate(cabezaSC, rot3, glm::vec3(0.0,1.0,0.0));
+		glm::mat4 cabezaSC = glm::translate(model2, glm::vec3(0.0, 0.5, 0.0));
+		cabezaSC = glm::rotate(cabezaSC, rotCabeza, glm::vec3(0.0,1.0,0.0)); //rota la cabeza de R2D2
 		cabeza.render(glm::scale(cabezaSC,glm::vec3(1.0,0.7,1.0)));
 		
 		glm::mat4 ojoSC = glm::translate(cabezaSC,glm::vec3(0.0,0.1,0.4));
 		ojo.render(glm::scale(ojoSC, glm::vec3(0.2, 0.2, 0.2)));
 		
-
+		glm::mat4 art1 = glm::translate(model2, glm::vec3(0.5,0.2,0.0)); /*articulacion derecho arriba*/
+		art1 = glm::rotate(art1, rotArt1, glm::vec3(1.0, 0.0, 0.0));
+		articulacion.render(glm::scale(art1, glm::vec3(0.2,0.2,0.2)));
 		
+		glm::mat4 braDer = glm::translate(art1, glm::vec3(0.15,-0.4,0.0)); /*brazo derecho con art1*/
+		braDer = glm::rotate(braDer, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDer.render(glm::scale(braDer, glm::vec3(0.2,1.0,0.2)));
+
+		glm::mat4 art3 = glm::translate(braDer, glm::vec3(0.0, -0.6, 0.0)); /*articulacion derecho muneca*/
+		art3 = glm::rotate(art3, rotArt3, glm::vec3(1.0, 0.0, 0.0));
+		articulacion3.render(glm::scale(art3, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 cajaDer = glm::translate(art3, glm::vec3(0.0, -0.2, 0.0));
+		baseDer.render(glm::scale(art3, glm::vec3(0.3,0.15,0.3)));
+
+		glm::mat4 art2 = glm::translate(model2, glm::vec3(-0.5, 0.2, 0.0)); /*articulacion izquierda arriba*/
+		art2 = glm::rotate(art2, rotArt1, glm::vec3(1.0, 0.0, 0.0));
+		articulacion2.render(glm::scale(art2, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 braIzq = glm::translate(art2, glm::vec3(-0.15, -0.4, 0.0)); /*brazo izquierdo con art2*/
+		braIzq = glm::rotate(braIzq, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoIzq.render(glm::scale(braIzq, glm::vec3(0.2, 1.0, 0.2)));
+
+		glm::mat4 art4 = glm::translate(braIzq, glm::vec3(0.0, -0.6, 0.0)); /*articulacion izquierda muneca*/
+		art4 = glm::rotate(art4, rotArt4, glm::vec3(1.0, 0.0, 0.0));
+		articulacion4.render(glm::scale(art4, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 cajaIzq = glm::translate(art4, glm::vec3(0.0, -0.2, 0.0));
+		baseIzq.render(glm::scale(art4, glm::vec3(0.3, 0.15, 0.3)));
+
+		glm::mat4 art5 = glm::translate(model2, glm::vec3(0.0, -0.6, 0.0)); /*articulacion izquierda muneca*/
+		art5 = glm::rotate(art5, rotArt2, glm::vec3(1.0, 0.0, 0.0));
+		articulacion5.render(glm::scale(art5, glm::vec3(0.2, 0.2, 0.2)));
+		
+		glm::mat4 cajaCentro = glm::translate(art5, glm::vec3(0.0, -0.2, 0.0));
+		baseCentro.render(glm::scale(art5, glm::vec3(0.5, 0.3, 0.5)));
 
 		shader.turnOff();
 
