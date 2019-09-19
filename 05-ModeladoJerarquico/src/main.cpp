@@ -360,6 +360,38 @@ bool processInput(bool continueApplication) {
 		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		rot3 -= 0.001;
 
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot4 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot4 -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot5 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot5 -= 0.001;
+
+	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot6 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot6 -= 0.001;
+	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot7 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot8 -= 0.001;
+	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+		rot9 += 0.001;
+	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		rot9 -= 0.001;
 	//ROTACION DE ARTURITO
 	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS		/*ROTA LA CABEZA*/
 		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
@@ -381,7 +413,7 @@ bool processInput(bool continueApplication) {
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS
 		&& glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		rotArt2 -= 0.001;
-
+	/*rotacion flechas*/
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		rot0 = 0.0001;
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -437,9 +469,6 @@ void applicationLoop() {
 		glm::mat4 p2 = glm::translate(c4, glm::vec3(0.01, -0.19, 0.0));
 		p2 = glm::rotate(p2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
 		cylinder1.render(glm::scale(p2, glm::vec3(0.048, 0.25, 0.048)));
-
-
-
 
 		//corbata
 		glm::mat4 ci1 = glm::translate(model, glm::vec3(0.0, -0.5, 0.09));
