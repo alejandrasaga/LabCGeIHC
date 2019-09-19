@@ -62,6 +62,7 @@ Sphere articulacion4(20, 20); //articulacion 2 es del hombro y la 4 de la muneca
 Cylinder cuerpoTronco(20, 20, 0.5, 0.5);
 Cylinder brazoDer(20, 20, 0.5, 0.5);
 Cylinder brazoIzq(20, 20, 0.5, 0.5);
+Cylinder brazoDetalle(20, 20, 0.5, 0.5);
 Box baseDer, baseIzq; //cajas en las articulaciones de las munecas
 Sphere articulacion5(20,20);
 Box baseCentro;
@@ -222,6 +223,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	brazoDer.init();
 	brazoDer.setShader(&shader);
 	brazoDer.setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+
+	brazoDetalle.init();
+	brazoDetalle.setShader(&shader);
+	brazoDetalle.setColor(glm::vec4(0.0,0.0,1.0,1.0));
 
 	articulacion3.init(); /*articulacion muneca derecha*/
 	articulacion3.setShader(&shader);
@@ -632,6 +637,18 @@ void applicationLoop() {
 		//r2d2
 		cuerpoTronco.render(glm::scale(model2, glm::vec3(1.0,1.0,1.0))); //CUERPO DE R2D2
 		
+		glm::mat4 pecho = glm::translate(model2, glm::vec3(0.0,0.1,0.5)); //linea azul pecho
+		pecho = glm::rotate(pecho, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho, glm::vec3(0.0, 0.05, 0.3)));
+
+		glm::mat4 pecho2 = glm::translate(model2, glm::vec3(0.0, 0.0, 0.5)); //linea azul pecho
+		pecho2 = glm::rotate(pecho2, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho2, glm::vec3(0.0, 0.05, 0.3)));
+
+		glm::mat4 pecho3 = glm::translate(model2, glm::vec3(0.0, -0.1, 0.5)); //linea azul pecho
+		pecho3 = glm::rotate(pecho3, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho3, glm::vec3(0.0, 0.05, 0.3)));
+		
 		glm::mat4 cabezaSC = glm::translate(model2, glm::vec3(0.0, 0.5, 0.0));
 		cabezaSC = glm::rotate(cabezaSC, rotCabeza, glm::vec3(0.0,1.0,0.0)); //rota la cabeza de R2D2
 		cabeza.render(glm::scale(cabezaSC,glm::vec3(1.0,0.7,1.0)));
@@ -646,6 +663,11 @@ void applicationLoop() {
 		glm::mat4 braDer = glm::translate(art1, glm::vec3(0.15,-0.4,0.0)); /*brazo derecho con art1*/
 		braDer = glm::rotate(braDer, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 		brazoDer.render(glm::scale(braDer, glm::vec3(0.2,1.0,0.2)));
+
+		glm::mat4 braDerDet = glm::translate(art1, glm::vec3(0.18, -0.4, 0.0)); /*brazo derecho con art1*/
+		braDerDet = glm::rotate(braDerDet, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(braDerDet, glm::vec3(0.1, 0.8, 0.2)));
+
 
 		glm::mat4 art3 = glm::translate(braDer, glm::vec3(0.0, -0.6, 0.0)); /*articulacion derecho muneca*/
 		art3 = glm::rotate(art3, rotArt3, glm::vec3(1.0, 0.0, 0.0));
@@ -662,6 +684,10 @@ void applicationLoop() {
 		braIzq = glm::rotate(braIzq, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
 		brazoIzq.render(glm::scale(braIzq, glm::vec3(0.2, 1.0, 0.2)));
 
+		glm::mat4 braIzqDet = glm::translate(art2, glm::vec3(-0.18, -0.4, 0.0)); /*brazo izquierdo detalle azul con art2*/
+		braIzqDet = glm::rotate(braIzqDet, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(braIzqDet, glm::vec3(0.1, 0.8, 0.2)));
+
 		glm::mat4 art4 = glm::translate(braIzq, glm::vec3(0.0, -0.6, 0.0)); /*articulacion izquierda muneca*/
 		art4 = glm::rotate(art4, rotArt4, glm::vec3(1.0, 0.0, 0.0));
 		articulacion4.render(glm::scale(art4, glm::vec3(0.2, 0.2, 0.2)));
@@ -673,6 +699,8 @@ void applicationLoop() {
 		art5 = glm::rotate(art5, rotArt2, glm::vec3(1.0, 0.0, 0.0));
 		articulacion5.render(glm::scale(art5, glm::vec3(0.2, 0.2, 0.2)));
 		
+		
+
 		glm::mat4 cajaCentro = glm::translate(art5, glm::vec3(0.0, -0.2, 0.0));
 		baseCentro.render(glm::scale(art5, glm::vec3(0.5, 0.3, 0.5)));
 
