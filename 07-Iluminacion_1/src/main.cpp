@@ -574,3 +574,6 @@ int main(int argc, char ** argv) {
 	destroy();
 	return 1;
 }
+/* anadir la cosas de
+tarea
+*/
