@@ -450,26 +450,6 @@ void applicationLoop() {
 		glm::mat4 n1 = glm::translate(boca, glm::vec3(0.0f, 0.2, 0.05));
 		cylinder1.render(glm::scale(n1, glm::vec3(0.05, 0.05, 0.2)));
 
-		//pestañas
-		/*glm::mat4 pe1 = glm::translate(ojo2, glm::vec3(0.0f, 0.16, 0.05));
-		cylinder3.render(glm::scale(pe1, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe2 = glm::translate(ojo2, glm::vec3(-0.06f, 0.155, 0.05));
-		cylinder3.render(glm::scale(pe2, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe3 = glm::translate(ojo2, glm::vec3(0.06f, 0.155, 0.05));
-		cylinder3.render(glm::scale(pe3, glm::vec3(0.05, 0.05, 0.2)));
-
-		// pestañas 2 
-		glm::mat4 pe4 = glm::translate(ojo1, glm::vec3(0.0f, 0.16, 0.0));
-		cylinder3.render(glm::scale(pe4, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe5 = glm::translate(ojo1, glm::vec3(-0.06f, 0.15, 0.0));
-		cylinder3.render(glm::scale(pe5, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe6 = glm::translate(ojo1, glm::vec3(0.06f, 0.15, 0.0));
-		cylinder3.render(glm::scale(pe6, glm::vec3(0.05, 0.05, 0.2)));*/
-
 
 		shader.turnOff();
 
