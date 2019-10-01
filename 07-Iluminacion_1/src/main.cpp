@@ -41,6 +41,7 @@ Shader shader;
 Shader shaderTexture;
 // Descomentar El shader para iluminacion
 Shader shaderColorLighting;
+Shader shaderTextureLighting;
 
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
@@ -134,7 +135,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	shaderTexture.initialize("../Shaders/texturizado_res.vs", "../Shaders/texturizado_res.fs");
 	// Descomentar
 	shaderColorLighting.initialize("../Shaders/iluminacion_color.vs",
-			"../Shaders/iluminacion_color.fs");
+			"../Shaders/iluminacion_color.fs"); //ILUMINACION SHADER
+
+	shaderTextureLighting.initialize("../Shaders/iluminacion_texture_res.vs",
+		"../Shaders/iluminacion_texture_res.fs"); //ILUMINACION SHADER
 
 	// Inicializar los buffers VAO, VBO, EBO
 	sphere1.init();
@@ -167,7 +171,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	box1.init();
 	// Settea el shader a utilizar
-	box1.setShader(&shaderTexture);
+	box1.setShader(&shaderTextureLighting);
 	box1.setColor(glm::vec4(1.0, 1.0, 0.0, 1.0));
 
 	box2.init();
@@ -454,13 +458,26 @@ void applicationLoop() {
 		shaderColorLighting.setVectorFloat3("light.specular", glm::value_ptr(glm::vec3(0.9, 0.0, 0.0)));
 
 		glm::mat4 lightModelmatrix = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f, 0.0f, 0.0f));
-		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(0.0f, 0.0f, -ratio));
+		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(-0.3f, 0.0f, -ratio));
 		shaderColorLighting.setVectorFloat3("light.position",
 				glm::value_ptr(
 						glm::vec4(
 								lightModelmatrix
 										* glm::vec4(0.0, 0.0, 0.0, 1.0))));
 		sphereLamp.render(lightModelmatrix);
+
+
+		shaderTextureLighting.setMatrix4("projection", 1, false, glm::value_ptr(projection));
+		shaderTextureLighting.setMatrix4("view", 1, false, glm::value_ptr(view));
+		shaderTextureLighting.setVectorFloat3("viewPos", glm::value_ptr(camera->getPosition()));
+		shaderTextureLighting.setVectorFloat3("light.ambient", glm::value_ptr(glm::vec3(0.3, 0.3, 0.3)));
+		shaderTextureLighting.setVectorFloat3("light.diffuse", glm::value_ptr(glm::vec3(0.3, 0.3, 0.3)));
+		shaderTextureLighting.setVectorFloat3("light.specular", glm::value_ptr(glm::vec3(0.9, 0.9, 0.9)));
+		shaderTextureLighting.setVectorFloat3("light.position",
+			glm::value_ptr(
+				glm::vec4(
+					lightModelmatrix
+					* glm::vec4(0.0, 0.0, 0.0, 1.0))));
 
 		model = glm::translate(model, glm::vec3(0, 0, dz));
 		model = glm::rotate(model, rot0, glm::vec3(0, 1, 0));
