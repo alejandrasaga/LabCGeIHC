@@ -49,11 +49,26 @@ Sphere sphere1(20, 20);
 Sphere sphere2(20, 20);
 Sphere sphere3(20, 20);
 Sphere sphereLamp(20, 20);
+Sphere sphere4(20, 20); //ojo bob blanco
+Sphere sphere5(20, 20); //ojo parte negra bob
+Sphere sphere6(20, 20); //ojo azul bob
+Sphere sphere7(20, 20); //boca bob
+Sphere sphere8(20, 20);
+Sphere sphere9(20, 20);
+Cylinder cylinder4(20, 20, 0.5, 0.5);
+Cylinder cylinder5(20, 20, 0.5, 0.5);
+Cylinder cylinder6(20, 20, 0.5, 0.5); //BRAZO DERECHO BOB
 Cylinder cylinder1(20, 20, 0.5, 0.5);
 Cylinder cylinder2(20, 20, 0.5, 0.5);
 Box box1;
 Box box2;
-Box box3; //añadimos esto
+Box boxC; //añadimos esto
+Box box3;
+Box box4;
+Box box5;
+Box box6;
+Box box7; //dientes bob
+
 
 GLuint textureID1, textureID2, textureID3, textureID4;
 
@@ -169,6 +184,16 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cylinder2.init();
 	cylinder2.setShader(&shaderTexture);
 
+	cylinder4.init();
+	cylinder4.setShader(&shaderTextureLighting);
+
+	cylinder5.init();
+	cylinder5.setShader(&shader);
+	cylinder5.setColor(glm::vec4(1.0, 0.1, 0.0, 0.0));
+
+	cylinder6.init();
+	cylinder6.setShader(&shaderTextureLighting);
+
 	box1.init();
 	// Settea el shader a utilizar
 	box1.setShader(&shaderTextureLighting);
@@ -180,8 +205,50 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	sphere3.init();
 	sphere3.setShader(&shaderTexture);
 
+	boxC.init();
+	boxC.setShader(&shaderTexture);
+
 	box3.init();
-	box3.setShader(&shaderTexture);
+	box3.setShader(&shaderTextureLighting);
+	box3.setColor(glm::vec4(1.0, 1.0, 0.0, 1.0));
+
+	box4.init();
+	box4.setShader(&shader);
+	box4.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0));
+
+	box5.init();
+	box5.setShader(&shader);
+	box5.setColor(glm::vec4(0.5, 0.25, 0.0, 0.0));
+
+	box6.init();
+	box6.setShader(&shader);
+	box6.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
+
+	box7.init();
+	box7.setShader(&shader);
+	box7.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0));
+	sphere4.init();
+	sphere4.setShader(&shader);
+	sphere4.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0));
+
+	sphere5.init();
+	sphere5.setShader(&shader);
+	sphere5.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
+
+	sphere6.init();
+	sphere6.setShader(&shader);
+	sphere6.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f));
+
+	sphere7.init();
+	sphere7.setShader(&shader);
+	sphere7.setColor(glm::vec4(0.9f, 0.0f, 0.5f, 0.0f));
+
+	sphere8.init();
+	sphere8.setShader(&shaderTextureLighting);
+
+	sphere9.init();
+	sphere9.setShader(&shaderTextureLighting);
+
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -458,7 +525,7 @@ void applicationLoop() {
 		shaderColorLighting.setVectorFloat3("light.specular", glm::value_ptr(glm::vec3(0.9, 0.0, 0.0)));
 
 		glm::mat4 lightModelmatrix = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(1.0f, 0.0f, 0.0f));
-		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(-0.3f, 0.0f, -ratio));
+		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(-0.2f, 0.0f,-ratio));
 		shaderColorLighting.setVectorFloat3("light.position",
 				glm::value_ptr(
 						glm::vec4(
@@ -563,11 +630,106 @@ void applicationLoop() {
 				modelCylinder);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
+		/*==============================================================*/
+		//BOB ESPONJA CHIDO
+		glm::mat4 model2 = glm::mat4(1.0f); //BOB ESPONJA
+		model2 = glm::translate(model2, glm::vec3(0.0, 0.0, 0.5));
+		glBindTexture(GL_TEXTURE_2D, textureID1);
+		//CUERPO DE BOB
+		box3.render(glm::scale(model2, glm::vec3(1.0, 1.0, 0.1)));
+		glm::mat4 c2 = glm::translate(model2, glm::vec3(0.0, -0.5, 0.01));
+		box4.render(glm::scale(c2, glm::vec3(1.0, 0.04, 0.1)));
+		glm::mat4 c3 = glm::translate(c2, glm::vec3(0.0, -0.11, 0.0));
+		box5.render(glm::scale(c3, glm::vec3(1.0, 0.25, 0.1)));
+		glm::mat4 c4 = glm::translate(c3, glm::vec3(-0.3, -0.1, 0.0));
+		box5.render(glm::scale(c4, glm::vec3(0.11, 0.13, 0.0)));
+		glm::mat4 c5 = glm::translate(c3, glm::vec3(0.3, -0.1, 0.0));
+		box5.render(glm::scale(c5, glm::vec3(0.11, 0.13, 0.0)));
+		//PIERNAS
+		// pie derecho 
+		glm::mat4 p1 = glm::translate(c5, glm::vec3(0.01, -0.19, 0.0));
+		p1 = glm::rotate(p1, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
+		cylinder4.render(glm::scale(p1, glm::vec3(0.048, 0.25, 0.048)));
+		// pie izquierdo
+		glm::mat4 p2 = glm::translate(c4, glm::vec3(0.01, -0.19, 0.0));
+		p2 = glm::rotate(p2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
+		cylinder4.render(glm::scale(p2, glm::vec3(0.048, 0.25, 0.048)));
+		//corbata
+		glm::mat4 ci1 = glm::translate(model2, glm::vec3(0.0, -0.5, 0.09));
+		cylinder5.render(glm::scale(ci1, glm::vec3(0.1, 0.07, 0.1)));
+		//ZAPATOS
+		glm::mat4 z1 = glm::translate(p1, glm::vec3(0.0, -0.15, 0.0));
+		box6.render(glm::scale(z1, glm::vec3(0.1, 0.05, 0.2)));
+		glm::mat4 z2 = glm::translate(p2, glm::vec3(0.0, -0.15, 0.0));
+		box6.render(glm::scale(z2, glm::vec3(0.1, 0.05, 0.2)));
+		//ojos
+		//ojo 2
+		glm::mat4 ojo3 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.05));
+		sphere4.render(glm::scale(ojo3, glm::vec3(0.3, 0.3, 0.1)));
+		//ojo parte azul
+		glm::mat4 ojo5 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.08));
+		sphere6.render(glm::scale(ojo5, glm::vec3(0.15, 0.15, 0.05)));
+		//ojo2 pequeño parte negra
+		glm::mat4 ojo4 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.09));
+		sphere5.render(glm::scale(ojo4, glm::vec3(0.08, 0.08, 0.05)));
+
+		//ojo 2
+		glm::mat4 ojo6 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.05));
+		sphere4.render(glm::scale(ojo6, glm::vec3(0.3, 0.3, 0.1)));
+		//ojo parte azul
+		glm::mat4 ojo7 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.08));
+		sphere6.render(glm::scale(ojo7, glm::vec3(0.15, 0.15, 0.05)));
+		//ojo2 pequeño parte negra
+		glm::mat4 ojo8 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.09));
+		sphere5.render(glm::scale(ojo8, glm::vec3(0.08, 0.08, 0.05)));
+
+		// boca 
+		glm::mat4 boca = glm::translate(model2, glm::vec3(0.0, -0.2, 0.08));
+		sphere7.render(glm::scale(boca, glm::vec3(0.1, 0.1, 0.0)));
+		// dientes 
+		glm::mat4 d1 = glm::translate(boca, glm::vec3(-0.02, 0.03, 0.0));
+		box7.render(glm::scale(d1, glm::vec3(0.025, 0.03, 0.01)));
+		glm::mat4 d2 = glm::translate(boca, glm::vec3(0.02, 0.03, 0.0));
+		box7.render(glm::scale(d2, glm::vec3(0.025, 0.03, 0.01)));
+		//BRAZO DERECHO
+		//articulacion mano derecha hombro 
+		glm::mat4 DH = glm::translate(model2, glm::vec3(0.5f, 0.0f, 0.0f));
+		sphere8.render(glm::scale(DH, glm::vec3(0.1, 0.1, 0.1)));
+		DH = glm::rotate(DH, rot1, glm::vec3(0, 0, 1));
+		DH = glm::rotate(DH, rot2, glm::vec3(0.0, 1.0, 0.0));
+		//BRAZO DERECHO
+		glm::mat4 BD = glm::translate(DH, glm::vec3(0.1f, 0.0, 0.0));
+		BD = glm::rotate(BD, glm::radians(90.0f), glm::vec3(0, 0, 1.0));
+		cylinder6.render(glm::scale(BD, glm::vec3(0.05, 0.4, 0.05)));
+		//articulacion mano derecha codo
+		glm::mat4 AD = glm::translate(DH, glm::vec3(0.3, 0.0, 0.0));
+		sphere9.render(glm::scale(AD, glm::vec3(0.1, 0.1, 0.1)));
+		//mano derecha 2
+		glm::mat4 MD = glm::translate(AD, glm::vec3(0.01, 0.2, 0.0));
+		cylinder6.render(glm::scale(MD, glm::vec3(0.05, 0.4, 0.05)));
+		//BRAZO IZQUIERDO
+		glm::mat4 DH2 = glm::translate(model2, glm::vec3(-0.5f, 0.0f, 0.0f));
+		sphere8.render(glm::scale(DH2, glm::vec3(0.1, 0.1, 0.1)));
+		DH = glm::rotate(DH2, rot1, glm::vec3(0, 0, 1));
+		DH = glm::rotate(DH2, rot2, glm::vec3(0.0, 1.0, 0.0));
+		//
+		glm::mat4 BD2 = glm::translate(DH2, glm::vec3(-0.1f, 0.0, 0.0));
+		BD2 = glm::rotate(BD2, glm::radians(90.0f), glm::vec3(0, 0, 1.0));
+		cylinder6.render(glm::scale(BD2, glm::vec3(0.05, 0.4, 0.05)));
+		//articulacion mano derecha codo
+		glm::mat4 AD2 = glm::translate(DH2, glm::vec3(-0.3, 0.0, 0.0));
+		sphere9.render(glm::scale(AD2, glm::vec3(0.1, 0.1, 0.1)));
+		//mano derecha 2
+		glm::mat4 MD2 = glm::translate(AD2, glm::vec3(-0.01, 0.2, 0.0));
+		cylinder6.render(glm::scale(MD2, glm::vec3(0.05, 0.4, 0.05)));
+		/*AQUI TERMINA BOB ESPONJA*/
+
+
 		glm::mat4 cubeTextureModel = glm::mat4(1.0);
 		cubeTextureModel = glm::translate(cubeTextureModel, glm::vec3(3.0, 2.0, 3.0));
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		shaderTexture.setVectorFloat2("scaleUV",glm::value_ptr(glm::vec2(2.0,1.0)));
-		box3.render(cubeTextureModel);
+		boxC.render(cubeTextureModel);
 		glBindTexture(GL_TEXTURE_2D, 0); 
 
 		if (angle > 2 * M_PI)
