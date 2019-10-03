@@ -362,9 +362,6 @@ void applicationLoop() {
 		p2 = glm::rotate(p2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
 		cylinder1.render(glm::scale(p2, glm::vec3(0.048, 0.25, 0.048)));
 
-
-
-
 		//corbata
 		glm::mat4 ci1 = glm::translate(model, glm::vec3(0.0, -0.5, 0.09));
 		cylinder2.render(glm::scale(ci1, glm::vec3(0.1, 0.07, 0.1)));
@@ -383,7 +380,6 @@ void applicationLoop() {
 		//articulacion mano derecha codo
 		glm::mat4 j2 = glm::translate(j1, glm::vec3(0.3, 0.0, 0.0));
 		sphere7.render(glm::scale(j2, glm::vec3(0.1, 0.1, 0.1)));
-
 
 		//mano derecha 2
 		glm::mat4 l2 = glm::translate(j2, glm::vec3(0.01, 0.2, 0.0));
@@ -436,8 +432,6 @@ void applicationLoop() {
 		//sphere3.enableWireMode();
 		sphere5.render(glm::scale(ojo4, glm::vec3(0.15, 0.15, 0.05)));
 		// boca 
-		//sphere1.enableWireMode();
-
 		glm::mat4 boca = glm::translate(model, glm::vec3(0.0, -0.2, 0.08));
 		sphere8.render(glm::scale(boca, glm::vec3(0.1, 0.1, 0.0)));
 		// dientes 
@@ -455,26 +449,6 @@ void applicationLoop() {
 		//nariz 
 		glm::mat4 n1 = glm::translate(boca, glm::vec3(0.0f, 0.2, 0.05));
 		cylinder1.render(glm::scale(n1, glm::vec3(0.05, 0.05, 0.2)));
-
-		//pestañas
-		/*glm::mat4 pe1 = glm::translate(ojo2, glm::vec3(0.0f, 0.16, 0.05));
-		cylinder3.render(glm::scale(pe1, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe2 = glm::translate(ojo2, glm::vec3(-0.06f, 0.155, 0.05));
-		cylinder3.render(glm::scale(pe2, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe3 = glm::translate(ojo2, glm::vec3(0.06f, 0.155, 0.05));
-		cylinder3.render(glm::scale(pe3, glm::vec3(0.05, 0.05, 0.2)));
-
-		// pestañas 2 
-		glm::mat4 pe4 = glm::translate(ojo1, glm::vec3(0.0f, 0.16, 0.0));
-		cylinder3.render(glm::scale(pe4, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe5 = glm::translate(ojo1, glm::vec3(-0.06f, 0.15, 0.0));
-		cylinder3.render(glm::scale(pe5, glm::vec3(0.05, 0.05, 0.2)));
-
-		glm::mat4 pe6 = glm::translate(ojo1, glm::vec3(0.06f, 0.15, 0.0));
-		cylinder3.render(glm::scale(pe6, glm::vec3(0.05, 0.05, 0.2)));*/
 
 
 		shader.turnOff();
