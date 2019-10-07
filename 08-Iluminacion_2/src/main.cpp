@@ -71,6 +71,7 @@ Box boxMaterials;
 Box box1;
 Box box2;
 Box box3;
+Box casa;
 
 GLuint textureID1, textureID2, textureID3, textureID4;
 // Descomentar
@@ -91,12 +92,13 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
 		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
 		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };*/
 
-		std::string fileNames[6] = { "../Textures/sor_cwd/cwd_ft.JPG", //FT es el float asociado al indice de numeracion
-		"../Textures/sor_cwd/cwd_bk.JPG",
-		"../Textures/sor_cwd/cwd_up.JPG",
-		"../Textures/sor_cwd/cwd_dn.JPG",
-		"../Textures/sor_cwd/cwd_rt.JPG",
-		"../Textures/sor_cwd/cwd_lf.JPG" };
+
+std::string fileNames[6] = { "../Textures/sb_iceflow/iceflow_ft.tga", //FT es el float asociado al indice de numeracion
+		"../Textures/sb_iceflow/iceflow_bk.tga",
+		"../Textures/sb_iceflow/iceflow_up.tga",
+		"../Textures/sb_iceflow/iceflow_dn.tga",
+		"../Textures/sb_iceflow/iceflow_rt.tga",
+		"../Textures/sb_iceflow/iceflow_lf.tga" };
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
