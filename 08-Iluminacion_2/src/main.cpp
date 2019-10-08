@@ -64,14 +64,13 @@ Sphere sphereLamp(20, 20);
 // Descomentar
 Sphere skyboxSphere(20, 20);
 Cylinder cylinder1(20, 20, 0.5, 0.5);
-Cylinder cylinder2(20, 20, 0.5, 0.5);
-// Descomentar
 Cylinder cylinderMaterials(20, 20, 0.5, 0.5);
 Box boxMaterials;
 Box box3;
-Box casaExterior, casaExterior2, casaExterior3, casaExterior4;
-
-GLuint textureID1, textureID2, textureID3, textureID4, textureID5;
+Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
+Box mosaicoBanio;
+//												 paredes exterior, mosaicoBanio
+GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6; 
 // Descomentar
 GLuint skyboxTextureID;
 
@@ -209,9 +208,6 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cylinder1.setShader(&shaderColorLighting);
 	cylinder1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
 
-	cylinder2.init();
-	cylinder2.setShader(&shaderTextureLighting);
-
 	// Descomentar
 	cylinderMaterials.init();
 	cylinderMaterials.setShader(&shaderMaterialLighting);
@@ -240,6 +236,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	casaExterior3.setShader(&shaderTextureLighting);
 	casaExterior4.init();
 	casaExterior4.setShader(&shaderTextureLighting);
+
+	mosaicoBanio.init();
+	mosaicoBanio.setShader(&shaderTextureLighting);
+
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -279,7 +279,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	// Libera la memoria de la textura
 	texture1.freeImage(bitmap);
 
-	// Definiendo la textura a utilizar
+	// TEXTURA DE PAREDES EXTERIORES
 	Texture texture5("../Textures/maderaExt.jpg");
 	bitmap = texture5.loadImage();
 	data = texture5.convertToData(bitmap, imageWidth, imageHeight);
@@ -296,41 +296,26 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	// Libera la memoria de la textura
 	texture5.freeImage(bitmap);
 
-	// Definiendo la textura a utilizar
-	Texture texture3("../Textures/goku.png");
-	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
-	// Voltear la imagen
-	bitmap = texture3.loadImage(true);
-	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
-	data = texture3.convertToData(bitmap, imageWidth, imageHeight);
-	// Creando la textura con id 1
-	glGenTextures(1, &textureID3);
-	// Enlazar esa textura a una tipo de textura de 2D.
-	glBindTexture(GL_TEXTURE_2D, textureID3);
-	// set the texture wrapping parameters
+	// TEXTURA DE PISO BANIO
+	Texture texture6("../Textures/mosaicoBanio.jpg");
+	bitmap = texture6.loadImage();
+	data = texture6.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID6);
+	glBindTexture(GL_TEXTURE_2D, textureID6);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// Verifica si se pudo abrir la textura
 	if (data) {
-		// Transferis los datos de la imagen a memoria
-		// Tipo de textura, Mipmaps, Formato interno de openGL, ancho, alto, Mipmaps,
-		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
-		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
 			GL_BGRA, GL_UNSIGNED_BYTE, data);
-		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	// Libera la memoria de la textura
-	texture3.freeImage(bitmap);
+	texture6.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -645,6 +630,14 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID5); 
 		casaExterior4.render(modelCasa4);
 		glBindTexture(GL_TEXTURE_2D, 0);
+		//
+		//MOSAICO BANIO
+		glm::mat4 mosaicoBano = glm::mat4(1.0);
+		mosaicoBano = glm::translate(mosaicoBano, glm::vec3(3.0, -7.0, -7.5));
+		mosaicoBano = glm::scale(mosaicoBano, glm::vec3(3.0, 0.01, 2.0));
+		glBindTexture(GL_TEXTURE_2D, textureID6);
+		mosaicoBanio.render(mosaicoBano);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glm::mat4 modelCylinder = glm::mat4(1.0);
 		modelCylinder = glm::translate(modelCylinder,
@@ -652,21 +645,6 @@ void applicationLoop() {
 		// Envolvente desde el indice 0, el tamanio es 20 * 20 * 6
 		// Se usa la textura 1 ( Bon sponja)
 		glBindTexture(GL_TEXTURE_2D, textureID1);
-		cylinder2.render(0, cylinder2.getSlices() * cylinder2.getStacks() * 6,
-			modelCylinder);
-		// Tapa Superior desde el indice : 20 * 20 * 6, el tamanio de indices es 20 * 3
-		// Se usa la textura 2 ( Agua )
-		glBindTexture(GL_TEXTURE_2D, textureID2);
-		cylinder2.render(cylinder2.getSlices() * cylinder2.getStacks() * 6,
-			cylinder2.getSlices() * 3, modelCylinder);
-		// Tapa inferior desde el indice : 20 * 20 * 6 + 20 * 3, el tamanio de indices es 20 * 3
-		// Se usa la textura 3 ( Goku )
-		glBindTexture(GL_TEXTURE_2D, textureID3);
-		cylinder2.render(
-			cylinder2.getSlices() * cylinder2.getStacks() * 6
-			+ cylinder2.getSlices() * 3, cylinder2.getSlices() * 3,
-			modelCylinder);
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Render del cubo con textura de ladrillos y con repeticion en x
 		glm::mat4 cubeTextureModel = glm::mat4(1.0);
