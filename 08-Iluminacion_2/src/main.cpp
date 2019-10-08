@@ -69,7 +69,7 @@ Cylinder cylinder2(20, 20, 0.5, 0.5);
 Cylinder cylinderMaterials(20, 20, 0.5, 0.5);
 Box boxMaterials;
 Box box3;
-Box casaExterior;
+Box casaExterior, casaExterior2, casaExterior3, casaExterior4;
 
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5;
 // Descomentar
@@ -231,9 +231,15 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	box3.init();
 	box3.setShader(&shaderTextureLighting);
-
+	//PAREDES EXTERIORES DE LA CASA 
 	casaExterior.init();
 	casaExterior.setShader(&shaderTextureLighting);
+	casaExterior2.init();
+	casaExterior2.setShader(&shaderTextureLighting);
+	casaExterior3.init();
+	casaExterior3.setShader(&shaderTextureLighting);
+	casaExterior4.init();
+	casaExterior4.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -611,16 +617,34 @@ void applicationLoop() {
 
 		model = glm::translate(model, glm::vec3(0, 0, dz));
 		model = glm::rotate(model, rot0, glm::vec3(0, 1, 0));
-
-		glm::mat4 modelCasa = glm::mat4(1.0);
+		//PARED IZQUIERDA
+		glm::mat4 modelCasa = glm::mat4(1.0); 
 		modelCasa = glm::translate(modelCasa, glm::vec3(0.0, -3.0, 0.0));
-		modelCasa = glm::scale(modelCasa, glm::vec3(0.25, 4.0, 10.0));
-		// Se activa la textura del agua
-		glBindTexture(GL_TEXTURE_2D, textureID5); //AQUI PONER TEXTURA DE MADERA CASA
-		shaderTexture.setFloat("offsetX", offX);
+		modelCasa = glm::scale(modelCasa, glm::vec3(0.01, 4.0, 15.0));
+		glBindTexture(GL_TEXTURE_2D, textureID5); 
 		casaExterior.render(modelCasa);
 		glBindTexture(GL_TEXTURE_2D, 0);
-		shaderTexture.setFloat("offsetX", 0);
+		//PARED DE ATRAS
+		glm::mat4 modelCasa2 = glm::mat4(1.0);
+		modelCasa2 = glm::translate(modelCasa2, glm::vec3(7.5, -3.0, -7.5));
+		modelCasa2 = glm::scale(modelCasa2, glm::vec3(15.0, 4.0, 0.01));
+		glBindTexture(GL_TEXTURE_2D, textureID5);
+		casaExterior2.render(modelCasa2);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED DERECHA
+		glm::mat4 modelCasa3 = glm::mat4(1.0);
+		modelCasa3 = glm::translate(modelCasa3, glm::vec3(15.0, -3.0, 0.0));
+		modelCasa3 = glm::scale(modelCasa3, glm::vec3(0.01, 4.0, 15.0));
+		glBindTexture(GL_TEXTURE_2D, textureID5); 
+		casaExterior3.render(modelCasa3);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED DE ENFRENTE
+		glm::mat4 modelCasa4 = glm::mat4(1.0);
+		modelCasa4 = glm::translate(modelCasa4, glm::vec3(7.5, -3.0, 7.5));
+		modelCasa4 = glm::scale(modelCasa4, glm::vec3(15.0, 4.0, 0.01));
+		glBindTexture(GL_TEXTURE_2D, textureID5); 
+		casaExterior4.render(modelCasa4);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glm::mat4 modelCylinder = glm::mat4(1.0);
 		modelCylinder = glm::translate(modelCylinder,
