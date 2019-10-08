@@ -65,7 +65,7 @@ Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la c
 Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
-GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID8, textureID9;
+GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -226,6 +226,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//HABITACION IZQUIERDA CERCA BANIO
 	pisoHabitacion.init();
 	pisoHabitacion.setShader(&shaderTextureLighting);
+	paredHabitacion.init();
+	paredHabitacion.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -320,8 +322,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture7.freeImage(bitmap);
-	//TEXTURA PISO HABITACION
-	Texture texture8("../Textures/marmolParedBanio.jpg");
+	//TEXTURA PARED HABITACION
+	Texture texture8("../Textures/tapizHabitacion.jpg");
 	bitmap = texture8.loadImage();
 	data = texture8.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID8);
@@ -338,6 +340,25 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture8.freeImage(bitmap);
+	//PISO HABITACION
+	Texture texture9("../Textures/maderaPisoHabitacion.jpg");
+	bitmap = texture9.loadImage();
+	data = texture9.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID9);
+	glBindTexture(GL_TEXTURE_2D, textureID9);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture9.freeImage(bitmap);
+
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -663,8 +684,24 @@ void applicationLoop() {
 		paredesBanio = glm::translate(modelCasa4, glm::vec3(-5.5, 0.0, -12.0));
 		paredBanio.render(glm::scale(paredesBanio, glm::vec3(4.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
-
-
+		//PARED IZQUIERDA HABITACION
+		glm::mat4 paredHabit = glm::translate(modelCasa, glm::vec3(0.01,0.0,-1.5));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 6.0)));
+		//PARED ATRAS HABITACION
+		paredHabit = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 3.01));
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(7.0, 3.0, 0.01)));
+		//PARED DERECHA HABITACION
+		paredHabit = glm::translate(modelCasa3, glm::vec3(-8.0, 0.0, -1.5));
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 6.01)));
+		//PARED ENFRENTE HABITACION
+		paredHabit = glm::translate(modelCasa4, glm::vec3(-4.0, 0.0, -6.0));
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(7.0, 3.0, 0.01)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PISO HABITACION
+		glm::mat4 pisoHabit = glm::translate(mosaicoBano, glm::vec3(1.5,0.0,4.5));
+		glBindTexture(GL_TEXTURE_2D, textureID9);
+		pisoHabitacion.render(glm::scale(pisoHabit, glm::vec3(7.0, 0.01, 6.0)));
 		/*====================================*/
 
 		glm::mat4 modelCylinder = glm::mat4(1.0);
