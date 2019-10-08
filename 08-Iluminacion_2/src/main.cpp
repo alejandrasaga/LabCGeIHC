@@ -45,15 +45,12 @@ Shader shaderTexture;
 Shader shaderColorLighting;
 //Shader con iluminacion y textura
 Shader shaderTextureLighting;
-// Descomentar
 //Shader con materiales
 Shader shaderMaterialLighting;
-// Descomentar
 //Shader con skybox
 Shader shaderSkybox;
 //SHADER CON MUCHAS LUCES
 Shader shaderMulLighting;
-
 
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
@@ -61,17 +58,14 @@ Sphere sphere1(20, 20);
 Sphere sphere2(20, 20);
 Sphere sphere3(20, 20);
 Sphere sphereLamp(20, 20);
-// Descomentar
 Sphere skyboxSphere(20, 20);
-Cylinder cylinder1(20, 20, 0.5, 0.5);
-Cylinder cylinderMaterials(20, 20, 0.5, 0.5);
 Box boxMaterials;
 Box box3;
 Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
-Box mosaicoBanio;
-//												 paredes exterior, mosaicoBanio
-GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6; 
-// Descomentar
+Box mosaicoBanio, paredBanio;//BANIO1
+Box pisoHabitacion, paredHabitacion;
+//												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
+GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID8, textureID9;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -194,29 +188,17 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//Setter para poner el color de la geometria
 	sphere1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
 
-	// Inicializar los buffers VAO, VBO, EBO
 	sphere2.init();
 	sphere2.setShader(&shaderColorLighting); //AGREGAMOS COLOR E ILUMINACION
 	sphere2.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
 
-	// Inicializar los buffers VAO, VBO, EBO
 	sphereLamp.init();
 	sphereLamp.setShader(&shader);
 	sphereLamp.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
 
-	cylinder1.init();
-	cylinder1.setShader(&shaderColorLighting);
-	cylinder1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
-
-	// Descomentar
-	cylinderMaterials.init();
-	cylinderMaterials.setShader(&shaderMaterialLighting);
-	cylinderMaterials.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
-
 	boxMaterials.init();
 	boxMaterials.setShader(&shaderMaterialLighting);//no es necesario ponerle color porque le estamos diicendo que material va a tener
 
-	// Descomentar
 	//INICIALIZACION DE LA ESPERA DEL SKYBOX
 	skyboxSphere.init();
 	skyboxSphere.setShader(&shaderSkybox);
@@ -236,10 +218,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	casaExterior3.setShader(&shaderTextureLighting);
 	casaExterior4.init();
 	casaExterior4.setShader(&shaderTextureLighting);
-
+	//BANIO1
 	mosaicoBanio.init();
 	mosaicoBanio.setShader(&shaderTextureLighting);
-
+	paredBanio.init();
+	paredBanio.setShader(&shaderTextureLighting);
+	//HABITACION IZQUIERDA CERCA BANIO
+	pisoHabitacion.init();
+	pisoHabitacion.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -299,7 +285,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	texture5.freeImage(bitmap);
 
 	// TEXTURA DE PISO BANIO
-	Texture texture6("../Textures/mosaicoBanio.jpg");
+	Texture texture6("../Textures/mosaicoPisoBanio.jpg");
 	bitmap = texture6.loadImage();
 	data = texture6.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID6);
@@ -316,6 +302,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture6.freeImage(bitmap);
+	//TEXTURA PARED BANIO
+	Texture texture7("../Textures/marmolParedBanio.jpg");
+	bitmap = texture7.loadImage();
+	data = texture7.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID7);
+	glBindTexture(GL_TEXTURE_2D, textureID7);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture7.freeImage(bitmap);
+	//TEXTURA PISO HABITACION
+	Texture texture8("../Textures/marmolParedBanio.jpg");
+	bitmap = texture8.loadImage();
+	data = texture8.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID8);
+	glBindTexture(GL_TEXTURE_2D, textureID8);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture8.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -386,8 +408,6 @@ void destroy() {
 
 	// Destrucción de los VAO, EBO, VBO
 	sphere1.destroy();
-	cylinder1.destroy();
-
 	shader.destroy();
 }
 
@@ -605,39 +625,47 @@ void applicationLoop() {
 		//PARED IZQUIERDA
 		glm::mat4 modelCasa = glm::mat4(1.0); 
 		modelCasa = glm::translate(modelCasa, glm::vec3(0.0, -3.0, 0.0));
-		modelCasa = glm::scale(modelCasa, glm::vec3(0.01, 4.0, 15.0));
 		glBindTexture(GL_TEXTURE_2D, textureID5); 
-		casaExterior.render(modelCasa);
+		casaExterior.render(glm::scale(modelCasa, glm::vec3(0.01, 3.0, 15.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED DE ATRAS
-		glm::mat4 modelCasa2 = glm::mat4(1.0);
-		modelCasa2 = glm::translate(modelCasa2, glm::vec3(7.5, -3.0, -7.5));
-		modelCasa2 = glm::scale(modelCasa2, glm::vec3(15.0, 4.0, 0.01));
+		glm::mat4 modelCasa2 = glm::translate(modelCasa, glm::vec3(7.5, 0.0, -7.5));
 		glBindTexture(GL_TEXTURE_2D, textureID5);
-		casaExterior2.render(modelCasa2);
+		casaExterior2.render(glm::scale(modelCasa2, glm::vec3(15.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED DERECHA
-		glm::mat4 modelCasa3 = glm::mat4(1.0);
-		modelCasa3 = glm::translate(modelCasa3, glm::vec3(15.0, -3.0, 0.0));
-		modelCasa3 = glm::scale(modelCasa3, glm::vec3(0.01, 4.0, 15.0));
-		glBindTexture(GL_TEXTURE_2D, textureID5); 
-		casaExterior3.render(modelCasa3);
+		glm::mat4 modelCasa3 = glm::translate(modelCasa2, glm::vec3(7.5, 0.0, 7.5));
+		glBindTexture(GL_TEXTURE_2D, textureID5);
+		casaExterior3.render(glm::scale(modelCasa3, glm::vec3(0.01, 3.0, 15.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED DE ENFRENTE
-		glm::mat4 modelCasa4 = glm::mat4(1.0);
-		modelCasa4 = glm::translate(modelCasa4, glm::vec3(7.5, -3.0, 7.5));
-		modelCasa4 = glm::scale(modelCasa4, glm::vec3(15.0, 4.0, 0.01));
-		glBindTexture(GL_TEXTURE_2D, textureID5); 
-		casaExterior4.render(modelCasa4);
+		glm::mat4 modelCasa4 = glm::translate(modelCasa3, glm::vec3(-7.5, 0.0, 7.5));
+		glBindTexture(GL_TEXTURE_2D, textureID5);
+		casaExterior4.render(glm::scale(modelCasa4, glm::vec3(15.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
-		//
+
 		//MOSAICO BANIO
-		glm::mat4 mosaicoBano = glm::mat4(1.0);
-		mosaicoBano = glm::translate(mosaicoBano, glm::vec3(3.0, -7.0, -7.5));
-		mosaicoBano = glm::scale(mosaicoBano, glm::vec3(3.0, 0.01, 2.0));
+		glm::mat4 mosaicoBano = glm::translate(modelCasa2, glm::vec3(-5.5, -1.49, 1.5));
 		glBindTexture(GL_TEXTURE_2D, textureID6);
-		mosaicoBanio.render(mosaicoBano);
+		mosaicoBanio.render(glm::scale(mosaicoBano, glm::vec3(4.0, 0.01, 3.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED BANIO IZQUIERA
+		glm::mat4 paredesBanio = glm::translate(modelCasa, glm::vec3(0.01,0.0,-6.0));
+		glBindTexture(GL_TEXTURE_2D, textureID7);
+		paredBanio.render(glm::scale(paredesBanio, glm::vec3(0.01, 3.0, 3.0)));
+		//PARED BANIO ATRAS
+		paredesBanio = glm::translate(modelCasa2, glm::vec3(-5.5, 0.0, 0.01));
+		paredBanio.render(glm::scale(paredesBanio, glm::vec3(4.0, 3.0, 0.01)));
+		//PARED BANIO DERECHA
+		paredesBanio = glm::translate(modelCasa3, glm::vec3(-11.0, 0.0, -6.0));
+		paredBanio.render(glm::scale(paredesBanio, glm::vec3(0.01, 3.0, 3.0)));
+		//PARED BANIO ENFRENTE
+		paredesBanio = glm::translate(modelCasa4, glm::vec3(-5.5, 0.0, -12.0));
+		paredBanio.render(glm::scale(paredesBanio, glm::vec3(4.0, 3.0, 0.01)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+
+		/*====================================*/
 
 		glm::mat4 modelCylinder = glm::mat4(1.0);
 		modelCylinder = glm::translate(modelCylinder,
@@ -664,7 +692,6 @@ void applicationLoop() {
 		shaderMaterialLighting.setVectorFloat3("material.diffuse", glm::value_ptr(glm::vec3(0.427451f, 0.470588f, 0.541176f)));
 		shaderMaterialLighting.setVectorFloat3("material.specular", glm::value_ptr(glm::vec3(0.333333f, 0.333333f, 0.521569f)));
 		shaderMaterialLighting.setFloat("material.shininess", 9.84615f);
-		cylinderMaterials.render(cylinderMaterialModel);
 
 		glm::mat4 boxMaterialModel = glm::mat4(1.0f);
 		boxMaterialModel = glm::translate(boxMaterialModel, glm::vec3(-3.0f, 2.0f, -3.0f));
