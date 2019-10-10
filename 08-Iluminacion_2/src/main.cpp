@@ -64,8 +64,11 @@ Box box3;
 Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
 Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion;
+Box cocinaPared, cocinaPiso;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
+//		cocinaPared,cocinaPiso
+GLuint textureID10, textureID11;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -228,6 +231,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	pisoHabitacion.setShader(&shaderTextureLighting);
 	paredHabitacion.init();
 	paredHabitacion.setShader(&shaderTextureLighting);
+	//COCINA
+	cocinaPared.init();
+	cocinaPared.setShader(&shaderTextureLighting);
+	cocinaPiso.init();
+	cocinaPiso.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -358,6 +366,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture9.freeImage(bitmap);
+	//TEXTURA PARED COCINA 
+	Texture texture10("../Textures/paredCocina.jpg");
+	bitmap = texture10.loadImage();
+	data = texture10.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID10);
+	glBindTexture(GL_TEXTURE_2D, textureID10);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture10.freeImage(bitmap);
+	//PISO COCINA
+	Texture texture11("../Textures/pisoCocina.jpg");
+	bitmap = texture11.loadImage();
+	data = texture11.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID11);
+	glBindTexture(GL_TEXTURE_2D, textureID11);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture11.freeImage(bitmap);
 
 
 	// Definiendo la textura a utilizar
@@ -702,6 +746,25 @@ void applicationLoop() {
 		glm::mat4 pisoHabit = glm::translate(mosaicoBano, glm::vec3(1.5,0.0,4.5));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
 		pisoHabitacion.render(glm::scale(pisoHabit, glm::vec3(7.0, 0.01, 6.0)));
+		//PARED IZQUIERDA COCINA
+		glm::mat4 paredCocina = glm::translate(modelCasa, glm::vec3(0.01,0.0,4.5));
+		glBindTexture(GL_TEXTURE_2D, textureID10);
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 6.0)));
+		shaderTextureLighting.setVectorFloat2("scaleUV",glm::value_ptr(glm::vec2(6.0,3.0)));
+		//PARED ATRAS COCINA
+		paredCocina = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 9.02));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
+		//PARED DERECHA COCINA
+		paredCocina = glm::translate(modelCasa3, glm::vec3(-8.0, 0.0, 4.5));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.01, 3.0, 6.0)));
+		//PARED ENFRENTE COCINA
+		paredCocina = glm::translate(modelCasa4, glm::vec3(-4.0, 0.0, -0.01));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PISO COCINA
+		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 3.5));
+
+		
 		/*====================================*/
 
 		glm::mat4 modelCylinder = glm::mat4(1.0);
