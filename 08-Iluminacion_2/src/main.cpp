@@ -754,6 +754,7 @@ void applicationLoop() {
 		//PARED ATRAS COCINA
 		paredCocina = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 9.02));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
+		
 		//PARED DERECHA COCINA
 		paredCocina = glm::translate(modelCasa3, glm::vec3(-8.0, 0.0, 4.5));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.01, 3.0, 6.0)));
@@ -761,9 +762,11 @@ void applicationLoop() {
 		paredCocina = glm::translate(modelCasa4, glm::vec3(-4.0, 0.0, -0.01));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
+
 		//PISO COCINA
 		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 6.0));
 		glBindTexture(GL_TEXTURE_2D, textureID11);
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		cocinaPiso.render(glm::scale(pisoCocina, glm::vec3(7.0, 0.01, 6.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
