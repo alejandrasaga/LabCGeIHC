@@ -762,30 +762,13 @@ void applicationLoop() {
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PISO COCINA
-		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 3.5));
-
-		
+		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 6.0));
+		glBindTexture(GL_TEXTURE_2D, textureID11);
+		cocinaPiso.render(glm::scale(pisoCocina, glm::vec3(7.0, 0.01, 6.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
-		glm::mat4 modelCylinder = glm::mat4(1.0);
-		modelCylinder = glm::translate(modelCylinder,
-			glm::vec3(-3.0, 0.0, 0.0));
-		// Envolvente desde el indice 0, el tamanio es 20 * 20 * 6
-		// Se usa la textura 1 ( Bon sponja)
-		glBindTexture(GL_TEXTURE_2D, textureID1);
 
-		// Render del cubo con textura de ladrillos y con repeticion en x
-		glm::mat4 cubeTextureModel = glm::mat4(1.0);
-		cubeTextureModel = glm::translate(cubeTextureModel,
-			glm::vec3(3.0, 2.0, 3.0));
-		glBindTexture(GL_TEXTURE_2D, textureID4);
-		shaderTexture.setVectorFloat2("scaleUV",
-			glm::value_ptr(glm::vec2(2.0, 3.0)));
-		box3.render(cubeTextureModel);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		// Render del cyindro con materiales
-		// Descomentar
 		glm::mat4 cylinderMaterialModel = glm::mat4(1.0);
 		cylinderMaterialModel = glm::translate(cylinderMaterialModel, glm::vec3(3.0, 2.0, -3.0));
 		shaderMaterialLighting.setVectorFloat3("material.ambient", glm::value_ptr(glm::vec3(0.105882f, 0.058824f, 0.113725f)));
@@ -806,7 +789,6 @@ void applicationLoop() {
 		else
 			angle += 0.0001;
 
-		// Descomentar
 		// Se Dibuja el Skybox
 		GLint oldCullFaceMode;
 		GLint oldDepthFuncMode;
