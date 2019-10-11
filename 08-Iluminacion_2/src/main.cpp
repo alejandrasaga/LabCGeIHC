@@ -467,7 +467,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture14.freeImage(bitmap);
-
+	//TEXTURA 15 
+	Texture texture15("../Textures/paredExt.jpg");
+	bitmap = texture15.loadImage();
+	data = texture15.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID15);
+	glBindTexture(GL_TEXTURE_2D, textureID15);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture15.freeImage(bitmap);
+	//TEXTURA 16 PISO PATIO
+	Texture texture16("../Textures/pisoExt.jpg");
+	bitmap = texture16.loadImage();
+	data = texture16.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID16);
+	glBindTexture(GL_TEXTURE_2D, textureID16);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture16.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -856,6 +891,32 @@ void applicationLoop() {
 		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, textureID14);
 		paredExt.render(glm::scale(arbusto, glm::vec3(11.0,3.0,0.2)));
+		arbusto = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, -4.0)); //arbusto izquierdo
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
+		paredExt.render(glm::scale(arbusto, glm::vec3(0.01, 3.0, 7.0)));
+		//ARBUSTO PEQUENO
+		arbusto = glm::translate(modelCasa, glm::vec3(4.04, 0.0, -6.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 1.0)));
+		paredExt.render(glm::scale(arbusto, glm::vec3(0.03, 3.0, 3.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED PATIO
+		glm::mat4 parExt = glm::translate(modelCasa4, glm::vec3(3.5, 0.0, -8.02));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
+		glBindTexture(GL_TEXTURE_2D, textureID15);
+		paredExt.render(glm::scale(parExt, glm::vec3(8.0, 3.0, 0.01)));
+		parExt = glm::translate(modelCasa, glm::vec3(7.01, 0.0, -2.5));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
+		paredExt.render(glm::scale(parExt, glm::vec3(0.01, 3.0, 4.0)));
+		parExt = glm::translate(modelCasa4, glm::vec3(-2.0, 0.0, -12.0));
+		paredExt.render(glm::scale(parExt, glm::vec3(3.0, 3.0, 0.01)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PISO PATIO
+		glm::mat4 pisoPatio = glm::translate(pisoSala, glm::vec3(0.0, 0.0, -6.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(8.0, 2.0)));
+		glBindTexture(GL_TEXTURE_2D, textureID16);
+		pisoExt.render(glm::scale(pisoPatio, glm::vec3(8.0,0.01,4.0)));
+		pisoPatio = glm::translate(pisoSala, glm::vec3(-2.0, 0.0, -9.5));
+		pisoExt.render(glm::scale(pisoPatio, glm::vec3(12.0, 0.01, 3.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
