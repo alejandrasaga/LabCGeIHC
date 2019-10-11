@@ -423,7 +423,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "Failed to load texture" << std::endl;
 	texture12.freeImage(bitmap);
 	//TEXTURA 13 PISO SALA
-	Texture texture13("../Textures/paredCocina.jpg");
+	Texture texture13("../Textures/pisoSala.jpg");
 	bitmap = texture13.loadImage();
 	data = texture13.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID13);
@@ -817,6 +817,11 @@ void applicationLoop() {
 		//PARED SALA DERECHA
 		paredSala = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 3.5));
 		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 8.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PISO SALA COMEDOR
+		glm::mat4 pisoSala = glm::translate(pisoCocina, glm::vec3(7.5,0.0,-1.0));
+		glBindTexture(GL_TEXTURE_2D, textureID13);
+		salaPiso.render(glm::scale(pisoSala, glm::vec3(8.0, 0.01, 8.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
