@@ -65,10 +65,11 @@ Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la c
 Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion;
 Box cocinaPared, cocinaPiso;
+Box salaPared, salaPiso;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
-//		cocinaPared,cocinaPiso
-GLuint textureID10, textureID11;
+//		cocinaPared,cocinaPiso,  marmolSala,	pisoSala
+GLuint textureID10, textureID11, textureID12, textureID13;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -191,10 +192,6 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//Setter para poner el color de la geometria
 	sphere1.setColor(glm::vec4(0.3, 0.3, 1.0, 1.0));
 
-	sphere2.init();
-	sphere2.setShader(&shaderColorLighting); //AGREGAMOS COLOR E ILUMINACION
-	sphere2.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
-
 	sphereLamp.init();
 	sphereLamp.setShader(&shader);
 	sphereLamp.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
@@ -236,6 +233,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cocinaPared.setShader(&shaderTextureLighting);
 	cocinaPiso.init();
 	cocinaPiso.setShader(&shaderTextureLighting);
+	//SALA
+	salaPared.init();
+	salaPared.setShader(&shaderTextureLighting);
+	salaPiso.init();
+	salaPiso.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -402,7 +404,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture11.freeImage(bitmap);
-
+	//TEXTURA 12 PARED SALA
+	Texture texture12("../Textures/marmolSala.jpg");
+	bitmap = texture12.loadImage();
+	data = texture12.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID12);
+	glBindTexture(GL_TEXTURE_2D, textureID12);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture12.freeImage(bitmap);
+	//TEXTURA 13 PISO SALA
+	Texture texture13("../Textures/paredCocina.jpg");
+	bitmap = texture13.loadImage();
+	data = texture13.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID13);
+	glBindTexture(GL_TEXTURE_2D, textureID13);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture13.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -642,7 +679,7 @@ void applicationLoop() {
 		shaderTextureLighting.setVectorFloat3("light.diffuse",
 			glm::value_ptr(glm::vec3(0.3, 0.3, 0.3)));
 		shaderTextureLighting.setVectorFloat3("light.specular",
-			glm::value_ptr(glm::vec3(0.9, 0.0, 0.0)));
+			glm::value_ptr(glm::vec3(1.0, 1.0, 1.0)));
 
 		// Propiedades de la luz para objetos con textura
 		// Descomentar
@@ -745,16 +782,16 @@ void applicationLoop() {
 		//PISO HABITACION
 		glm::mat4 pisoHabit = glm::translate(mosaicoBano, glm::vec3(1.5,0.0,4.5));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		pisoHabitacion.render(glm::scale(pisoHabit, glm::vec3(7.0, 0.01, 6.0)));
 		//PARED IZQUIERDA COCINA
 		glm::mat4 paredCocina = glm::translate(modelCasa, glm::vec3(0.01,0.0,4.5));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(6.0, 3.0)));
 		glBindTexture(GL_TEXTURE_2D, textureID10);
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 6.0)));
-		shaderTextureLighting.setVectorFloat2("scaleUV",glm::value_ptr(glm::vec2(6.0,3.0)));
 		//PARED ATRAS COCINA
 		paredCocina = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 9.02));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
-		
 		//PARED DERECHA COCINA
 		paredCocina = glm::translate(modelCasa3, glm::vec3(-8.0, 0.0, 4.5));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.01, 3.0, 6.0)));
@@ -762,12 +799,24 @@ void applicationLoop() {
 		paredCocina = glm::translate(modelCasa4, glm::vec3(-4.0, 0.0, -0.01));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
-
 		//PISO COCINA
 		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 6.0));
 		glBindTexture(GL_TEXTURE_2D, textureID11);
-		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		cocinaPiso.render(glm::scale(pisoCocina, glm::vec3(7.0, 0.01, 6.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED SALA IZQUIERDA
+		glm::mat4 paredSala = glm::translate(modelCasa, glm::vec3(7.01,0.0,3.5));
+		glBindTexture(GL_TEXTURE_2D, textureID12);
+		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 8.0)));
+		//PARED SALA ATRAS
+		paredSala = glm::translate(modelCasa2, glm::vec3(3.5, 0.0, 7.0));
+		salaPared.render(glm::scale(paredSala, glm::vec3(8.0, 3.0, 0.01)));
+		//PARED SALA ENFRENTE
+		paredSala = glm::translate(modelCasa4, glm::vec3(3.5, 0.0, -0.01));
+		salaPared.render(glm::scale(paredSala, glm::vec3(8.0, 3.0, 0.01)));
+		//PARED SALA DERECHA
+		paredSala = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 3.5));
+		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 8.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
