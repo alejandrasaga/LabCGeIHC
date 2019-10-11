@@ -68,10 +68,13 @@ Box cocinaPared, cocinaPiso;
 Box salaPared, salaPiso;
 Box paredExt, paredExt2;
 Box pisoExt;
+Box puerta;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
-//		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior
-GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16;
+//		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior, puertaPrinci
+GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
+//		puertas
+GLuint textureID18;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -247,49 +250,16 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	paredExt2.setShader(&shaderTextureLighting);
 	pisoExt.init();
 	pisoExt.setShader(&shaderTextureLighting);
+	puerta.init();
+	puerta.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
-	// Descomentar
-	// Definimos el tamanio de la imagen
 	int imageWidth, imageHeight;
-	// Definiendo la textura a utilizar
-	Texture texture1("../Textures/sponge.jpg");
-	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
-	FIBITMAP *bitmap = texture1.loadImage();
-	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
-	unsigned char *data = texture1.convertToData(bitmap, imageWidth,
-		imageHeight);
-	// Creando la textura con id 1
-	glGenTextures(1, &textureID1);
-	// Enlazar esa textura a una tipo de textura de 2D.
-	glBindTexture(GL_TEXTURE_2D, textureID1);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// Verifica si se pudo abrir la textura
-	if (data) {
-		// Transferis los datos de la imagen a memoria
-		// Tipo de textura, Mipmaps, Formato interno de openGL, ancho, alto, Mipmaps,
-		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
-		// a los datos
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-			GL_BGRA, GL_UNSIGNED_BYTE, data);
-		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-		std::cout << "Failed to load texture" << std::endl;
-	// Libera la memoria de la textura
-	texture1.freeImage(bitmap);
-
 	// TEXTURA DE PAREDES EXTERIORES
 	Texture texture5("../Textures/maderaExt.jpg");
-	bitmap = texture5.loadImage();
-	data = texture5.convertToData(bitmap, imageWidth, imageHeight);
+	FIBITMAP *bitmap = texture5.loadImage();
+	unsigned char *data = texture5.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID5);
 	glBindTexture(GL_TEXTURE_2D, textureID5);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
@@ -503,42 +473,43 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture16.freeImage(bitmap);
-
-	// Definiendo la textura a utilizar
-	Texture texture4("../Textures/texturaLadrillos.jpg");
-	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
-	// Voltear la imagen
-	bitmap = texture4.loadImage(true);
-	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
-	data = texture4.convertToData(bitmap, imageWidth, imageHeight);
-	// Creando la textura con id 1
-	glGenTextures(1, &textureID4);
-	// Enlazar esa textura a una tipo de textura de 2D.
-	glBindTexture(GL_TEXTURE_2D, textureID4);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // set texture wrapping to GL_REPEAT (default wrapping method)
+	//TEXTURA 17 PUERTA PRINCIPAL
+	Texture texture17("../Textures/puertaPrincipal.jpg");
+	bitmap = texture17.loadImage();
+	data = texture17.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID17);
+	glBindTexture(GL_TEXTURE_2D, textureID17);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// Verifica si se pudo abrir la textura
 	if (data) {
-		// Transferis los datos de la imagen a memoria
-		// Tipo de textura, Mipmaps, Formato interno de openGL, ancho, alto, Mipmaps,
-		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
-		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
 			GL_BGRA, GL_UNSIGNED_BYTE, data);
-		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	// Libera la memoria de la textura
-	texture4.freeImage(bitmap);
+	texture17.freeImage(bitmap);
+	//TEXTURA 18 PUERTA PRINCIPAL
+	Texture texture18("../Textures/puerta.jpg");
+	bitmap = texture18.loadImage();
+	data = texture18.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID18);
+	glBindTexture(GL_TEXTURE_2D, textureID18);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture18.freeImage(bitmap);
 
-	// Descomentar
-	// Carga de texturas para el skybox
 	Texture skyboxTexture = Texture("");
 	glGenTextures(1, &skyboxTextureID);
 	//TIPO DE TEXTURA CUBE MAP
@@ -917,6 +888,23 @@ void applicationLoop() {
 		pisoExt.render(glm::scale(pisoPatio, glm::vec3(8.0,0.01,4.0)));
 		pisoPatio = glm::translate(pisoSala, glm::vec3(-2.0, 0.0, -9.5));
 		pisoExt.render(glm::scale(pisoPatio, glm::vec3(12.0, 0.01, 3.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PUERTA PRINCIPAL
+		glm::mat4 puertas = glm::translate(modelCasa4,glm::vec3(1.0,0.0,0.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
+		glBindTexture(GL_TEXTURE_2D, textureID17);
+		puerta.render(glm::scale(puertas, glm::vec3(3.0, 3.0, 0.04)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PUERTAS CASA DENTRO
+		puertas = glm::translate(modelCasa, glm::vec3(7.0, 0.0, 4.0));
+		glBindTexture(GL_TEXTURE_2D, textureID18);
+		puerta.render(glm::scale(puertas, glm::vec3(0.04, 3.0, 1.25)));//PUERTA COCINA
+		puertas = glm::translate(modelCasa, glm::vec3(7.0, 0.0, 0.5)); //PUERTA CUARTO
+		puerta.render(glm::scale(puertas, glm::vec3(0.04, 3.0, 1.25)));
+		puertas = glm::translate(modelCasa2, glm::vec3(-6.0, 0.0, 3.0));
+		puerta.render(glm::scale(puertas, glm::vec3(1.25, 3.0, 0.04)));
+		puertas = glm::translate(modelCasa2, glm::vec3(6.0, 0.0, 7.0));
+		puerta.render(glm::scale(puertas, glm::vec3(1.25, 3.0, 0.06)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
