@@ -66,10 +66,12 @@ Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion;
 Box cocinaPared, cocinaPiso;
 Box salaPared, salaPiso;
+Box paredExt, paredExt2;
+Box pisoExt;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
-//		cocinaPared,cocinaPiso,  marmolSala,	pisoSala
-GLuint textureID10, textureID11, textureID12, textureID13;
+//		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior
+GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -238,6 +240,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	salaPared.setShader(&shaderTextureLighting);
 	salaPiso.init();
 	salaPiso.setShader(&shaderTextureLighting);
+	//CUARTO EXTERIOR
+	paredExt.init();
+	paredExt.setShader(&shaderTextureLighting);
+	paredExt2.init();
+	paredExt2.setShader(&shaderTextureLighting);
+	pisoExt.init();
+	pisoExt.setShader(&shaderTextureLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -440,6 +449,25 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture13.freeImage(bitmap);
+	//TEXTURA 14 EXTERIOR
+	Texture texture14("../Textures/paredJardin.jpg");
+	bitmap = texture14.loadImage();
+	data = texture14.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID14);
+	glBindTexture(GL_TEXTURE_2D, textureID14);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture14.freeImage(bitmap);
+
 
 	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
@@ -822,6 +850,12 @@ void applicationLoop() {
 		glm::mat4 pisoSala = glm::translate(pisoCocina, glm::vec3(7.5,0.0,-1.0));
 		glBindTexture(GL_TEXTURE_2D, textureID13);
 		salaPiso.render(glm::scale(pisoSala, glm::vec3(8.0, 0.01, 8.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//PARED JARDIN (ARBUSTO)
+		glm::mat4 arbusto = glm::translate(modelCasa2, glm::vec3(2.0,0.0,0.01));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
+		glBindTexture(GL_TEXTURE_2D, textureID14);
+		paredExt.render(glm::scale(arbusto, glm::vec3(11.0,3.0,0.2)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 
