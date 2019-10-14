@@ -59,11 +59,12 @@ Sphere sphere2(20, 20);
 Sphere sphere3(20, 20);
 Sphere sphereLamp(20, 20);
 Sphere skyboxSphere(20, 20);
+Cylinder buroHabit(20, 20, 0.5, 0.5);
 Box boxMaterials;
 Box box3;
 Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
 Box mosaicoBanio, paredBanio;//BANIO1
-Box pisoHabitacion, paredHabitacion;
+Box pisoHabitacion, paredHabitacion, muebleHabitacion;
 Box cocinaPared, cocinaPiso, cocina;
 Box salaPared, salaPiso;
 Box paredExt, paredExt2;
@@ -74,8 +75,8 @@ Box ventana;
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
 //		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior, puertaPrinci
 GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
-//		puertas		ventana		cocina estufa, comida		horno estufa
-GLuint textureID18, textureID19, textureID20, textureID21, textureID22;
+//		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon
+GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -256,8 +257,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//VENTANA
 	ventana.init();
 	ventana.setShader(&shaderTextureLighting);
+	//cocina muebles
 	cocina.init();
 	cocina.setShader(&shaderTextureLighting);
+	//habitacion muebles
+	muebleHabitacion.init();
+	muebleHabitacion.setShader(&shaderTextureLighting);
+	buroHabit.init();
+	buroHabit.setShader(&shaderTextureLighting);
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
 	int imageWidth, imageHeight;
@@ -587,6 +594,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture22.freeImage(bitmap);
+	//textura cama
+	Texture texture23("../Textures/cama.jpg");
+	bitmap = texture23.loadImage();
+	data = texture23.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID23);
+	glBindTexture(GL_TEXTURE_2D, textureID23);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture23.freeImage(bitmap);
+	//textura cama colcha
+	Texture texture24("../Textures/camaColcha.jpg");
+	bitmap = texture24.loadImage();
+	data = texture24.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID24);
+	glBindTexture(GL_TEXTURE_2D, textureID24);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture24.freeImage(bitmap);
 
 	Texture skyboxTexture = Texture("");
 	glGenTextures(1, &skyboxTextureID);
@@ -1012,6 +1055,21 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID21);
 		cocina.render(glm::scale(estufa, glm::vec3(1.5, 0.0001, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
+		//MUEBLES HABITACION
+		glm::mat4 muebles = glm::translate(modelCasa, glm::vec3(2.0, -1.25, -1.5));
+		glBindTexture(GL_TEXTURE_2D, textureID23);
+		muebleHabitacion.render(glm::scale(muebles, glm::vec3(3.5, 0.25, 2.0))); //base cama
+		glm::mat4 muebles2 = glm::translate(modelCasa, glm::vec3(0.5, -1.25, 0.15)); //buro
+		buroHabit.render(glm::scale(muebles2, glm::vec3(0.8, 1.0, 0.8)));
+		muebles2 = glm::translate(modelCasa, glm::vec3(0.5, -1.25, -3.15)); //buro
+		buroHabit.render(glm::scale(muebles2, glm::vec3(0.8, 1.0, 0.8)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		muebles = glm::translate(modelCasa, glm::vec3(2.0, -1.0, -1.5));
+		glBindTexture(GL_TEXTURE_2D, textureID24);
+		muebleHabitacion.render(glm::scale(muebles, glm::vec3(3.5, 0.5, 2.0))); //base cama
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//
+
 		//ENCIMERA DE LA COCINA
 		shaderMaterialLighting.setVectorFloat3("material.ambient", glm::value_ptr(glm::vec3(0.05f, 0.05f, 0.05f)));
 		shaderMaterialLighting.setVectorFloat3("material.diffuse", glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
