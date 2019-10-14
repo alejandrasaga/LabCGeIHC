@@ -60,13 +60,14 @@ Sphere sphere3(20, 20);
 Sphere sphereLamp(20, 20);
 Sphere skyboxSphere(20, 20);
 Cylinder buroHabit(20, 20, 0.5, 0.5);
+Cylinder jacuzi(20, 20, 0.5, 0.5);
 Box boxMaterials;
 Box box3;
 Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
 Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion, muebleHabitacion;
 Box cocinaPared, cocinaPiso, cocina;
-Box salaPared, salaPiso;
+Box salaPared, salaPiso, sillon;
 Box paredExt, paredExt2;
 Box pisoExt;
 Box puerta;
@@ -75,8 +76,10 @@ Box ventana;
 GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
 //		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior, puertaPrinci
 GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
-//		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon
-GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24;
+//		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon, piscina
+GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24, textureID25;
+// sillon
+GLuint textureID26;
 GLuint skyboxTextureID;
 
 GLenum types[6] = { //enumeracion 
@@ -245,6 +248,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	salaPared.setShader(&shaderTextureLighting);
 	salaPiso.init();
 	salaPiso.setShader(&shaderTextureLighting);
+	sillon.init();
+	sillon.setShader(&shaderTextureLighting);
 	//CUARTO EXTERIOR
 	paredExt.init();
 	paredExt.setShader(&shaderTextureLighting);
@@ -265,6 +270,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	muebleHabitacion.setShader(&shaderTextureLighting);
 	buroHabit.init();
 	buroHabit.setShader(&shaderTextureLighting);
+	//jardin
+	jacuzi.init();
+	jacuzi.setShader(&shaderTextureLighting);
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
 	int imageWidth, imageHeight;
@@ -630,6 +638,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture24.freeImage(bitmap);
+	//TEXTURA 25 JACUZZI
+	Texture texture25("../Textures/water.jpg");
+	bitmap = texture25.loadImage();
+	data = texture25.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID25);
+	glBindTexture(GL_TEXTURE_2D, textureID25);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture25.freeImage(bitmap);
+	//TEXTURA PARA EL SILLON
+	Texture texture26("../Textures/sillon.jpg");
+	bitmap = texture26.loadImage();
+	data = texture26.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID26);
+	glBindTexture(GL_TEXTURE_2D, textureID26);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture26.freeImage(bitmap);
 
 	Texture skyboxTexture = Texture("");
 	glGenTextures(1, &skyboxTextureID);
@@ -1068,7 +1112,32 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID24);
 		muebleHabitacion.render(glm::scale(muebles, glm::vec3(3.5, 0.5, 2.0))); //base cama
 		glBindTexture(GL_TEXTURE_2D, 0);
-		//
+		//JACUZI
+		glm::mat4 jardin = glm::translate(modelCasa2, glm::vec3(5.5, -1.0, 2.0));
+		jardin = glm::scale(jardin, glm::vec3(3.0,1.0,3.0));
+		glBindTexture(GL_TEXTURE_2D, textureID23);
+		jacuzi.render(0, jacuzi.getSlices() * jacuzi.getStacks() * 6,
+			jardin);
+		glBindTexture(GL_TEXTURE_2D, textureID25);
+		jacuzi.render(jacuzi.getSlices() * jacuzi.getStacks() * 6,
+			jacuzi.getSlices() * 3,
+			jardin);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//SILLONES DE LA SALA
+		glm::mat4 sillones = glm::translate(modelCasa, glm::vec3(10.0, -1.0, 3.5));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(4.0,1.0)));
+		glBindTexture(GL_TEXTURE_2D, textureID26);
+		sillon.render(glm::scale(sillones, glm::vec3(0.15,1.0,4.0))); //respaldo sillon 
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 4.0)));
+		sillones = glm::translate(modelCasa, glm::vec3(10.25, -1.35, 3.5));
+		sillon.render(glm::scale(sillones, glm::vec3(0.5, 0.3, 4.0)));//asiento sillon
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(4.0, 1.0)));
+		sillones = glm::translate(modelCasa2, glm::vec3(4.0, -1.0, 9.1));
+		sillon.render(glm::scale(sillones, glm::vec3(3.0, 1.0, 0.15))); //respaldo sillon 2
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(4.0, 1.0)));
+		sillones = glm::translate(modelCasa2, glm::vec3(4.0, -1.35, 9.25));
+		sillon.render(glm::scale(sillones, glm::vec3(3.0, 0.3, 0.6)));//asiento sillon 2
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//ENCIMERA DE LA COCINA
 		shaderMaterialLighting.setVectorFloat3("material.ambient", glm::value_ptr(glm::vec3(0.05f, 0.05f, 0.05f)));
