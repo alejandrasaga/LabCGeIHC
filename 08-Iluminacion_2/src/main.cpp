@@ -530,7 +530,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "Failed to load texture" << std::endl;
 	texture18.freeImage(bitmap);
 	//TEXTURA 19 PARA VENTANA
-	Texture texture19("../Textures/ventana.jpg");
+	Texture texture19("../Textures/ventana.png");
 	bitmap = texture19.loadImage();
 	data = texture19.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID19);
@@ -927,8 +927,18 @@ void applicationLoop() {
 		glm::mat4 modelCasa = glm::mat4(1.0); 
 		modelCasa = glm::translate(model, glm::vec3(0.0, -3.0, 0.0));
 		glBindTexture(GL_TEXTURE_2D, textureID5); 
-		casaExterior.render(glm::scale(modelCasa, glm::vec3(0.01, 3.0, 15.0)));
+		glm::mat4 modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, 0.0));
+		modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, -5.25));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(5.0, 3.0)));
+		casaExterior.render(glm::scale(modelCasaIzq, glm::vec3(0.01, 3.0, 4.5)));
+		modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, 1.75));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(4.0, 3.0)));
+		casaExterior.render(glm::scale(modelCasaIzq, glm::vec3(0.01, 3.0, 3.5)));
+		modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, 7.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
+		casaExterior.render(glm::scale(modelCasaIzq, glm::vec3(0.01, 3.0, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		//PARED DE ATRAS
 		glm::mat4 modelCasa2 = glm::translate(modelCasa, glm::vec3(7.5, 0.0, -7.5));
 		glBindTexture(GL_TEXTURE_2D, textureID5);
@@ -937,12 +947,23 @@ void applicationLoop() {
 		//PARED DERECHA
 		glm::mat4 modelCasa3 = glm::translate(modelCasa2, glm::vec3(7.5, 0.0, 7.5));
 		glBindTexture(GL_TEXTURE_2D, textureID5);
-		casaExterior3.render(glm::scale(modelCasa3, glm::vec3(0.01, 3.0, 15.0)));
+		glm::mat4 modelCasaDer = glm::translate(modelCasa2, glm::vec3(7.5, 0.0, 7.5));
+		modelCasaDer = glm::translate(modelCasaDer, glm::vec3(0.0, 0.0, 0.75));
+		casaExterior3.render(glm::scale(modelCasaDer, glm::vec3(0.01, 3.0, 2.5)));
+		modelCasaDer = glm::translate(modelCasaDer, glm::vec3(0.0, 0.0, 5.5));
+		casaExterior3.render(glm::scale(modelCasaDer, glm::vec3(0.01, 3.0, 2.5)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED DE ENFRENTE
 		glm::mat4 modelCasa4 = glm::translate(modelCasa3, glm::vec3(-7.5, 0.0, 7.5));
+		glm::mat4 modelCasaFrente = glm::translate(modelCasa3, glm::vec3(-7.5, 0.0, 7.5));
 		glBindTexture(GL_TEXTURE_2D, textureID5);
-		casaExterior4.render(glm::scale(modelCasa4, glm::vec3(15.0, 3.0, 0.01)));
+		casaExterior4.render(glm::scale(modelCasaFrente, glm::vec3(7.0, 3.0, 0.01)));
+		modelCasaFrente = glm::translate(modelCasa4, glm::vec3(7.0, 0.0, 0.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
+		casaExterior4.render(glm::scale(modelCasaFrente, glm::vec3(1.0, 3.0, 0.01)));
+		modelCasaFrente = glm::translate(modelCasa4, glm::vec3(-7.0, 0.0, 0.0));
+		casaExterior4.render(glm::scale(modelCasaFrente, glm::vec3(1.0, 3.0, 0.01)));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//MOSAICO BANIO
@@ -965,9 +986,11 @@ void applicationLoop() {
 		paredBanio.render(glm::scale(paredesBanio, glm::vec3(4.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED IZQUIERDA HABITACION
-		glm::mat4 paredHabit = glm::translate(modelCasa, glm::vec3(0.01,0.0,-1.5));
+		glm::mat4 paredHabit = glm::translate(modelCasa, glm::vec3(0.01,0.0,1.0));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 6.0)));
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 2.0)));
+		paredHabit = glm::translate(modelCasa, glm::vec3(0.01, 0.0, -4.0));
+		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 2.0)));
 		//PARED ATRAS HABITACION
 		paredHabit = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 3.01));
 		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(7.0, 3.0, 0.01)));
@@ -984,23 +1007,34 @@ void applicationLoop() {
 		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		pisoHabitacion.render(glm::scale(pisoHabit, glm::vec3(7.0, 0.01, 6.0)));
 		//PARED IZQUIERDA COCINA
-		glm::mat4 paredCocina = glm::translate(modelCasa, glm::vec3(0.01,0.0,4.5));
-		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(6.0, 3.0)));
+		glm::mat4 paredCocina = glm::translate(modelCasa, glm::vec3(0.01,0.0,7.0));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
 		glBindTexture(GL_TEXTURE_2D, textureID10);
-		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 6.0)));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 1.0)));
+		//PARED IZQUIERDA 2 COCINA 
+		paredCocina = glm::translate(modelCasa, glm::vec3(0.01, 0.0, 2.5));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(2.0, 3.0)));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 2.0)));
 		//PARED ATRAS COCINA
 		paredCocina = glm::translate(modelCasa2, glm::vec3(-4.0, 0.0, 9.02));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(6.0, 3.0)));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
 		//PARED DERECHA COCINA
 		paredCocina = glm::translate(modelCasa3, glm::vec3(-8.0, 0.0, 4.5));
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.01, 3.0, 6.0)));
 		//PARED ENFRENTE COCINA
-		paredCocina = glm::translate(modelCasa4, glm::vec3(-4.0, 0.0, -0.01));
-		cocinaPared.render(glm::scale(paredCocina, glm::vec3(7.0, 3.0, 0.01)));
+		paredCocina = glm::translate(modelCasa4, glm::vec3(-7.0, 0.0, -0.01));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(1.0, 3.0, 0.01)));
+		//PARED ENFRENTE 2 COCINA 
+		paredCocina = glm::translate(modelCasa4, glm::vec3(-2.0, 0.0, -0.01));
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 3.0)));
+		cocinaPared.render(glm::scale(paredCocina, glm::vec3(3.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PISO COCINA
 		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 6.0));
 		glBindTexture(GL_TEXTURE_2D, textureID11);
+		shaderTextureLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(6.0, 3.0)));
 		cocinaPiso.render(glm::scale(pisoCocina, glm::vec3(7.0, 0.01, 6.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED SALA IZQUIERDA
@@ -1011,11 +1045,15 @@ void applicationLoop() {
 		paredSala = glm::translate(modelCasa2, glm::vec3(3.5, 0.0, 7.0));
 		salaPared.render(glm::scale(paredSala, glm::vec3(8.0, 3.0, 0.01)));
 		//PARED SALA ENFRENTE
-		paredSala = glm::translate(modelCasa4, glm::vec3(3.5, 0.0, -0.01));
-		salaPared.render(glm::scale(paredSala, glm::vec3(8.0, 3.0, 0.01)));
+		paredSala = glm::translate(modelCasa4, glm::vec3(1.5, 0.0, -0.01));
+		salaPared.render(glm::scale(paredSala, glm::vec3(4.0, 3.0, 0.01)));
+		paredSala = glm::translate(modelCasa4, glm::vec3(7.0, 0.0, -0.01));
+		salaPared.render(glm::scale(paredSala, glm::vec3(1.0, 3.0, 0.01)));
 		//PARED SALA DERECHA
-		paredSala = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 3.5));
-		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 8.0)));
+		paredSala = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 0.75));
+		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 2.5)));
+		paredSala = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 6.25));
+		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 2.5)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PISO SALA COMEDOR
 		glm::mat4 pisoSala = glm::translate(pisoCocina, glm::vec3(7.5,0.0,-1.0));
@@ -1072,17 +1110,17 @@ void applicationLoop() {
 		puerta.render(glm::scale(puertas, glm::vec3(1.25, 3.0, 0.06)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//VENTANAS
-		glm::mat4 ventanas = glm::translate(modelCasa, glm::vec3(0.01,0.5,5.0));
+		glm::mat4 ventanas = glm::translate(modelCasa, glm::vec3(0.01,0.0,5.0));
 		glBindTexture(GL_TEXTURE_2D, textureID19);
-		ventana.render(glm::scale(ventanas, glm::vec3(0.05,1.5,3.0)));
-		ventanas = glm::translate(modelCasa, glm::vec3(0.01, 0.5, -1.5));
-		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 1.5, 3.0)));
-		ventanas = glm::translate(modelCasa3, glm::vec3(-0.01, 0.5, 3.5));
-		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 1.5, 3.0)));
-		ventanas = glm::translate(modelCasa4, glm::vec3(5.0, 0.5, 0.01));
-		ventana.render(glm::scale(ventanas, glm::vec3(3.0, 1.5, 0.07)));
-		ventanas = glm::translate(modelCasa4, glm::vec3(-5.0, 0.5, 0.01));
-		ventana.render(glm::scale(ventanas, glm::vec3(3.0, 1.5, 0.07)));
+		ventana.render(glm::scale(ventanas, glm::vec3(0.05,3.0,3.0)));
+		ventanas = glm::translate(modelCasa, glm::vec3(0.01, 0.0, -1.5));
+		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 3.0, 3.0)));
+		ventanas = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, 3.5));
+		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 3.0, 3.0)));
+		ventanas = glm::translate(modelCasa4, glm::vec3(5.0, 0.0, 0.01));
+		ventana.render(glm::scale(ventanas, glm::vec3(3.0, 3.0, 0.07)));
+		ventanas = glm::translate(modelCasa4, glm::vec3(-5.0, 0.0, 0.01));
+		ventana.render(glm::scale(ventanas, glm::vec3(3.0, 3.0, 0.07)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		/*====================================*/
 		glm::mat4 estufa = glm::translate(modelCasa, glm::vec3(0.5, -0.5, 5.0));
