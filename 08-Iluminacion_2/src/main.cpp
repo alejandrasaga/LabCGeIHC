@@ -73,7 +73,7 @@ Box pisoExt;
 Box puerta;
 Box ventana;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
-GLuint textureID1, textureID2, textureID3, textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
+GLuint textureID4, textureID5, textureID6, textureID7, textureID9, textureID8;
 //		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior, puertaPrinci
 GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
 //		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon, piscina
