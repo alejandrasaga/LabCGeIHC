@@ -62,7 +62,17 @@ Sphere sphere1(20, 20);
 Sphere sphere2(20, 20);
 Sphere sphere3(20, 20);
 Sphere sphereLamp(20, 20);
-// Descomentar
+//BOB 
+Box box4, box5, box6, box7;
+Sphere sphere4(20, 20); //ojo bob blanco
+Sphere sphere5(20, 20); //ojo parte negra bob
+Sphere sphere6(20, 20); //ojo azul bob
+Sphere sphere7(20, 20); //boca bob
+Sphere sphere8(20, 20); 
+Sphere sphere9(20, 20); 
+Cylinder cylinder6(20, 20, 0.5, 0.5), cylinder5(20, 20, 0.5, 0.5), cylinder4(20, 20, 0.5, 0.5); //BRAZO DERECHO BOB
+Box box8; //dientes bob
+//
 Sphere skyboxSphere(20, 20);
 Cylinder cylinder1(20, 20, 0.5, 0.5);
 Cylinder cylinder2(20, 20, 0.5, 0.5);
@@ -83,6 +93,20 @@ Box paredExt, paredExt2;
 Box pisoExt;
 Box puerta;
 Box ventana;
+/*R2D2*/
+Sphere cabeza(20, 20);
+Sphere ojoR2D2(20, 20);
+Sphere articulacion(20, 20);
+Sphere  articulacion3(20, 20); //articulacion 1 es del hombro y la 3 de la muneca derecha
+Sphere articulacion2(20, 20);
+Sphere articulacion4(20, 20); //articulacion 2 es del hombro y la 4 de la muneca izquierda
+Cylinder cuerpoTronco(20, 20, 0.5, 0.5);
+Cylinder brazoDer(20, 20, 0.5, 0.5);
+Cylinder brazoIzq(20, 20, 0.5, 0.5);
+Cylinder brazoDetalle(20, 20, 0.5, 0.5);
+Box baseDer, baseIzq; //cajas en las articulaciones de las munecas
+Sphere articulacion5(20, 20);
+Box baseCentro;
 
 
 //Models complex instances
@@ -125,6 +149,7 @@ int lastMousePosY, offsetY = 0;
 float rot0 = 0.0, dz = 0.0;
 
 float rot1 = 0.0, rot2 = 0.0, rot3 = 0.0, rot4 = 0.0;
+float rotCabeza = 0.0, rotArt1 = 0.0, rotArt2 = 0.0, rotArt3 = 0.0, rotArt4 = 0.0; //Rotar R2D2
 bool sentido = true;
 
 double deltaTime;
@@ -326,6 +351,103 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//jardin
 	jacuzi.init();
 	jacuzi.setShader(&shaderMulLighting);
+	//TERMINA CASITA
+	/*=======================*/
+	/*INICIA BOB*/
+	box4.init();
+	box4.setShader(&shaderMulLighting); //CUERPO BOB
+	box5.init();
+	box5.setShader(&shader);
+	box5.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0)); //CAMISA BLANCA
+	box6.init();
+	box6.setShader(&shader);
+	box6.setColor(glm::vec4(0.5, 0.25, 0.0, 0.0)); //PANTALONES DEL BOB
+	cylinder4.init();
+	cylinder4.setShader(&shaderMulLighting); //piernas
+	cylinder5.init();
+	cylinder5.setShader(&shader);
+	cylinder5.setColor(glm::vec4(1.0, 0.1, 0.0, 0.0)); //CORBATA
+	box7.init();
+	box7.setShader(&shader);
+	box7.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));//ZAPATOS
+	sphere4.init();
+	sphere4.setShader(&shader);
+	sphere4.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0));
+	sphere5.init();
+	sphere5.setShader(&shader);
+	sphere5.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
+	sphere6.init();
+	sphere6.setShader(&shader);
+	sphere6.setColor(glm::vec4(0.0f, 0.1f, 1.0f, 1.0f)); //OJOS
+	sphere7.init();
+	sphere7.setShader(&shader);
+	sphere7.setColor(glm::vec4(0.9f, 0.0f, 0.5f, 0.0f));//BOCA
+	box8.init();
+	box8.setShader(&shader);
+	box8.setColor(glm::vec4(1.0, 1.0, 1.0, 0.0)); //DIENTES
+	cylinder6.init();
+	cylinder6.setShader(&shaderMulLighting);
+	sphere8.init();
+	sphere8.setShader(&shaderMulLighting);
+	sphere9.init();
+	sphere9.setShader(&shaderMulLighting);
+	/*INICIA R2D2*/
+	/*R2D2*/
+	cabeza.init();
+	cabeza.setShader(&shader);
+	cabeza.setColor(glm::vec4(0.7, 0.7, 1.0, 1.0));
+
+	ojoR2D2.init();
+	ojoR2D2.setShader(&shader);
+	ojoR2D2.setColor(glm::vec4(0.0, 0.0, 0.0, 0.0));
+
+	cuerpoTronco.init();
+	cuerpoTronco.setShader(&shader);
+	cuerpoTronco.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
+
+	articulacion.init(); /*articulacion arriba derecha*/
+	articulacion.setShader(&shader);
+	articulacion.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	brazoDer.init();
+	brazoDer.setShader(&shader);
+	brazoDer.setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+
+	brazoDetalle.init();
+	brazoDetalle.setShader(&shader);
+	brazoDetalle.setColor(glm::vec4(0.0, 0.0, 1.0, 1.0));
+
+	articulacion3.init(); /*articulacion muneca derecha*/
+	articulacion3.setShader(&shader);
+	articulacion3.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	articulacion2.init(); /*articulacion arriba izquierda*/
+	articulacion2.setShader(&shader);
+	articulacion2.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	articulacion4.init(); /*articulacion arriba izquierda*/
+	articulacion4.setShader(&shader);
+	articulacion4.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	brazoIzq.init();
+	brazoIzq.setShader(&shader);
+	brazoIzq.setColor(glm::vec4(0.9, 0.9, 0.9, 1.0));
+
+	articulacion5.init(); /*articulacion arriba izquierda*/
+	articulacion5.setShader(&shader);
+	articulacion5.setColor(glm::vec4(0.8, 0.8, 0.8, 0.8));
+
+	baseDer.init();
+	baseDer.setShader(&shader);
+	baseDer.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
+
+	baseIzq.init();
+	baseIzq.setShader(&shader);
+	baseIzq.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
+
+	baseCentro.init();
+	baseCentro.setShader(&shader);
+	baseCentro.setColor(glm::vec4(0.45, 0.45, 1.0, 0.8));
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 4.0));
 
@@ -1518,7 +1640,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//ENCIMERA DE LA COCINA
-		shaderMaterialLighting.setVectorFloat3("material.ambient", glm::value_ptr(glm::vec3(0.05f, 0.05f, 0.05f)));
+		/*shaderMaterialLighting.setVectorFloat3("material.ambient", glm::value_ptr(glm::vec3(0.05f, 0.05f, 0.05f)));
 		shaderMaterialLighting.setVectorFloat3("material.diffuse", glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 		shaderMaterialLighting.setVectorFloat3("material.specular", glm::value_ptr(glm::vec3(0.7f, 0.7f, 0.7f)));
 		shaderMaterialLighting.setFloat("material.shininess", 10.0f);
@@ -1527,9 +1649,175 @@ void applicationLoop() {
 		boxMaterialModel2 = glm::translate(boxMaterialModel2, glm::vec3(3.5f, 0.0f, 2.5f));
 		boxMaterials2.render(glm::scale(boxMaterialModel2, glm::vec3(6.0, 1.0, 1.0)));
 		boxMaterialModel2 = glm::translate(boxMaterialModel2, glm::vec3(-1.5f, 0.0f, -5.0f));
-		boxMaterials2.render(glm::scale(boxMaterialModel2, glm::vec3(3.0, 1.0, 1.0)));
-
+		boxMaterials2.render(glm::scale(boxMaterialModel2, glm::vec3(3.0, 1.0, 1.0)));*/
 		//FIN CASITA
+		//BOB ESPONJA CHIDO
+		glm::mat4 model2 = glm::mat4(1.0f); //BOB ESPONJA
+		model2 = glm::translate(arbusto, glm::vec3(7.0, 0.0, 2.0));
+		glBindTexture(GL_TEXTURE_2D, textureID1);
+		//CUERPO DE BOB
+		box4.render(glm::scale(model2, glm::vec3(1.0, 1.0, 0.1)));
+		glm::mat4 c2 = glm::translate(model2, glm::vec3(0.0, -0.5, 0.01));
+		box5.render(glm::scale(c2, glm::vec3(1.0, 0.04, 0.1)));
+		glm::mat4 c3 = glm::translate(c2, glm::vec3(0.0, -0.11, 0.0));
+		box6.render(glm::scale(c3, glm::vec3(1.0, 0.25, 0.1)));
+		glm::mat4 c4 = glm::translate(c3, glm::vec3(-0.3, -0.1, 0.0));
+		box6.render(glm::scale(c4, glm::vec3(0.11, 0.13, 0.0)));
+		glm::mat4 c5 = glm::translate(c3, glm::vec3(0.3, -0.1, 0.0));
+		box6.render(glm::scale(c5, glm::vec3(0.11, 0.13, 0.0)));
+		
+		//PIERNAS
+		// pie derecho 
+		glm::mat4 p1 = glm::translate(c5, glm::vec3(0.01, -0.19, 0.0));
+		p1 = glm::rotate(p1, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
+		cylinder4.render(glm::scale(p1, glm::vec3(0.048, 0.25, 0.048)));
+		// pie izquierdo
+		glm::mat4 p2 = glm::translate(c4, glm::vec3(0.01, -0.19, 0.0));
+		p2 = glm::rotate(p2, glm::radians(0.2f), glm::vec3(0.0, 0.0, 1.0));
+		cylinder4.render(glm::scale(p2, glm::vec3(0.048, 0.25, 0.048)));
+		//corbata
+		glm::mat4 ci1 = glm::translate(model2, glm::vec3(0.0, -0.5, 0.09));
+		cylinder5.render(glm::scale(ci1, glm::vec3(0.1, 0.07, 0.1)));
+		//ZAPATOS
+		glm::mat4 z1 = glm::translate(p1, glm::vec3(0.0, -0.15, 0.0));
+		box7.render(glm::scale(z1, glm::vec3(0.1, 0.05, 0.2)));
+		glm::mat4 z2 = glm::translate(p2, glm::vec3(0.0, -0.15, 0.0));
+		box7.render(glm::scale(z2, glm::vec3(0.1, 0.05, 0.2)));
+		//ojos
+		//ojo 2
+		glm::mat4 ojo3 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.05));
+		sphere4.render(glm::scale(ojo3, glm::vec3(0.3, 0.3, 0.1)));
+		//ojo parte azul
+		glm::mat4 ojo5 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.08));
+		sphere6.render(glm::scale(ojo5, glm::vec3(0.15, 0.15, 0.05)));
+		//ojo2 pequeño parte negra
+		glm::mat4 ojo4 = glm::translate(model2, glm::vec3(0.15, 0.15, 0.09));
+		sphere5.render(glm::scale(ojo4, glm::vec3(0.08, 0.08, 0.05)));
+		//ojo 2
+		glm::mat4 ojo6 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.05));
+		sphere4.render(glm::scale(ojo6, glm::vec3(0.3, 0.3, 0.1)));
+		//ojo parte azul
+		glm::mat4 ojo7 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.08));
+		sphere6.render(glm::scale(ojo7, glm::vec3(0.15, 0.15, 0.05)));
+		//ojo2 pequeño parte negra
+		glm::mat4 ojo8 = glm::translate(model2, glm::vec3(-0.15, 0.15, 0.09));
+		sphere5.render(glm::scale(ojo8, glm::vec3(0.08, 0.08, 0.05)));
+		// boca 
+		glm::mat4 boca = glm::translate(model2, glm::vec3(0.0, -0.2, 0.08));
+		sphere7.render(glm::scale(boca, glm::vec3(0.1, 0.1, 0.0)));
+		// dientes 
+		glm::mat4 d1 = glm::translate(boca, glm::vec3(-0.02, 0.03, 0.0));
+		box8.render(glm::scale(d1, glm::vec3(0.025, 0.03, 0.01)));
+		glm::mat4 d2 = glm::translate(boca, glm::vec3(0.02, 0.03, 0.0));
+		box8.render(glm::scale(d2, glm::vec3(0.025, 0.03, 0.01)));
+		//
+		//BRAZO DERECHO
+		//articulacion mano derecha hombro 
+		glm::mat4 DH = glm::translate(model2, glm::vec3(0.5f, 0.0f, 0.0f));
+		sphere8.render(glm::scale(DH, glm::vec3(0.1, 0.1, 0.1)));
+		DH = glm::rotate(DH, rot1, glm::vec3(0, 0, 1));
+		DH = glm::rotate(DH, rot2, glm::vec3(0.0, 1.0, 0.0));
+		//BRAZO DERECHO
+		glm::mat4 BD = glm::translate(DH, glm::vec3(0.1f, 0.0, 0.0));
+		BD = glm::rotate(BD, glm::radians(90.0f), glm::vec3(0, 0, 1.0));
+		cylinder6.render(glm::scale(BD, glm::vec3(0.05, 0.4, 0.05)));
+		//articulacion mano derecha codo
+		glm::mat4 AD = glm::translate(DH, glm::vec3(0.3, 0.0, 0.0));
+		sphere9.render(glm::scale(AD, glm::vec3(0.1, 0.1, 0.1)));
+		//mano derecha 2
+		glm::mat4 MD = glm::translate(AD, glm::vec3(0.01, 0.2, 0.0));
+		cylinder6.render(glm::scale(MD, glm::vec3(0.05, 0.4, 0.05)));
+		//BRAZO IZQUIERDO
+		glm::mat4 DH2 = glm::translate(model2, glm::vec3(-0.5f, 0.0f, 0.0f));
+		sphere8.render(glm::scale(DH2, glm::vec3(0.1, 0.1, 0.1)));
+		DH = glm::rotate(DH2, rot1, glm::vec3(0, 0, 1));
+		DH = glm::rotate(DH2, rot2, glm::vec3(0.0, 1.0, 0.0));
+		//
+		glm::mat4 BD2 = glm::translate(DH2, glm::vec3(-0.1f, 0.0, 0.0));
+		BD2 = glm::rotate(BD2, glm::radians(90.0f), glm::vec3(0, 0, 1.0));
+		cylinder6.render(glm::scale(BD2, glm::vec3(0.05, 0.4, 0.05)));
+		//articulacion mano derecha codo
+		glm::mat4 AD2 = glm::translate(DH2, glm::vec3(-0.3, 0.0, 0.0));
+		sphere9.render(glm::scale(AD2, glm::vec3(0.1, 0.1, 0.1)));
+		//mano derecha 2
+		glm::mat4 MD2 = glm::translate(AD2, glm::vec3(-0.01, 0.2, 0.0));
+		cylinder6.render(glm::scale(MD2, glm::vec3(0.05, 0.4, 0.05)));
+		/*AQUI TERMINA BOB ESPONJA*/
+		/**************************************************************/
+		/**								R2D2						 **/
+		/**************************************************************/
+		//model2 = glm::translate(model2, glm::vec3(1.0, 0.0, 0.0));
+		model2 = rotate(model2, rot0, glm::vec3(0, 1, 0));
+		model2 = glm::translate(paredSala, glm::vec3(-2.0, -0.5, 0));
+
+		//cuerpoTronco.enableWireMode();
+		//r2d2
+		cuerpoTronco.render(glm::scale(model2, glm::vec3(1.0, 1.0, 1.0))); //CUERPO DE R2D2
+
+		glm::mat4 pecho = glm::translate(model2, glm::vec3(0.0, 0.1, 0.5)); //linea azul pecho
+		pecho = glm::rotate(pecho, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho, glm::vec3(0.0, 0.05, 0.3)));
+
+		glm::mat4 pecho2 = glm::translate(model2, glm::vec3(0.0, 0.0, 0.5)); //linea azul pecho
+		pecho2 = glm::rotate(pecho2, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho2, glm::vec3(0.0, 0.05, 0.3)));
+
+		glm::mat4 pecho3 = glm::translate(model2, glm::vec3(0.0, -0.1, 0.5)); //linea azul pecho
+		pecho3 = glm::rotate(pecho3, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(pecho3, glm::vec3(0.0, 0.05, 0.3)));
+
+		glm::mat4 cabezaSC = glm::translate(model2, glm::vec3(0.0, 0.5, 0.0));
+		cabezaSC = glm::rotate(cabezaSC, rotCabeza, glm::vec3(0.0, 1.0, 0.0)); //rota la cabeza de R2D2
+		cabeza.render(glm::scale(cabezaSC, glm::vec3(1.0, 0.7, 1.0)));
+
+		glm::mat4 ojoSC = glm::translate(cabezaSC, glm::vec3(0.0, 0.1, 0.4));
+		ojoR2D2.render(glm::scale(ojoSC, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 art1 = glm::translate(model2, glm::vec3(0.5, 0.2, 0.0)); /*articulacion derecho arriba*/
+		art1 = glm::rotate(art1, rotArt1, glm::vec3(1.0, 0.0, 0.0));
+		articulacion.render(glm::scale(art1, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 braDer = glm::translate(art1, glm::vec3(0.15, -0.4, 0.0)); /*brazo derecho con art1*/
+		braDer = glm::rotate(braDer, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDer.render(glm::scale(braDer, glm::vec3(0.2, 1.0, 0.2)));
+
+		glm::mat4 braDerDet = glm::translate(art1, glm::vec3(0.18, -0.4, 0.0)); /*brazo derecho con art1*/
+		braDerDet = glm::rotate(braDerDet, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(braDerDet, glm::vec3(0.1, 0.8, 0.2)));
+
+
+		glm::mat4 art3 = glm::translate(braDer, glm::vec3(0.0, -0.6, 0.0)); /*articulacion derecho muneca*/
+		art3 = glm::rotate(art3, rotArt3, glm::vec3(1.0, 0.0, 0.0));
+		articulacion3.render(glm::scale(art3, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 cajaDer = glm::translate(art3, glm::vec3(0.0, -0.2, 0.0));
+		baseDer.render(glm::scale(art3, glm::vec3(0.3, 0.15, 0.3)));
+
+		glm::mat4 art2 = glm::translate(model2, glm::vec3(-0.5, 0.2, 0.0)); /*articulacion izquierda arriba*/
+		art2 = glm::rotate(art2, rotArt1, glm::vec3(1.0, 0.0, 0.0));
+		articulacion2.render(glm::scale(art2, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 braIzq = glm::translate(art2, glm::vec3(-0.15, -0.4, 0.0)); /*brazo izquierdo con art2*/
+		braIzq = glm::rotate(braIzq, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoIzq.render(glm::scale(braIzq, glm::vec3(0.2, 1.0, 0.2)));
+
+		glm::mat4 braIzqDet = glm::translate(art2, glm::vec3(-0.18, -0.4, 0.0)); /*brazo izquierdo detalle azul con art2*/
+		braIzqDet = glm::rotate(braIzqDet, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));
+		brazoDetalle.render(glm::scale(braIzqDet, glm::vec3(0.1, 0.8, 0.2)));
+
+		glm::mat4 art4 = glm::translate(braIzq, glm::vec3(0.0, -0.6, 0.0)); /*articulacion izquierda muneca*/
+		art4 = glm::rotate(art4, rotArt4, glm::vec3(1.0, 0.0, 0.0));
+		articulacion4.render(glm::scale(art4, glm::vec3(0.2, 0.2, 0.2)));
+
+		glm::mat4 cajaIzq = glm::translate(art4, glm::vec3(0.0, -0.2, 0.0));
+		baseIzq.render(glm::scale(art4, glm::vec3(0.3, 0.15, 0.3)));
+
+		glm::mat4 art5 = glm::translate(model2, glm::vec3(0.0, -0.6, 0.0)); /*articulacion izquierda muneca*/
+		art5 = glm::rotate(art5, rotArt2, glm::vec3(1.0, 0.0, 0.0));
+		articulacion5.render(glm::scale(art5, glm::vec3(0.2, 0.2, 0.2)));
+
+
+
 		if (angle > 2 * M_PI)
 			angle = 0.0;
 		else
