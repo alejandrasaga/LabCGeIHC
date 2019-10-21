@@ -85,7 +85,7 @@ Cylinder buroHabit(20, 20, 0.5, 0.5);
 Cylinder jacuzi(20, 20, 0.5, 0.5);
 Box boxMaterials2;
 Box casaExterior, casaExterior2, casaExterior3, casaExterior4, casaTecho; //paredes de la casa exterior
-Box mosaicoBanio, paredBanio;//BANIO1
+Box mosaicoBanio, paredBanio, banio;//BANIO1
 Box pisoHabitacion, paredHabitacion, muebleHabitacion;
 Box cocinaPared, cocinaPiso, cocina, encimera;
 Box salaPared, salaPiso, sillon;
@@ -125,8 +125,8 @@ GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
 GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
 //		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon, piscina
 GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24, textureID25;
-// sillon			encimera	techo
-GLuint textureID26, textureID27, textureID28;
+// sillon			encimera	techo			fregadero  lavabo
+GLuint textureID26, textureID27, textureID28, textureID29, textureID30;
 GLuint skyboxTextureID;
 
 GLenum types[6] = {
@@ -321,6 +321,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	mosaicoBanio.setShader(&shaderMulLighting);
 	paredBanio.init();
 	paredBanio.setShader(&shaderMulLighting);
+	banio.init();
+	banio.setShader(&shaderMulLighting);
 	//HABITACION IZQUIERDA CERCA BANIO
 	pisoHabitacion.init();
 	pisoHabitacion.setShader(&shaderMulLighting);
@@ -1016,6 +1018,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture28.freeImage(bitmap);
+	//FREGADERO
+	Texture texture29("../Textures/fregadero.png");
+	bitmap = texture29.loadImage(true);
+	data = texture29.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID29);
+	glBindTexture(GL_TEXTURE_2D, textureID29);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture29.freeImage(bitmap);
+	//LAVABO
+	Texture texture30("../Textures/lavabo.png");
+	bitmap = texture30.loadImage(true);
+	data = texture30.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID30);
+	glBindTexture(GL_TEXTURE_2D, textureID30);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture30.freeImage(bitmap);
 
 
 	//FINALIZA TEXTURA PARA LA CASA
@@ -1276,6 +1314,12 @@ void applicationLoop() {
 				glm::vec4(
 					lightModelmatrix
 					* glm::vec4(0.0, 0.0, 0.0, 1.0))));
+		shaderMulLighting.setVectorFloat3("light.position",
+			glm::value_ptr(
+				glm::vec4(
+					lightModelmatrix
+					* glm::vec4(0.0, 0.0, 0.0, 1.0))));
+
 		sphereLamp.render(lightModelmatrix);
 
 		model = glm::translate(model, glm::vec3(0, 0, dz));
@@ -1680,6 +1724,11 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID21);
 		cocina.render(glm::scale(estufa, glm::vec3(1.5, 0.0001, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
+		//fregadero
+		glm::mat4 fregadero = glm::translate(modelCasa, glm::vec3(0.5, -0.49, 3.0));
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		cocina.render(glm::scale(fregadero, glm::vec3(1.0, 0.0001, 1.5)));
+		glBindTexture(GL_TEXTURE_2D, 0);
 		//MUEBLES HABITACION
 		glm::mat4 muebles = glm::translate(modelCasa, glm::vec3(2.0, -1.25, -1.5));
 		glBindTexture(GL_TEXTURE_2D, textureID23);
@@ -1720,7 +1769,19 @@ void applicationLoop() {
 		sillon.render(glm::scale(sillones, glm::vec3(3.0, 0.3, 0.6)));//asiento sillon 2
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		
+		//LUCES DIRECCIONALES
+		lightModelmatrix = glm::translate(modelCasaRoof, glm::vec3(-4.0, -0.15, 1.0));
+		sphereLamp.render(glm::scale(lightModelmatrix, glm::vec3(0.3, 0.3, 0.3))); //COCINA LUZ
+		lightModelmatrix = glm::translate(modelCasaRoof2, glm::vec3(0.0, -0.15, 1.0));
+		sphereLamp.render(glm::scale(lightModelmatrix, glm::vec3(0.3, 0.3, 0.3))); //HABITACION LUZ
+		lightModelmatrix = glm::translate(modelCasaRoof3, glm::vec3(0.0, -0.15, 0.0));
+		sphereLamp.render(glm::scale(lightModelmatrix, glm::vec3(0.3, 0.3, 0.3))); //BANIO
+		lightModelmatrix = glm::translate(modelCasaRoof, glm::vec3(2.5, -0.15, 0.0));
+		sphereLamp.render(glm::scale(lightModelmatrix, glm::vec3(0.3, 0.3, 0.3))); //SALA LUZ 1
+		lightModelmatrix = glm::translate(modelCasaRoof, glm::vec3(4.5, -0.15, 0.0));
+		sphereLamp.render(glm::scale(lightModelmatrix, glm::vec3(0.3, 0.3, 0.3))); //SALA LUZ 2
+
+
 		//FIN CASITA
 		//BOB ESPONJA CHIDO
 		glm::mat4 model2 = glm::mat4(1.0f); //BOB ESPONJA
