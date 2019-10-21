@@ -84,7 +84,7 @@ Box box3;
 Cylinder buroHabit(20, 20, 0.5, 0.5);
 Cylinder jacuzi(20, 20, 0.5, 0.5);
 Box boxMaterials2;
-Box casaExterior, casaExterior2, casaExterior3, casaExterior4; //paredes de la casa exterior
+Box casaExterior, casaExterior2, casaExterior3, casaExterior4, casaTecho; //paredes de la casa exterior
 Box mosaicoBanio, paredBanio;//BANIO1
 Box pisoHabitacion, paredHabitacion, muebleHabitacion;
 Box cocinaPared, cocinaPiso, cocina, encimera;
@@ -125,8 +125,8 @@ GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
 GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
 //		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon, piscina
 GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24, textureID25;
-// sillon			encimera
-GLuint textureID26, textureID27;
+// sillon			encimera	techo
+GLuint textureID26, textureID27, textureID28;
 GLuint skyboxTextureID;
 
 GLenum types[6] = {
@@ -313,6 +313,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	casaExterior3.setShader(&shaderMulLighting);
 	casaExterior4.init();
 	casaExterior4.setShader(&shaderMulLighting);
+	//TECHO
+	casaTecho.init();
+	casaTecho.setShader(&shaderMulLighting);
 	//BANIO1
 	mosaicoBanio.init();
 	mosaicoBanio.setShader(&shaderMulLighting);
@@ -561,37 +564,22 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	// Libera la memoria de la textura
 	texture3.freeImage(bitmap);
 
-	// Definiendo la textura a utilizar
 	Texture texture4("../Textures/texturaLadrillos.jpg");
-	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
-	// Voltear la imagen
 	bitmap = texture4.loadImage(true);
-	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = texture4.convertToData(bitmap, imageWidth, imageHeight);
-	// Creando la textura con id 1
 	glGenTextures(1, &textureID4);
-	// Enlazar esa textura a una tipo de textura de 2D.
 	glBindTexture(GL_TEXTURE_2D, textureID4);
-	// set the texture wrapping parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// Verifica si se pudo abrir la textura
 	if (data) {
-		// Transferis los datos de la imagen a memoria
-		// Tipo de textura, Mipmaps, Formato interno de openGL, ancho, alto, Mipmaps,
-		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
-		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
 			GL_BGRA, GL_UNSIGNED_BYTE, data);
-		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	// Libera la memoria de la textura
 	texture4.freeImage(bitmap);
 	//TEXTURAS PARA LA CASA
 	// TEXTURA DE PAREDES EXTERIORES
@@ -1010,6 +998,26 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture27.freeImage(bitmap);
+	//TEXTURA PARA EL TECHO
+	Texture texture28("../Textures/techo.jpg");
+	bitmap = texture28.loadImage(true);
+	data = texture28.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID28);
+	glBindTexture(GL_TEXTURE_2D, textureID28);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture28.freeImage(bitmap);
+
+
 	//FINALIZA TEXTURA PARA LA CASA
 
 	// Carga de texturas para el skybox
@@ -1407,6 +1415,19 @@ void applicationLoop() {
 		//CASITA
 		model = glm::translate(model, glm::vec3(0, 0, dz));
 		model = glm::rotate(model, rot0, glm::vec3(0, 1, 0));
+		//TECHO
+		glm::mat4 modelCasaTecho = glm::mat4(1.0);
+		modelCasaTecho = glm::translate(model, glm::vec3(-10.0, 0.0, 15.0));
+		glm::mat4 modelCasaRoof = glm::translate(modelCasaTecho, glm::vec3(7.5, 1.5, 3.5));
+		glBindTexture(GL_TEXTURE_2D, textureID28);
+		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(15.0, 4.0)));
+		casaTecho.render(glm::scale(modelCasaRoof,glm::vec3(15.0,0.01,8.0)));
+		glm::mat4 modelCasaRoof2 = glm::translate(modelCasaTecho, glm::vec3(3.5, 1.5, -2.5));
+		casaTecho.render(glm::scale(modelCasaRoof2, glm::vec3(7.0, 0.01, 4.0)));
+		glm::mat4 modelCasaRoof3 = glm::translate(modelCasaTecho, glm::vec3(2.0, 1.5, -6.0));
+		casaTecho.render(glm::scale(modelCasaRoof3, glm::vec3(4.0, 0.01, 3.0)));
+		glBindTexture(GL_TEXTURE_2D, 0);
+		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		//PARED IZQUIERDA
 		glm::mat4 modelCasa = glm::mat4(1.0);
 		modelCasa = glm::translate(model, glm::vec3(-10.0, 0.0, 15.0));
