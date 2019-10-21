@@ -118,6 +118,7 @@ Model modelReloj;
 Model modelSilla;
 Model modelMesita;
 Model modelTaburete;
+Model modelPlanta;
 GLuint textureID1, textureID2, textureID3, textureID4;
 //												 paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
@@ -303,6 +304,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	modelTaburete.loadModel("../models/24-taburetka/Taburetka.obj");
 	modelTaburete.setShader(&shaderMulLighting);
+	
+	/*modelPlanta.loadModel("../models/microwave/microwave.obj");
+	modelPlanta.setShader(&shaderMulLighting);*/
 
 	//PAREDES EXTERIORES DE LA CASA 
 	casaExterior.init();
@@ -1449,6 +1453,11 @@ void applicationLoop() {
 		matrixAirCraft = glm::translate(matrixAirCraft, glm::vec3(4.0, -4.0, 7.0));
 		modelAirCraft.render(matrixAirCraft);
 		glActiveTexture(GL_TEXTURE0);
+
+		/*glm::mat4 matrixPlanta = glm::mat4(1.0);
+		matrixPlanta = glm::translate(matrixPlanta, glm::vec3(-7.0, -4.0, -6.0));
+		modelPlanta.render(matrixPlanta);
+		glActiveTexture(GL_TEXTURE0);*/
 
 		glm::mat4 matrixHongo = glm::mat4(1.0);
 		matrixHongo = glm::translate(matrixHongo, glm::vec3(-5.0, -4.0, -5.0));
