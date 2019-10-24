@@ -925,7 +925,7 @@ void applicationLoop() {
 		boxWall.render();
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		
+
 
 		modelAircraft.render(matrixModelAircraft);
 		glActiveTexture(GL_TEXTURE0);
