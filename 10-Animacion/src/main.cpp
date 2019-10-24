@@ -665,7 +665,7 @@ void applicationLoop() {
 		shaderMulLighting.setFloat("spotLights[0].outerCutOff", cos(glm::radians(15.0)));
 		shaderMulLighting.setFloat("spotLights[0].constant", 1.0);
 		shaderMulLighting.setFloat("spotLights[0].linear", 0.1);
-		shaderMulLighting.setFloat("spotLights[0].quadratic", 0.001);
+		shaderMulLighting.setFloat("spotLights[0].quadratic", 0.01);
 
 		// Esto es para la luces pointlights
 		//NUMERO DE LUCES A USAR DE TIPO POINT LIGHTS=3
