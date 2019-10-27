@@ -118,6 +118,7 @@ Model modelSilla;
 Model modelMesita;
 Model modelTaburete;
 Model modelPlanta;
+Model modelEclipse2; //sin desacoplar
 GLuint textureID1, textureID2, textureID3, textureID4;
 //	paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
