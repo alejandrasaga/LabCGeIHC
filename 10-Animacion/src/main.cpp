@@ -156,6 +156,7 @@ float rot0 = 0.0, dz = 0.0;
 float rot1 = 0.0, rot2 = 0.0, rot3 = 0.0, rot4 = 0.0;
 float rotCabeza = 0.0, rotArt1 = 0.0, rotArt2 = 0.0, rotArt3 = 0.0, rotArt4 = 0.0; //Rotar R2D2
 bool sentido = true;
+int aleatorio;
 float aleatorio2 = 0.0;
 float aleatorio3 = 10.0;
 
@@ -1852,28 +1853,31 @@ void applicationLoop() {
 		//POSICION DE LA LUZ CON INDICE [0]
 		std::cout << aleatorio2 << std::endl; //MUESTRA EN CONSOLA EL INCREMENTO
 		if ((aleatorio2 >= 10.0)||(aleatorio3 <= 1.0)) {
-			aleatorio2 = 0.0;
+			aleatorio2 = 1.0;
 			aleatorio3 = 10.0;
 		}
 		else {
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			shaderMulLighting.setVectorFloat3("pointLights[0].position", glm::value_ptr((glm::vec3(7.05, 1.0, 1.5))));
 			shaderMulLighting.setVectorFloat3("pointLights[0].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[0].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[0].light.specular", glm::value_ptr(glm::vec3(0.0, 0.6, 0.0)));
-			shaderMulLighting.setFloat("pointLights[0].constant", aleatorio2); //MOVERLE AQUI PA LAS LUCES
+			shaderMulLighting.setFloat("pointLights[0].constant", aleatorio3);
 			shaderMulLighting.setFloat("pointLights[0].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[0].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			shaderMulLighting.setVectorFloat3("pointLights[1].position", glm::value_ptr((glm::vec3(7.05, 1.25, 2.0))));
 			shaderMulLighting.setVectorFloat3("pointLights[1].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[1].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[1].light.specular", glm::value_ptr(glm::vec3(0.6, 0.0, 0.0)));
-			shaderMulLighting.setFloat("pointLights[1].constant", aleatorio3);
+			shaderMulLighting.setFloat("pointLights[1].constant", aleatorio2);
 			shaderMulLighting.setFloat("pointLights[1].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[1].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ AZUL 
@@ -1881,9 +1885,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[2].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[2].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[2].light.specular", glm::value_ptr(glm::vec3(0.0, 0.0, 0.6)));
-			shaderMulLighting.setFloat("pointLights[2].constant", aleatorio2);
+			shaderMulLighting.setFloat("pointLights[2].constant", aleatorio3);
 			shaderMulLighting.setFloat("pointLights[2].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[2].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ AMARILLA
@@ -1891,9 +1896,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[3].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[3].light.diffuse", glm::value_ptr(glm::vec3(0.01, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[3].light.specular", glm::value_ptr(glm::vec3(0.6, 0.6, 0.0)));
-			shaderMulLighting.setFloat("pointLights[3].constant", aleatorio3);
+			shaderMulLighting.setFloat("pointLights[3].constant", aleatorio2);
 			shaderMulLighting.setFloat("pointLights[3].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[3].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ MORADA
@@ -1901,9 +1907,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[4].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[4].light.diffuse", glm::value_ptr(glm::vec3(0.01, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[4].light.specular", glm::value_ptr(glm::vec3(0.5, 0.0, 0.5)));
-			shaderMulLighting.setFloat("pointLights[4].constant", aleatorio2);
+			shaderMulLighting.setFloat("pointLights[4].constant", aleatorio3);
 			shaderMulLighting.setFloat("pointLights[4].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[4].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ ROSA
@@ -1911,9 +1918,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[5].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[5].light.diffuse", glm::value_ptr(glm::vec3(0.01, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[5].light.specular", glm::value_ptr(glm::vec3(1.0, 0.0, 0.5)));
-			shaderMulLighting.setFloat("pointLights[5].constant", aleatorio3);
+			shaderMulLighting.setFloat("pointLights[5].constant", aleatorio2);
 			shaderMulLighting.setFloat("pointLights[5].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[5].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ AZUL CLARO
@@ -1921,9 +1929,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[6].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[6].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[6].light.specular", glm::value_ptr(glm::vec3(0.5, 0.5, 1.0)));
-			shaderMulLighting.setFloat("pointLights[6].constant", aleatorio2); //MOVERLE AQUI PA LAS LUCES
+			shaderMulLighting.setFloat("pointLights[6].constant", aleatorio3); 
 			shaderMulLighting.setFloat("pointLights[6].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[6].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ 
@@ -1931,9 +1940,10 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[7].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[7].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[7].light.specular", glm::value_ptr(glm::vec3(0.2, 0.8, 0.2)));
-			shaderMulLighting.setFloat("pointLights[7].constant", aleatorio3); //MOVERLE AQUI PA LAS LUCES
+			shaderMulLighting.setFloat("pointLights[7].constant", aleatorio2); 
 			shaderMulLighting.setFloat("pointLights[7].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[7].quadratic", 0.004);
+			aleatorio = 1 + rand() % 10;
 			aleatorio2 += 0.001;
 			aleatorio3 -= 0.001;
 			//LUZ ROJITA
@@ -1941,7 +1951,7 @@ void applicationLoop() {
 			shaderMulLighting.setVectorFloat3("pointLights[8].light.ambient", glm::value_ptr(glm::vec3(0.001, 0.001, 0.001)));
 			shaderMulLighting.setVectorFloat3("pointLights[8].light.diffuse", glm::value_ptr(glm::vec3(0.0, 0.01, 0.0)));
 			shaderMulLighting.setVectorFloat3("pointLights[8].light.specular", glm::value_ptr(glm::vec3(0.8, 0.1, 0.2)));
-			shaderMulLighting.setFloat("pointLights[8].constant", aleatorio2); //MOVERLE AQUI PA LAS LUCES
+			shaderMulLighting.setFloat("pointLights[8].constant", aleatorio3); 
 			shaderMulLighting.setFloat("pointLights[8].linear", 0.04);
 			shaderMulLighting.setFloat("pointLights[8].quadratic", 0.004);
 		}
