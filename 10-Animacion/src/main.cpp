@@ -301,6 +301,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	/*modelPlanta.loadModel("../models/microwave/microwave.obj");
 	modelPlanta.setShader(&shaderMulLighting);*/
 
+	modelEclipse2.loadModel("../models/Eclipse2/2003eclipse.obj");
+	modelEclipse2.setShader(&shaderMulLighting);
+
 	//PAREDES EXTERIORES DE LA CASA 
 	casaExterior.init();
 	casaExterior.setShader(&shaderMulLighting);
@@ -1822,6 +1825,12 @@ void applicationLoop() {
 		lightModelmatrix = glm::translate(modelCasaRoof, glm::vec3(4.5, -0.15, 0.0));
 		sphereLampDir.render(lightModelmatrix); //SALA LUZ 2
 
+		//CARRO ECLIPSE SIN DESARMAR
+		glm::mat4 matrixModelEclipse2 = glm::mat4(1.0);
+		matrixModelEclipse2 = glm::translate(pista, glm::vec3(0.5,0.0,9.0));
+		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
+		modelEclipse2.render(glm::scale(matrixModelEclipse2,glm::vec3(0.25,0.25,0.25)));
+		glActiveTexture(GL_TEXTURE0);
 
 		// Esto es para la luces pointlights
 		//NUMERO DE LUCES A USAR DE TIPO POINT LIGHTS=5
