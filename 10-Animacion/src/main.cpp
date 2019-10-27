@@ -1204,7 +1204,7 @@ void applicationLoop() {
 	glm::mat4 matrixModelEclipse2 = glm::mat4(1.0);
 	matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(-3.5, -1.5, -9.0));
 	glm::mat4 matrixModelHelicoptero2 = glm::mat4(1.0);
-	matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(24.0, 6.5, 0.0));
+	matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(24.0, 10.5, 0.0));
 	while (psi) {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -2052,7 +2052,7 @@ void applicationLoop() {
 			std::cout << "Down: helicoptero " << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, -0.01, 0.0));
 			offsetHelicoptero2AdvanceY += 0.01;
-			if (offsetHelicoptero2AdvanceY > 8) {
+			if (offsetHelicoptero2AdvanceY > 12) {
 				offsetHelicoptero2AdvanceY = 0.0;
 				estadoHel = 2;
 			}
@@ -2061,7 +2061,7 @@ void applicationLoop() {
 			std::cout << "Up: helicoptero " << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, 0.01, 0.0));
 			offsetHelicoptero2AdvanceY += 0.01;
-			if (offsetHelicoptero2AdvanceY > 8) {
+			if (offsetHelicoptero2AdvanceY > 12) {
 				offsetHelicoptero2AdvanceY = 0.0;
 				estadoHel = 3;
 			}
