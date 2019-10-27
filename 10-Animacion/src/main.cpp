@@ -118,7 +118,8 @@ Model modelSilla;
 Model modelMesita;
 Model modelTaburete;
 Model modelPlanta;
-Model modelEclipse2; //sin desacoplar
+Model modelEclipse2; //sin desacoplar carro
+Model modelHelicoptero2; //helicopetro sin desacoplar
 GLuint textureID1, textureID2, textureID3, textureID4;
 //	paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
 GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
@@ -304,6 +305,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	modelEclipse2.loadModel("../models/Eclipse2/2003eclipse.obj");
 	modelEclipse2.setShader(&shaderMulLighting);
 
+	modelHelicoptero2.loadModel("../models/Helicopter2/Mi_24.obj");
+	modelHelicoptero2.setShader(&shaderMulLighting);
 	//PAREDES EXTERIORES DE LA CASA 
 	casaExterior.init();
 	casaExterior.setShader(&shaderMulLighting);
@@ -1192,6 +1195,16 @@ void applicationLoop() {
 	float offX = 0.0;
 	float angle = 0.0;
 	float ratio = 5.0;
+	int state = 0;
+	int estadoHel = 0;
+	float offsetEclipse2Advance = 0.0;
+	float offsetEclipse2Rot = 0.0;
+	float offsetHelicoptero2AdvanceX = 0.0;
+	float offsetHelicoptero2AdvanceY = 0.0;
+	glm::mat4 matrixModelEclipse2 = glm::mat4(1.0);
+	matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(-3.5, -1.5, -9.0));
+	glm::mat4 matrixModelHelicoptero2 = glm::mat4(1.0);
+	matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(24.0, 6.5, 0.0));
 	while (psi) {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1826,10 +1839,11 @@ void applicationLoop() {
 		sphereLampDir.render(lightModelmatrix); //SALA LUZ 2
 
 		//CARRO ECLIPSE SIN DESARMAR
-		glm::mat4 matrixModelEclipse2 = glm::mat4(1.0);
-		matrixModelEclipse2 = glm::translate(pista, glm::vec3(0.5,0.0,9.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		modelEclipse2.render(glm::scale(matrixModelEclipse2,glm::vec3(0.25,0.25,0.25)));
+		glActiveTexture(GL_TEXTURE0);
+
+		modelHelicoptero2.render(glm::scale(matrixModelHelicoptero2, glm::vec3(1.25,1.25,1.25)));
 		glActiveTexture(GL_TEXTURE0);
 
 		// Esto es para la luces pointlights
@@ -1999,6 +2013,71 @@ void applicationLoop() {
 		dz = 0;
 		rot0 = 0;
 		offX += 0.001;
+		/*MAQUINA DE ESTADOS PARA EL CARRO ECLIPSE 2 SIN DESACOPLAR*/
+		switch (state) {
+		case 0:
+			std::cout << "Advance:" << std::endl;
+			// -0.001 debe de ser igual
+			matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(0.0, 0.0, 0.01));
+			offsetEclipse2Advance += 0.01;
+			if (offsetEclipse2Advance > 18.0) {
+				offsetEclipse2Advance = 0.0;
+				state = 1;
+			}
+			break;
+		case 1:
+			std::cout << "Turn: " << std::endl;
+			matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(0, 0, 0.01));
+			matrixModelEclipse2 = glm::rotate(matrixModelEclipse2, glm::radians(0.5f), glm::vec3(0, 1, 0));
+			offsetEclipse2Rot += 0.5; //INCREMENTA, ACUMULANDO		RADIANS ES LA VELOCIDAD
+			if (offsetEclipse2Rot > 90.0) {
+				offsetEclipse2Rot = 0.0;
+				state = 0;
+			}
+			break;
+
+		}
+		/*MAQUINA DE ESTADOS DEL HELICOPTERO*/
+		switch (estadoHel) {
+		case 0:
+			std::cout << "Advance Helicoptero:" << std::endl;
+			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0.0, 0.0, 0.01));
+			offsetHelicoptero2AdvanceX += 0.01;
+			if (offsetHelicoptero2AdvanceX > 3.0) {
+				offsetHelicoptero2AdvanceX = 0.0;
+				estadoHel = 1;
+			}
+			break;
+		case 1:
+			std::cout << "Down: helicoptero " << std::endl;
+			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, -0.01, 0.0));
+			offsetHelicoptero2AdvanceY += 0.01;
+			if (offsetHelicoptero2AdvanceY > 8) {
+				offsetHelicoptero2AdvanceY = 0.0;
+				estadoHel = 2;
+			}
+			break;
+		case 2:
+			std::cout << "Up: helicoptero " << std::endl;
+			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, 0.01, 0.0));
+			offsetHelicoptero2AdvanceY += 0.01;
+			if (offsetHelicoptero2AdvanceY > 8) {
+				offsetHelicoptero2AdvanceY = 0.0;
+				estadoHel = 3;
+			}
+			break;
+		case 3:
+			std::cout << "atras helicoptero" << std::endl;
+			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0.0, 0.0, -0.01));
+			offsetHelicoptero2AdvanceX += 0.01;
+			if (offsetHelicoptero2AdvanceX > 3) {
+				offsetHelicoptero2AdvanceX = 0.0;
+				estadoHel = 0;
+			}
+			break;
+
+		}
+
 
 		glfwSwapBuffers(window);
 	}
