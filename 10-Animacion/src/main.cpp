@@ -122,13 +122,13 @@ Model modelEclipse2; //sin desacoplar carro
 Model modelHelicoptero2; //helicopetro sin desacoplar
 GLuint textureID1, textureID2, textureID3, textureID4;
 //	paredes exterior, mosaicoBanio,paredBanio, pisoHabit, paredHabit
-GLuint textureID5, textureID6, textureID7, textureID9, textureID8;
+GLuint textureIDA5, textureIDA6, textureIDA7, textureIDA9, textureIDA8;
 //		cocinaPared,cocinaPiso,  marmolSala,	pisoSala, paredArbusto, paredRoca, pisoExterior, puertaPrinci
-GLuint textureID10, textureID11, textureID12, textureID13, textureID14, textureID15, textureID16, textureID17;
+GLuint textureIDA10, textureIDA11, textureIDA12, textureIDA13, textureIDA14, textureIDA15, textureIDA16, textureIDA17;
 //		puertas		ventana		cocina estufa, comida		horno estufa cama base	cama colchon, piscina
-GLuint textureID18, textureID19, textureID20, textureID21, textureID22, textureID23, textureID24, textureID25;
+GLuint textureIDA18, textureIDA19, textureIDA20, textureIDA21, textureIDA22, textureIDA23, textureIDA24, textureIDA25;
 // sillon			encimera	techo			fregadero  lavabo,		carretera
-GLuint textureID26, textureID27, textureID28, textureID29, textureID30, textureID31, textureID32;
+GLuint textureIDA26, textureIDA27, textureIDA28, textureIDA29, textureIDA30, textureIDA31, textureIDA32;
 GLuint skyboxTextureID;
 
 GLenum types[6] = {
@@ -544,11 +544,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	
 	//TEXTURAS PARA LA CASA
 	// TEXTURA DE PAREDES EXTERIORES
-	Texture texture5("../Textures/maderaExt.jpg");
-	bitmap = texture5.loadImage();
-	data = texture5.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID5);
-	glBindTexture(GL_TEXTURE_2D, textureID5);
+	Texture textureA5("../Textures/maderaExt.jpg");
+	bitmap = textureA5.loadImage();
+	data = textureA5.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA5);
+	glBindTexture(GL_TEXTURE_2D, textureIDA5);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -560,14 +560,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture5.freeImage(bitmap);
+	textureA5.freeImage(bitmap);
 
 	// TEXTURA DE PISO BANIO
-	Texture texture6("../Textures/mosaicoPisoBanio.jpg");
-	bitmap = texture6.loadImage();
-	data = texture6.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID6);
-	glBindTexture(GL_TEXTURE_2D, textureID6);
+	Texture textureA6("../Textures/mosaicoPisoBanio.jpg");
+	bitmap = textureA6.loadImage();
+	data = textureA6.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA6);
+	glBindTexture(GL_TEXTURE_2D, textureIDA6);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -579,13 +579,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture6.freeImage(bitmap);
+	textureA6.freeImage(bitmap);
 	//TEXTURA PARED BANIO
-	Texture texture7("../Textures/marmolParedBanio.jpg");
-	bitmap = texture7.loadImage();
-	data = texture7.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID7);
-	glBindTexture(GL_TEXTURE_2D, textureID7);
+	Texture textureA7("../Textures/marmolParedBanio.jpg");
+	bitmap = textureA7.loadImage();
+	data = textureA7.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA7);
+	glBindTexture(GL_TEXTURE_2D, textureIDA7);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -597,13 +597,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture7.freeImage(bitmap);
+	textureA7.freeImage(bitmap);
 	//TEXTURA PARED HABITACION
-	Texture texture8("../Textures/tapizHabitacion.jpg");
-	bitmap = texture8.loadImage();
-	data = texture8.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID8);
-	glBindTexture(GL_TEXTURE_2D, textureID8);
+	Texture textureA8("../Textures/tapizHabitacion.jpg");
+	bitmap = textureA8.loadImage();
+	data = textureA8.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA8);
+	glBindTexture(GL_TEXTURE_2D, textureIDA8);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -615,13 +615,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture8.freeImage(bitmap);
+	textureA8.freeImage(bitmap);
 	//PISO HABITACION
-	Texture texture9("../Textures/maderaPisoHabitacion.jpg");
-	bitmap = texture9.loadImage();
-	data = texture9.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID9);
-	glBindTexture(GL_TEXTURE_2D, textureID9);
+	Texture textureA9("../Textures/maderaPisoHabitacion.jpg");
+	bitmap = textureA9.loadImage();
+	data = textureA9.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA9);
+	glBindTexture(GL_TEXTURE_2D, textureIDA9);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -633,13 +633,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture9.freeImage(bitmap);
+	textureA9.freeImage(bitmap);
 	//TEXTURA PARED COCINA 
-	Texture texture10("../Textures/paredCocina.jpg");
-	bitmap = texture10.loadImage();
-	data = texture10.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID10);
-	glBindTexture(GL_TEXTURE_2D, textureID10);
+	Texture textureA10("../Textures/paredCocina.jpg");
+	bitmap = textureA10.loadImage();
+	data = textureA10.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA10);
+	glBindTexture(GL_TEXTURE_2D, textureIDA10);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -651,13 +651,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture10.freeImage(bitmap);
+	textureA10.freeImage(bitmap);
 	//PISO COCINA
-	Texture texture11("../Textures/pisoCocina.jpg");
-	bitmap = texture11.loadImage();
-	data = texture11.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID11);
-	glBindTexture(GL_TEXTURE_2D, textureID11);
+	Texture textureA11("../Textures/pisoCocina.jpg");
+	bitmap = textureA11.loadImage();
+	data = textureA11.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA11);
+	glBindTexture(GL_TEXTURE_2D, textureIDA11);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -669,13 +669,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture11.freeImage(bitmap);
+	textureA11.freeImage(bitmap);
 	//TEXTURA 12 PARED SALA
-	Texture texture12("../Textures/marmolSala.jpg");
-	bitmap = texture12.loadImage();
-	data = texture12.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID12);
-	glBindTexture(GL_TEXTURE_2D, textureID12);
+	Texture textureA12("../Textures/marmolSala.jpg");
+	bitmap = textureA12.loadImage();
+	data = textureA12.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA12);
+	glBindTexture(GL_TEXTURE_2D, textureIDA12);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -687,13 +687,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture12.freeImage(bitmap);
+	textureA12.freeImage(bitmap);
 	//TEXTURA 13 PISO SALA
-	Texture texture13("../Textures/pisoSala.jpg");
-	bitmap = texture13.loadImage();
-	data = texture13.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID13);
-	glBindTexture(GL_TEXTURE_2D, textureID13);
+	Texture textureA13("../Textures/pisoSala.jpg");
+	bitmap = textureA13.loadImage();
+	data = textureA13.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA13);
+	glBindTexture(GL_TEXTURE_2D, textureIDA13);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -705,13 +705,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture13.freeImage(bitmap);
+	textureA13.freeImage(bitmap);
 	//TEXTURA 14 EXTERIOR
-	Texture texture14("../Textures/paredJardin.jpg");
-	bitmap = texture14.loadImage();
-	data = texture14.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID14);
-	glBindTexture(GL_TEXTURE_2D, textureID14);
+	Texture textureA14("../Textures/paredJardin.jpg");
+	bitmap = textureA14.loadImage();
+	data = textureA14.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA14);
+	glBindTexture(GL_TEXTURE_2D, textureIDA14);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -723,13 +723,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture14.freeImage(bitmap);
+	textureA14.freeImage(bitmap);
 	//TEXTURA 15 
-	Texture texture15("../Textures/paredExt.jpg");
-	bitmap = texture15.loadImage();
-	data = texture15.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID15);
-	glBindTexture(GL_TEXTURE_2D, textureID15);
+	Texture textureA15("../Textures/paredExt.jpg");
+	bitmap = textureA15.loadImage();
+	data = textureA15.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA15);
+	glBindTexture(GL_TEXTURE_2D, textureIDA15);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -741,13 +741,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture15.freeImage(bitmap);
+	textureA15.freeImage(bitmap);
 	//TEXTURA 16 PISO PATIO
-	Texture texture16("../Textures/pisoExt.jpg");
-	bitmap = texture16.loadImage();
-	data = texture16.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID16);
-	glBindTexture(GL_TEXTURE_2D, textureID16);
+	Texture textureA16("../Textures/pisoExt.jpg");
+	bitmap = textureA16.loadImage();
+	data = textureA16.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA16);
+	glBindTexture(GL_TEXTURE_2D, textureIDA16);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -759,13 +759,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture16.freeImage(bitmap);
+	textureA16.freeImage(bitmap);
 	//TEXTURA 17 PUERTA PRINCIPAL
-	Texture texture17("../Textures/puertaPrincipal.jpg");
-	bitmap = texture17.loadImage();
-	data = texture17.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID17);
-	glBindTexture(GL_TEXTURE_2D, textureID17);
+	Texture textureA17("../Textures/puertaPrincipal.jpg");
+	bitmap = textureA17.loadImage();
+	data = textureA17.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA17);
+	glBindTexture(GL_TEXTURE_2D, textureIDA17);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -777,13 +777,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture17.freeImage(bitmap);
+	textureA17.freeImage(bitmap);
 	//TEXTURA 18 PUERTA PRINCIPAL
-	Texture texture18("../Textures/puerta.jpg");
-	bitmap = texture18.loadImage();
-	data = texture18.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID18);
-	glBindTexture(GL_TEXTURE_2D, textureID18);
+	Texture textureA18("../Textures/puerta.jpg");
+	bitmap = textureA18.loadImage();
+	data = textureA18.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA18);
+	glBindTexture(GL_TEXTURE_2D, textureIDA18);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -795,13 +795,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture18.freeImage(bitmap);
+	textureA18.freeImage(bitmap);
 	//TEXTURA 19 PARA VENTANA
-	Texture texture19("../Textures/ventana.png");
-	bitmap = texture19.loadImage();
-	data = texture19.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID19);
-	glBindTexture(GL_TEXTURE_2D, textureID19);
+	Texture textureA19("../Textures/ventana.png");
+	bitmap = textureA19.loadImage();
+	data = textureA19.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA19);
+	glBindTexture(GL_TEXTURE_2D, textureIDA19);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -813,13 +813,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture19.freeImage(bitmap);
+	textureA19.freeImage(bitmap);
 	//TEXTURA 20
-	Texture texture20("../Textures/estufa.jpg");
-	bitmap = texture20.loadImage();
-	data = texture20.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID20);
-	glBindTexture(GL_TEXTURE_2D, textureID20);
+	Texture textureA20("../Textures/estufa.jpg");
+	bitmap = textureA20.loadImage();
+	data = textureA20.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA20);
+	glBindTexture(GL_TEXTURE_2D, textureIDA20);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -831,13 +831,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture20.freeImage(bitmap);
+	textureA20.freeImage(bitmap);
 	//COMIDA
-	Texture texture21("../Textures/comida.png");
-	bitmap = texture21.loadImage();
-	data = texture21.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID21);
-	glBindTexture(GL_TEXTURE_2D, textureID21);
+	Texture textureA21("../Textures/comida.png");
+	bitmap = textureA21.loadImage();
+	data = textureA21.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA21);
+	glBindTexture(GL_TEXTURE_2D, textureIDA21);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -849,14 +849,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture21.freeImage(bitmap);
+	textureA21.freeImage(bitmap);
 
 	//HORNO ESTUFA
-	Texture texture22("../Textures/horno.jpg");
-	bitmap = texture22.loadImage();
-	data = texture22.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID22);
-	glBindTexture(GL_TEXTURE_2D, textureID22);
+	Texture textureA22("../Textures/horno.jpg");
+	bitmap = textureA22.loadImage();
+	data = textureA22.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA22);
+	glBindTexture(GL_TEXTURE_2D, textureIDA22);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -868,13 +868,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture22.freeImage(bitmap);
+	textureA22.freeImage(bitmap);
 	//textura cama
-	Texture texture23("../Textures/cama.jpg");
-	bitmap = texture23.loadImage();
-	data = texture23.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID23);
-	glBindTexture(GL_TEXTURE_2D, textureID23);
+	Texture textureA23("../Textures/cama.jpg");
+	bitmap = textureA23.loadImage();
+	data = textureA23.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA23);
+	glBindTexture(GL_TEXTURE_2D, textureIDA23);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -886,13 +886,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture23.freeImage(bitmap);
+	textureA23.freeImage(bitmap);
 	//textura cama colcha
-	Texture texture24("../Textures/camaColcha.jpg");
-	bitmap = texture24.loadImage();
-	data = texture24.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID24);
-	glBindTexture(GL_TEXTURE_2D, textureID24);
+	Texture textureA24("../Textures/camaColcha.jpg");
+	bitmap = textureA24.loadImage();
+	data = textureA24.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA24);
+	glBindTexture(GL_TEXTURE_2D, textureIDA24);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -904,13 +904,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture24.freeImage(bitmap);
+	textureA24.freeImage(bitmap);
 	//TEXTURA 25 JACUZZI
-	Texture texture25("../Textures/water.jpg");
-	bitmap = texture25.loadImage();
-	data = texture25.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID25);
-	glBindTexture(GL_TEXTURE_2D, textureID25);
+	Texture textureA25("../Textures/water.jpg");
+	bitmap = textureA25.loadImage();
+	data = textureA25.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA25);
+	glBindTexture(GL_TEXTURE_2D, textureIDA25);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -922,13 +922,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture25.freeImage(bitmap);
+	textureA25.freeImage(bitmap);
 	//TEXTURA PARA EL SILLON
-	Texture texture26("../Textures/sillon.jpg");
-	bitmap = texture26.loadImage();
-	data = texture26.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID26);
-	glBindTexture(GL_TEXTURE_2D, textureID26);
+	Texture textureA26("../Textures/sillon.jpg");
+	bitmap = textureA26.loadImage();
+	data = textureA26.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA26);
+	glBindTexture(GL_TEXTURE_2D, textureIDA26);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -940,13 +940,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture26.freeImage(bitmap);
+	textureA26.freeImage(bitmap);
 	//TEXTURA PARA EL SILLON
-	Texture texture27("../Textures/metal2.jpg");
-	bitmap = texture27.loadImage();
-	data = texture27.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID27);
-	glBindTexture(GL_TEXTURE_2D, textureID27);
+	Texture textureA27("../Textures/metal2.jpg");
+	bitmap = textureA27.loadImage();
+	data = textureA27.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA27);
+	glBindTexture(GL_TEXTURE_2D, textureIDA27);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -958,13 +958,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture27.freeImage(bitmap);
+	textureA27.freeImage(bitmap);
 	//TEXTURA PARA EL TECHO
-	Texture texture28("../Textures/techo.jpg");
-	bitmap = texture28.loadImage(true);
-	data = texture28.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID28);
-	glBindTexture(GL_TEXTURE_2D, textureID28);
+	Texture textureA28("../Textures/techo.jpg");
+	bitmap = textureA28.loadImage(true);
+	data = textureA28.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA28);
+	glBindTexture(GL_TEXTURE_2D, textureIDA28);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -976,13 +976,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture28.freeImage(bitmap);
+	textureA28.freeImage(bitmap);
 	//FREGADERO
-	Texture texture29("../Textures/fregadero.png");
-	bitmap = texture29.loadImage(true);
-	data = texture29.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID29);
-	glBindTexture(GL_TEXTURE_2D, textureID29);
+	Texture textureA29("../Textures/fregadero.png");
+	bitmap = textureA29.loadImage(true);
+	data = textureA29.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA29);
+	glBindTexture(GL_TEXTURE_2D, textureIDA29);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -994,13 +994,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture29.freeImage(bitmap);
+	textureA29.freeImage(bitmap);
 	//LAVABO
-	Texture texture30("../Textures/lavabo.png");
-	bitmap = texture30.loadImage(true);
-	data = texture30.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID30);
-	glBindTexture(GL_TEXTURE_2D, textureID30);
+	Texture textureA30("../Textures/lavabo.png");
+	bitmap = textureA30.loadImage(true);
+	data = textureA30.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA30);
+	glBindTexture(GL_TEXTURE_2D, textureIDA30);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -1012,13 +1012,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture30.freeImage(bitmap);
+	textureA30.freeImage(bitmap);
 
-	Texture texture31("../Textures/carretera.jpg");
-	bitmap = texture31.loadImage();
-	data = texture31.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID31);
-	glBindTexture(GL_TEXTURE_2D, textureID31);
+	Texture textureA31("../Textures/carretera.jpg");
+	bitmap = textureA31.loadImage();
+	data = textureA31.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA31);
+	glBindTexture(GL_TEXTURE_2D, textureIDA31);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -1030,13 +1030,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture31.freeImage(bitmap);
+	textureA31.freeImage(bitmap);
 
-	Texture texture32("../Textures/carretera2.jpg");
-	bitmap = texture32.loadImage();
-	data = texture32.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID32);
-	glBindTexture(GL_TEXTURE_2D, textureID32);
+	Texture textureA32("../Textures/carretera2.jpg");
+	bitmap = textureA32.loadImage();
+	data = textureA32.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureIDA32);
+	glBindTexture(GL_TEXTURE_2D, textureIDA32);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -1048,7 +1048,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture32.freeImage(bitmap);
+	textureA32.freeImage(bitmap);
 
 
 	//FINALIZA TEXTURA PARA LA CASA
@@ -1336,7 +1336,7 @@ void applicationLoop() {
 		glm::mat4 modelCasaTecho = glm::mat4(1.0);
 		modelCasaTecho = glm::translate(model, glm::vec3(0.0, 0.0, 0.0));
 		glm::mat4 modelCasaRoof = glm::translate(modelCasaTecho, glm::vec3(7.5, 1.5, 3.5));
-		glBindTexture(GL_TEXTURE_2D, textureID28);
+		glBindTexture(GL_TEXTURE_2D, textureIDA28);
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(15.0, 4.0)));
 		casaTecho.render(glm::scale(modelCasaRoof, glm::vec3(15.0, 0.01, 8.0)));
 		glm::mat4 modelCasaRoof2 = glm::translate(modelCasaTecho, glm::vec3(3.5, 1.5, -2.5));
@@ -1349,7 +1349,7 @@ void applicationLoop() {
 		//PARED IZQUIERDA
 		glm::mat4 modelCasa = glm::mat4(1.0);
 		modelCasa = glm::translate(model, glm::vec3(0.0, 0.0, 0.0));
-		glBindTexture(GL_TEXTURE_2D, textureID5);
+		glBindTexture(GL_TEXTURE_2D, textureIDA5);
 		glm::mat4 modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, 0.0));
 		modelCasaIzq = glm::translate(modelCasa, glm::vec3(0.0, 0.0, -5.25));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(5.0, 3.0)));
@@ -1364,12 +1364,12 @@ void applicationLoop() {
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		//PARED DE ATRAS
 		glm::mat4 modelCasa2 = glm::translate(modelCasa, glm::vec3(7.5, 0.0, -7.5));
-		glBindTexture(GL_TEXTURE_2D, textureID5);
+		glBindTexture(GL_TEXTURE_2D, textureIDA5);
 		casaExterior2.render(glm::scale(modelCasa2, glm::vec3(15.0, 3.0, 0.01)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED DERECHA
 		glm::mat4 modelCasa3 = glm::translate(modelCasa2, glm::vec3(7.5, 0.0, 7.5));
-		glBindTexture(GL_TEXTURE_2D, textureID5);
+		glBindTexture(GL_TEXTURE_2D, textureIDA5);
 		glm::mat4 modelCasaDer = glm::translate(modelCasa2, glm::vec3(7.5, 0.0, 7.5));
 		modelCasaDer = glm::translate(modelCasaDer, glm::vec3(0.0, 0.0, 0.75));
 		casaExterior3.render(glm::scale(modelCasaDer, glm::vec3(0.01, 3.0, 2.5)));
@@ -1379,7 +1379,7 @@ void applicationLoop() {
 		//PARED DE ENFRENTE
 		glm::mat4 modelCasa4 = glm::translate(modelCasa3, glm::vec3(-7.5, 0.0, 7.5));
 		glm::mat4 modelCasaFrente = glm::translate(modelCasa3, glm::vec3(-7.5, 0.0, 7.5));
-		glBindTexture(GL_TEXTURE_2D, textureID5);
+		glBindTexture(GL_TEXTURE_2D, textureIDA5);
 		casaExterior4.render(glm::scale(modelCasaFrente, glm::vec3(7.0, 3.0, 0.01)));
 		modelCasaFrente = glm::translate(modelCasa4, glm::vec3(7.0, 0.0, 0.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
@@ -1391,12 +1391,12 @@ void applicationLoop() {
 
 		//MOSAICO BANIO
 		glm::mat4 mosaicoBano = glm::translate(modelCasa2, glm::vec3(-5.5, -1.49, 1.5));
-		glBindTexture(GL_TEXTURE_2D, textureID6);
+		glBindTexture(GL_TEXTURE_2D, textureIDA6);
 		mosaicoBanio.render(glm::scale(mosaicoBano, glm::vec3(4.0, 0.01, 3.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED BANIO IZQUIERA
 		glm::mat4 paredesBanio = glm::translate(modelCasa, glm::vec3(0.01, 0.0, -6.0));
-		glBindTexture(GL_TEXTURE_2D, textureID7);
+		glBindTexture(GL_TEXTURE_2D, textureIDA7);
 		paredBanio.render(glm::scale(paredesBanio, glm::vec3(0.01, 3.0, 3.0)));
 		//PARED BANIO ATRAS
 		paredesBanio = glm::translate(modelCasa2, glm::vec3(-5.5, 0.0, 0.01));
@@ -1410,7 +1410,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PARED IZQUIERDA HABITACION
 		glm::mat4 paredHabit = glm::translate(modelCasa, glm::vec3(0.01, 0.0, 1.0));
-		glBindTexture(GL_TEXTURE_2D, textureID8);
+		glBindTexture(GL_TEXTURE_2D, textureIDA8);
 		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 2.0)));
 		paredHabit = glm::translate(modelCasa, glm::vec3(0.01, 0.0, -4.0));
 		paredHabitacion.render(glm::scale(paredHabit, glm::vec3(0.01, 3.0, 2.0)));
@@ -1426,13 +1426,13 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PISO HABITACION
 		glm::mat4 pisoHabit = glm::translate(mosaicoBano, glm::vec3(1.5, 0.0, 4.5));
-		glBindTexture(GL_TEXTURE_2D, textureID9);
+		glBindTexture(GL_TEXTURE_2D, textureIDA9);
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		pisoHabitacion.render(glm::scale(pisoHabit, glm::vec3(7.0, 0.01, 6.0)));
 		//PARED IZQUIERDA COCINA
 		glm::mat4 paredCocina = glm::translate(modelCasa, glm::vec3(0.01, 0.0, 7.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 3.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID10);
+		glBindTexture(GL_TEXTURE_2D, textureIDA10);
 		cocinaPared.render(glm::scale(paredCocina, glm::vec3(0.015, 3.0, 1.0)));
 		//PARED IZQUIERDA 2 COCINA 
 		paredCocina = glm::translate(modelCasa, glm::vec3(0.01, 0.0, 2.5));
@@ -1456,14 +1456,14 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PISO COCINA
 		glm::mat4 pisoCocina = glm::translate(pisoHabit, glm::vec3(0.0, 0.0, 6.0));
-		glBindTexture(GL_TEXTURE_2D, textureID11);
+		glBindTexture(GL_TEXTURE_2D, textureIDA11);
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(6.0, 3.0)));
 		cocinaPiso.render(glm::scale(pisoCocina, glm::vec3(7.0, 0.01, 6.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		//PARED SALA IZQUIERDA
 		glm::mat4 paredSala = glm::translate(modelCasa, glm::vec3(7.01, 0.0, 3.5));
-		glBindTexture(GL_TEXTURE_2D, textureID12);
+		glBindTexture(GL_TEXTURE_2D, textureIDA12);
 		salaPared.render(glm::scale(paredSala, glm::vec3(0.01, 3.0, 8.0)));
 		//PARED SALA ATRAS
 		paredSala = glm::translate(modelCasa2, glm::vec3(3.5, 0.0, 7.0));
@@ -1489,7 +1489,7 @@ void applicationLoop() {
 
 		//PISO SALA COMEDOR
 		glm::mat4 pisoSala = glm::translate(pisoCocina, glm::vec3(7.5, 0.0, -1.0));
-		glBindTexture(GL_TEXTURE_2D, textureID13);
+		glBindTexture(GL_TEXTURE_2D, textureIDA13);
 		salaPiso.render(glm::scale(pisoSala, glm::vec3(8.0, 0.01, 8.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -1501,7 +1501,7 @@ void applicationLoop() {
 		glActiveTexture(GL_TEXTURE0);
 
 		glm::mat4 comedor = glm::translate(pisoCocina, glm::vec3(0.5, 1.0, -1.0));
-		glBindTexture(GL_TEXTURE_2D, textureID23);
+		glBindTexture(GL_TEXTURE_2D, textureIDA23);
 		buroHabit.render(glm::scale(comedor, glm::vec3(2.5, 0.1, 2.5)));
 		comedor = glm::translate(pisoCocina, glm::vec3(0.5, 0.5, -1.0));
 		buroHabit.render(glm::scale(comedor, glm::vec3(0.2, 1.0, 0.2)));
@@ -1517,7 +1517,7 @@ void applicationLoop() {
 		//PARED JARDIN (ARBUSTO)
 		glm::mat4 arbusto = glm::translate(modelCasa2, glm::vec3(2.0, 0.0, 0.01));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID14);
+		glBindTexture(GL_TEXTURE_2D, textureIDA14);
 		paredExt.render(glm::scale(arbusto, glm::vec3(11.0, 3.0, 0.2)));
 		arbusto = glm::translate(modelCasa3, glm::vec3(-0.01, 0.0, -4.0)); //arbusto izquierdo
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
@@ -1530,7 +1530,7 @@ void applicationLoop() {
 		//PARED PATIO
 		glm::mat4 parExt = glm::translate(modelCasa4, glm::vec3(3.5, 0.0, -8.02));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(3.0, 1.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID15);
+		glBindTexture(GL_TEXTURE_2D, textureIDA15);
 		paredExt.render(glm::scale(parExt, glm::vec3(8.0, 3.0, 0.01)));
 		parExt = glm::translate(modelCasa, glm::vec3(7.01, 0.0, -2.5));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
@@ -1541,7 +1541,7 @@ void applicationLoop() {
 		//PISO PATIO
 		glm::mat4 pisoPatio = glm::translate(pisoSala, glm::vec3(0.0, 0.0, -6.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(8.0, 2.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID16);
+		glBindTexture(GL_TEXTURE_2D, textureIDA16);
 		pisoExt.render(glm::scale(pisoPatio, glm::vec3(8.0, 0.01, 4.0)));
 		pisoPatio = glm::translate(pisoSala, glm::vec3(-2.0, 0.0, -9.5));
 		pisoExt.render(glm::scale(pisoPatio, glm::vec3(12.0, 0.01, 3.0)));
@@ -1549,12 +1549,12 @@ void applicationLoop() {
 		//PUERTA PRINCIPAL
 		glm::mat4 puertas = glm::translate(modelCasa4, glm::vec3(1.0, 0.0, 0.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID17);
+		glBindTexture(GL_TEXTURE_2D, textureIDA17);
 		puerta.render(glm::scale(puertas, glm::vec3(3.0, 3.0, 0.04)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//PUERTAS CASA DENTRO
 		puertas = glm::translate(modelCasa, glm::vec3(7.0, 0.0, 4.0));
-		glBindTexture(GL_TEXTURE_2D, textureID18);
+		glBindTexture(GL_TEXTURE_2D, textureIDA18);
 		puerta.render(glm::scale(puertas, glm::vec3(0.04, 3.0, 1.25)));//PUERTA COCINA
 		puertas = glm::translate(modelCasa, glm::vec3(7.0, 0.0, 0.5)); //PUERTA CUARTO
 		puerta.render(glm::scale(puertas, glm::vec3(0.04, 3.0, 1.25)));
@@ -1565,7 +1565,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//VENTANAS
 		glm::mat4 ventanas = glm::translate(modelCasa, glm::vec3(0.01, 0.0, 5.0));
-		glBindTexture(GL_TEXTURE_2D, textureID19);
+		glBindTexture(GL_TEXTURE_2D, textureIDA19);
 		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 3.0, 3.0)));
 		ventanas = glm::translate(modelCasa, glm::vec3(0.01, 0.0, -1.5));
 		ventana.render(glm::scale(ventanas, glm::vec3(0.05, 3.0, 3.0)));
@@ -1577,14 +1577,14 @@ void applicationLoop() {
 		ventana.render(glm::scale(ventanas, glm::vec3(3.0, 3.0, 0.07)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glm::mat4 pista = glm::translate(modelCasa4, glm::vec3(0.0,-1.5,3.0));
-		glBindTexture(GL_TEXTURE_2D, textureID31);
+		glBindTexture(GL_TEXTURE_2D, textureIDA31);
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(2.0, 1.0)));
 		carretera.render(glm::scale(pista,glm::vec3(24.0,0.001,3.0)));//FRENTE
 		pista = glm::translate(modelCasa2, glm::vec3(0.0, -1.5, -3.0));
 		carretera.render(glm::scale(pista, glm::vec3(24.0, 0.001, 3.0))); //ATRAS
 		glBindTexture(GL_TEXTURE_2D, 0);
 		pista = glm::translate(modelCasa, glm::vec3(-3.0, -1.5, 0.0)); //IZQUIERDA
-		glBindTexture(GL_TEXTURE_2D, textureID32);
+		glBindTexture(GL_TEXTURE_2D, textureIDA32);
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 2.0)));
 		carretera.render(glm::scale(pista, glm::vec3(3.0, 0.001, 18.0)));
 		pista = glm::translate(modelCasa3, glm::vec3(3.0, -1.5, 0.0)); //DERECHA
@@ -1593,34 +1593,34 @@ void applicationLoop() {
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		/*====================================*/
 		glm::mat4 estufa = glm::translate(modelCasa, glm::vec3(0.5, -0.5, 5.0));
-		glBindTexture(GL_TEXTURE_2D, textureID20);
+		glBindTexture(GL_TEXTURE_2D, textureIDA20);
 		cocina.render(glm::scale(estufa, glm::vec3(1.0, 0.02, 1.5)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//encimeraglm::vec3(-8.0, 0.0, -1.5)
 		glm::mat4 encimeras = glm::translate(modelCasa, glm::vec3(0.5, -1.0, 4.5));
-		glBindTexture(GL_TEXTURE_2D, textureID27);
+		glBindTexture(GL_TEXTURE_2D, textureIDA27);
 		encimera.render(glm::scale(encimeras, glm::vec3(1.0, 1.0, 6.0)));
 		encimeras = glm::translate(modelCasa4, glm::vec3(-4.0, -1.0, -0.5));
 		encimera.render(glm::scale(encimeras, glm::vec3(7.0, 1.0, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//horno estufa
 		estufa = glm::translate(modelCasa, glm::vec3(1.0, -1.0, 5.0));
-		glBindTexture(GL_TEXTURE_2D, textureID22);
+		glBindTexture(GL_TEXTURE_2D, textureIDA22);
 		cocina.render(glm::scale(estufa, glm::vec3(0.01, 1.0, 1.5)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//comida
 		estufa = glm::translate(modelCasa4, glm::vec3(-4.0, -0.4, -0.5));
-		glBindTexture(GL_TEXTURE_2D, textureID21);
+		glBindTexture(GL_TEXTURE_2D, textureIDA21);
 		cocina.render(glm::scale(estufa, glm::vec3(1.5, 0.0001, 1.0)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//fregadero
 		glm::mat4 fregadero = glm::translate(modelCasa, glm::vec3(0.5, -0.49, 3.0));
-		glBindTexture(GL_TEXTURE_2D, textureID29);
+		glBindTexture(GL_TEXTURE_2D, textureIDA29);
 		cocina.render(glm::scale(fregadero, glm::vec3(1.0, 0.0001, 1.5)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//MUEBLES HABITACION
 		glm::mat4 muebles = glm::translate(modelCasa, glm::vec3(2.0, -1.25, -1.5));
-		glBindTexture(GL_TEXTURE_2D, textureID23);
+		glBindTexture(GL_TEXTURE_2D, textureIDA23);
 		muebleHabitacion.render(glm::scale(muebles, glm::vec3(3.5, 0.25, 2.0))); //base cama
 		glm::mat4 muebles2 = glm::translate(modelCasa, glm::vec3(0.5, -1.25, 0.15)); //buro
 		buroHabit.render(glm::scale(muebles2, glm::vec3(0.8, 1.0, 0.8)));
@@ -1628,16 +1628,16 @@ void applicationLoop() {
 		buroHabit.render(glm::scale(muebles2, glm::vec3(0.8, 1.0, 0.8)));
 		glBindTexture(GL_TEXTURE_2D, 0);
 		muebles = glm::translate(modelCasa, glm::vec3(2.0, -1.0, -1.5));
-		glBindTexture(GL_TEXTURE_2D, textureID24);
+		glBindTexture(GL_TEXTURE_2D, textureIDA24);
 		muebleHabitacion.render(glm::scale(muebles, glm::vec3(3.5, 0.5, 2.0))); //base cama
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//JACUZI
 		glm::mat4 jardin = glm::translate(modelCasa2, glm::vec3(5.5, -1.0, 2.0));
 		jardin = glm::scale(jardin, glm::vec3(3.0, 1.0, 3.0));
-		glBindTexture(GL_TEXTURE_2D, textureID23);
+		glBindTexture(GL_TEXTURE_2D, textureIDA23);
 		jacuzi.render(0, jacuzi.getSlices() * jacuzi.getStacks() * 6,
 			jardin);
-		glBindTexture(GL_TEXTURE_2D, textureID25);
+		glBindTexture(GL_TEXTURE_2D, textureIDA25);
 		jacuzi.render(jacuzi.getSlices() * jacuzi.getStacks() * 6,
 			jacuzi.getSlices() * 3,
 			jardin);
@@ -1645,7 +1645,7 @@ void applicationLoop() {
 		//SILLONES DE LA SALA
 		glm::mat4 sillones = glm::translate(modelCasa, glm::vec3(10.0, -1.0, 3.5));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(4.0, 1.0)));
-		glBindTexture(GL_TEXTURE_2D, textureID26);
+		glBindTexture(GL_TEXTURE_2D, textureIDA26);
 		sillon.render(glm::scale(sillones, glm::vec3(0.15, 1.0, 4.0))); //respaldo sillon 
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(1.0, 4.0)));
 		sillones = glm::translate(modelCasa, glm::vec3(10.25, -1.35, 3.5));
