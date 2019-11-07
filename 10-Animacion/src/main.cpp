@@ -1202,11 +1202,14 @@ void applicationLoop() {
 	float offsetEclipse2Rot = 0.0;
 	float offsetHelicoptero2AdvanceX = 0.0;
 	float offsetHelicoptero2AdvanceY = 0.0;
+	
 	glm::mat4 matrixModelEclipse2 = glm::mat4(1.0);
 	matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(-3.5, -1.5, -9.0));
 	glm::mat4 matrixModelHelicoptero2 = glm::mat4(1.0);
 	matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(24.0, 10.5, 0.0));
 	while (psi) {
+		glm::vec3 camera_pos = camera->getPosition();
+
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -1495,6 +1498,9 @@ void applicationLoop() {
 
 		glm::mat4 matrixMesita = glm::mat4(1.0);
 		matrixMesita = glm::translate(pisoSala, glm::vec3(0.75, 0.0, 0.0));
+		glm::vec3 mesitaPos = matrixMesita[3];
+		if (glm::distance(camera_pos, mesitaPos) < 2.0)
+			std::cout << "Prender la luz." << std::endl;
 		matrixMesita = glm::scale(matrixMesita, glm::vec3(2.0, 1.0, 2.0));
 		shaderMulLighting.setVectorFloat2("scaleUV", glm::value_ptr(glm::vec2(0.0, 0.0)));
 		modelMesita.render(matrixMesita);
@@ -1851,7 +1857,7 @@ void applicationLoop() {
 		//NUMERO DE LUCES A USAR DE TIPO POINT LIGHTS=5
 		shaderMulLighting.setInt("pointLightCount", 9);
 		//POSICION DE LA LUZ CON INDICE [0]
-		std::cout << aleatorio2 << std::endl; //MUESTRA EN CONSOLA EL INCREMENTO
+		//std::cout << aleatorio2 << std::endl; //MUESTRA EN CONSOLA EL INCREMENTO
 		if ((aleatorio2 >= 10.0)||(aleatorio3 <= 1.0)) {
 			aleatorio2 = 1.0;
 			aleatorio3 = 10.0;
@@ -2026,7 +2032,7 @@ void applicationLoop() {
 		/*MAQUINA DE ESTADOS PARA EL CARRO ECLIPSE 2 SIN DESACOPLAR*/
 		switch (state) {
 		case 0:
-			std::cout << "Advance:" << std::endl;
+			// std::cout << "Advance:" << std::endl;
 			// -0.001 debe de ser igual
 			matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(0.0, 0.0, 0.01));
 			offsetEclipse2Advance += 0.01;
@@ -2036,7 +2042,7 @@ void applicationLoop() {
 			}
 			break;
 		case 1:
-			std::cout << "Turn: " << std::endl;
+			//std::cout << "Turn: " << std::endl;
 			matrixModelEclipse2 = glm::translate(matrixModelEclipse2, glm::vec3(0, 0, 0.01));
 			matrixModelEclipse2 = glm::rotate(matrixModelEclipse2, glm::radians(0.5f), glm::vec3(0, 1, 0));
 			offsetEclipse2Rot += 0.5; //INCREMENTA, ACUMULANDO		RADIANS ES LA VELOCIDAD
@@ -2050,7 +2056,7 @@ void applicationLoop() {
 		/*MAQUINA DE ESTADOS DEL HELICOPTERO*/
 		switch (estadoHel) {
 		case 0:
-			std::cout << "Advance Helicoptero:" << std::endl;
+			//std::cout << "Advance Helicoptero:" << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0.0, 0.0, 0.01));
 			offsetHelicoptero2AdvanceX += 0.01;
 			if (offsetHelicoptero2AdvanceX > 3.0) {
@@ -2059,7 +2065,7 @@ void applicationLoop() {
 			}
 			break;
 		case 1:
-			std::cout << "Down: helicoptero " << std::endl;
+			//std::cout << "Down: helicoptero " << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, -0.01, 0.0));
 			offsetHelicoptero2AdvanceY += 0.01;
 			if (offsetHelicoptero2AdvanceY > 12) {
@@ -2068,7 +2074,7 @@ void applicationLoop() {
 			}
 			break;
 		case 2:
-			std::cout << "Up: helicoptero " << std::endl;
+			//std::cout << "Up: helicoptero " << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0, 0.01, 0.0));
 			offsetHelicoptero2AdvanceY += 0.01;
 			if (offsetHelicoptero2AdvanceY > 12) {
@@ -2077,7 +2083,7 @@ void applicationLoop() {
 			}
 			break;
 		case 3:
-			std::cout << "atras helicoptero" << std::endl;
+			//std::cout << "atras helicoptero" << std::endl;
 			matrixModelHelicoptero2 = glm::translate(matrixModelHelicoptero2, glm::vec3(0.0, 0.0, -0.01));
 			offsetHelicoptero2AdvanceX += 0.01;
 			if (offsetHelicoptero2AdvanceX > 3) {
